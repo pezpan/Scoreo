@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:gravity="center_horizontal"
+    android:paddingTop="10dip"
+    android:paddingBottom="10dip"
+    android:layout_height="64dp">
+
+    <TextView android:id="@+id/nombrejugador"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_alignParentLeft="true"
+        android:layout_gravity="center"
+        android:fontFamily="sans-serif"           
+        android:textSize="18sp"
+        android:maxLines="1"
+        android:scrollHorizontally="true"
+        android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+    <ImageButton android:id="@+id/restar"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/ic_remove_white_24dp"
+        android:background="@drawable/botonredondo"
+        android:scaleType="fitXY"
+        android:padding="10dp"
+        android:layout_gravity="center"/>
+
+    <TextView android:id="@+id/puntos"
+        android:layout_width="18dp"
+        android:layout_height="wrap_content"
+        android:maxWidth="18dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:gravity="center"
+        android:textSize="16sp"
+        android:fontFamily="sans-serif"    
+        android:layout_gravity="center"/>
+
+    <ImageButton android:id="@+id/sumar"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/ic_add_white_24dp"
+        android:background="@drawable/botonredondo"
+        android:scaleType="fitXY"
+        android:padding="10dp"
+        android:layout_gravity="center"/>
+
+</LinearLayout>

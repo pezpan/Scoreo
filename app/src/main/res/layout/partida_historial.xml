@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="72dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif"           
+        android:id="@+id/nombrepartida"
+        android:textSize="18sp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:textAppearance="?android:textAppearanceLarge"
+        android:paddingTop="8dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif"          
+        android:id="@+id/actualizada"
+        android:textSize="14sp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="10dp"
+        android:textAppearance="?android:textAppearanceSmall"
+        android:paddingRight="16dp"
+        android:paddingTop="8dp"/>
+
+</LinearLayout>

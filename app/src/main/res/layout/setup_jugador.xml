@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText android:id="@+id/nombre"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:scrollHorizontally="true"
+        android:layout_weight="1"
+        android:layout_alignParentLeft="true"
+        android:ems="10"
+        />
+
+    <ImageView
+        android:id="@+id/imgcolor"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/ic_brush_black_24dp" />
+
+</LinearLayout>

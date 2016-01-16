@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="menupartidas">
+        <item>Borrar</item>
+        <item>Cambiar nombre</item>
+        <item>Duplicar</item>
+        <item>Reiniciar</item>
+    </string-array>
+</resources>

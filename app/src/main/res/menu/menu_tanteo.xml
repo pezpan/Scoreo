@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/addjugador"
+        android:title="@string/nuevo_jugador"
+        android:icon="@drawable/ic_person_add_white_24dp"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/partidasguardadas"
+        android:title="@string/partidas_guardadas"
+        android:icon="@drawable/ic_folder_white_24dp"
+        app:showAsAction="always"/>
+        
+    <item
+        android:id="@+id/reiniciarpartida"
+        android:title="@string/reiniciar_partida"
+        app:showAsAction="never"/>    
+
+
+</menu>
