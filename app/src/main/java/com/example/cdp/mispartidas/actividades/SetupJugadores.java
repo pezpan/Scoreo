@@ -14,14 +14,19 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 
+import com.example.cdp.mispartidas.Utils;
 import com.example.cdp.mispartidas.auxiliares.JugadorSetup;
 import com.example.cdp.mispartidas.auxiliares.Utilidades;
 import com.example.cdp.mispartidas.R;
 import com.example.cdp.mispartidas.almacenamiento.objetos.Jugador;
 import com.example.cdp.mispartidas.almacenamiento.objetos.Partida;
 import com.example.cdp.mispartidas.almacenamiento.operaciones.Backup;
+import com.example.cdp.mispartidas.colorpicker.ColorPickerDialog;
+import com.example.cdp.mispartidas.colorpicker.ColorPickerSwatch.OnColorSelectedListener;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -32,6 +37,7 @@ public class SetupJugadores extends ActionBarActivity {
     private ListView listviewjugadores;
     private int jugadores = 0;
     private JugadorSetup players[];
+    int mSelectedColorCal0 = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -172,7 +178,8 @@ public class SetupJugadores extends ActionBarActivity {
                 item = inflater.inflate(R.layout.setup_jugador, null);
          
                 holder = new ViewHolder();
-                holder.nombre = (EditText) item.findViewById(R.id.nombre);        
+                holder.nombre = (EditText) item.findViewById(R.id.nombre);
+                holder.colores = (ImageView) item.findViewById(R.id.imgcolor);
          
         		// Establecemos el tag
                 item.setTag(holder);
@@ -183,8 +190,8 @@ public class SetupJugadores extends ActionBarActivity {
                 holder = (ViewHolder)item.getTag();
             }
 
-            // Establecemos el nombre por defecto
-            //holder.nombre.setHint(players[position].getNombre());
+            holder.colores.setTag(position);
+            holder.listener = new CustomListener(position);
             holder.nombre.setText(players[position].getNombre());
 
             // Tenemos que guardar los nombres de los jugadores para que cada vez que una vista pierda el foco
@@ -199,12 +206,56 @@ public class SetupJugadores extends ActionBarActivity {
                 }
             });
 
+            holder.colores.setOnClickListener(holder.listener);
+
 
             return(item);
-        }		
+        }
+
+        public class CustomListener implements View.OnClickListener {
+            private int position;
+
+            protected CustomListener(int position) {
+                this.position = position;
+            }
+
+            @Override
+            public void onClick(View v) {
+                //Comprobamos que vista ha lanzado el evento y lo gestionamos
+                switch (v.getId()) {
+                    case R.id.imgcolor:
+                        try {
+                            int[] mColor = Utils.ColorUtils.colorChoice(getApplicationContext());
+                            ColorPickerDialog colorcalendar = ColorPickerDialog.newInstance(
+                                    R.string.color_picker_default_title,
+                                    mColor,
+                                    mSelectedColorCal0,
+                                    5,
+                                    Utils.isTablet(getApplicationContext()) ? ColorPickerDialog.SIZE_LARGE : ColorPickerDialog.SIZE_SMALL);
+
+                            //Implement listener to get selected color value
+                            colorcalendar.setOnColorSelectedListener(new OnColorSelectedListener() {
+
+                                @Override
+                                public void onColorSelected(int color) {
+                                    mSelectedColorCal0 = color;
+                                }
+
+                            });
+
+                            colorcalendar.show(getFragmentManager(), "cal");
+                        }catch(Exception e){
+                            Log.i("MILOG", "Exception en colorpicker: " + e.getMessage());
+                        }
+                        break;
+                }
+            }
+        }
     }
     
     static class ViewHolder {
         EditText nombre;
+        ImageView colores;
+        AdaptadorSetup.CustomListener listener;
     }
 }
