@@ -63,6 +63,8 @@ public class SetupJugadores extends ActionBarActivity {
                 llamarTanteo();
             }
         });
+
+
     }
 
     @Override
@@ -196,6 +198,8 @@ public class SetupJugadores extends ActionBarActivity {
                     }
                 }
             });
+
+
             return(item);
         }		
     }

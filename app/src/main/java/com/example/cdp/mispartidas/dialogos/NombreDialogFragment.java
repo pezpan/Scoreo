@@ -36,7 +36,7 @@ public class NombreDialogFragment extends DialogFragment {
 
         final Activity actividad = getActivity();
         final EditText myName = new EditText(actividad);
-        
+
         // Obtenemos los parametros
         getParameters();
         final int posicion = this.posicion;

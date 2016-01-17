@@ -117,13 +117,8 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
                 break;
 
             case R.id.reiniciarpartida:
-                // Ponemos todos los marcadores a 0
-                // Recorremos nuestra partida
-                numjugadores = partida.getJugadores().size();
-                // recorremos y reiniciamos
-                for(int i = 0; i < numjugadores; i++){
-                    partida.getJugadores().get(i).setPuntuacion(0);
-                }
+                // Reiniciamos la partida
+                partida.reiniciarPartida();
                 // Actualizamos el backup
                 backup.getBackup().set(indice, partida);
                 // Almacenamos

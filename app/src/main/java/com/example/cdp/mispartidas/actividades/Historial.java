@@ -34,7 +34,7 @@ public class Historial extends ActionBarActivity implements NombreDialogFragment
     private ListView listapartidas;
     //private List<Partida> mispartidas;
     private AdaptadorHistorial adaptador;
-    private static Context context;
+    //private static Context context;
     private Backup backup;
 
     @Override
@@ -45,7 +45,7 @@ public class Historial extends ActionBarActivity implements NombreDialogFragment
         // Variables
         listapartidas = (ListView) findViewById(R.id.listapartidas);
         // Guardamos el contexto
-        this.context = getApplicationContext();
+        //this.context = getApplicationContext();
         Log.i("MILOG", "Obtenemos el backup");
         try {
             backup = Backup.getMiBackup(getApplicationContext());
@@ -117,36 +117,34 @@ public class Historial extends ActionBarActivity implements NombreDialogFragment
                     // Lanzamos el dialog
                     NombreDialogFragment fragmento = new NombreDialogFragment();
                     Bundle bundles = new Bundle();
-                    bundles.putInt("posicion", menuItemIndex);
+                    bundles.putInt("posicion", info.position);
                     fragmento.setArguments(bundles);
-                    FragmentManager fragmentManager = ((Activity) context).getFragmentManager();
+                    FragmentManager fragmentManager = this.getFragmentManager();
                     fragmento.show(fragmentManager, "Dialogo_nombre");
                 } catch (Exception ex) {
-                    Toast.makeText(this.context, "Se produjo un error al cambiar el nombre", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this.getApplicationContext(), "Se produjo un error al cambiar el nombre", Toast.LENGTH_SHORT).show();
                 }
                 break;
             // Duplicamos la partida
             case 2:
-                Partida copiapartida = backup.getBackup().get(info.position);
-                // Actualizamos la fecha para que no sea la misma
-                copiapartida.setFechainicio(Utilidades.getFechaActual());
-                copiapartida.setFechaactualizacion(Utilidades.getFechaActual());
-                // Generamos un nuevo identificador
-                String identificador = String.valueOf(new Date().getTime());
-                copiapartida.setIdentificador(identificador);
+                Partida copiapartida = new Partida(backup.getBackup().get(info.position));
                 // Anadimos la partida
                 backup.addPartida(copiapartida);
+                // Actualizamos la lista
+                adaptador.notifyDataSetChanged();
                 break;
             // Reiniciamos la partida
             case 3:
+                backup.getBackup().get(info.position).reiniciarPartida();
+                // Actualizamos la lista
+                adaptador.notifyDataSetChanged();
                 break;
         }
         
         // Almacenamos
         Log.i("MILOG", "Guardamos el backup");
         backup.guardarBackup();
-        // Actualizamos la lista
-        adaptador.notifyDataSetChanged();
+
 
         return true;
     }
@@ -159,12 +157,13 @@ public class Historial extends ActionBarActivity implements NombreDialogFragment
 
         // Actualizamos la partida
         backup.getBackup().get(position).setNombre(nombre);
-        
+
+        // Actualizamos la lista
+        adaptador.notifyDataSetChanged();
+
         // Actualizamos el backup
         Log.i("MILOG", "Guardamos el backup");
         backup.guardarBackup();
-        Log.i("MILOG", "Actualizamos la vista");
-        ((AdaptadorHistorial) listapartidas.getAdapter()).notifyDataSetChanged();
     }
 
     @Override

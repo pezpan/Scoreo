@@ -15,6 +15,7 @@
         android:fontFamily="sans-serif"           
         android:textSize="18sp"
         android:maxLines="1"
+        android:ellipsize="marquee"
         android:scrollHorizontally="true"
         android:textAppearance="?android:attr/textAppearanceMedium"/>
 
