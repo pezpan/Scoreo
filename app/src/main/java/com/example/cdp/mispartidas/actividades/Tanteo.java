@@ -27,7 +27,7 @@ import com.example.cdp.mispartidas.almacenamiento.operaciones.Backup;
 
 import java.util.List;
 
-public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragment.NumberTanteoDialogListener {
+public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragment.NumberTanteoDialogListener, NombreDialogFragment.NuevoNombreListener {
 
     private String identificador;
     private Partida partida;
