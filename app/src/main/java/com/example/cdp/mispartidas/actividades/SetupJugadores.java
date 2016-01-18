@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -53,7 +55,7 @@ public class SetupJugadores extends ActionBarActivity {
         Bundle bundle = getIntent().getExtras();
         jugadores = bundle.getInt("numjugadores");
         //players = new JugadorSetup[jugadores];
-        playeres = new ArrayList<JugadorSetup>();
+        players = new ArrayList<JugadorSetup>();
         for(int i = 0; i < jugadores; i++){
             JugadorSetup aux = new JugadorSetup();
             aux.setNombre("Jugador" + Integer.toString(i + 1));
@@ -161,7 +163,7 @@ public class SetupJugadores extends ActionBarActivity {
     }
 
     // Adaptador para el layout del listview
-    public class AdaptadorSetup extends ArrayAdapter ArrayAdapter<JugadorSetup>{
+    public class AdaptadorSetup extends ArrayAdapter<JugadorSetup>{
 
         Activity context;
         List<JugadorSetup> jugadores;
@@ -200,7 +202,6 @@ public class SetupJugadores extends ActionBarActivity {
             holder.colores.setTag(position);
             holder.listener = new CustomListener(position);
             holder.colores.setOnClickListener(holder.listener);
-            holder.nombre.addTextChangedListener(filterTextWatcher);
             
             // Comprobamos si tenemos que poner hint o texto
             if(jugadores.get(position).getCambiado() == true){
@@ -210,7 +211,7 @@ public class SetupJugadores extends ActionBarActivity {
             }
             
             // Definimos un listener para ver cuando cambia el texto de los edittext
-            private TextWatcher filterTextWatcher = new TextWatcher() {
+            TextWatcher filterTextWatcher = new TextWatcher() {
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
                 }
@@ -225,6 +226,9 @@ public class SetupJugadores extends ActionBarActivity {
                     jugadores.get(position).setCambiado(true);
                 }
             };
+
+            // Anadimos el listener
+            holder.nombre.addTextChangedListener(filterTextWatcher);
             
             // Tenemos que guardar los nombres de los jugadores para que cada vez que una vista pierda el foco
             // no se modifiquen los valores introducidos por el reciclaje de vistas de la lista

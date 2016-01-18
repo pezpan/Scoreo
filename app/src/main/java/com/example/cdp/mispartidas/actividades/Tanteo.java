@@ -4,21 +4,25 @@ import android.app.Activity;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.cdp.mispartidas.dialogos.NombreDialogFragment;
 import com.example.cdp.mispartidas.dialogos.NumeroTanteoDialogFragment;
 import com.example.cdp.mispartidas.R;
 import com.example.cdp.mispartidas.almacenamiento.objetos.Jugador;
@@ -60,7 +64,7 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         
         // Registramos la lista para el menu contextual
-        registerForContextMenu(listapartidas);
+        registerForContextMenu(listviewjugadores);
 
         // Buscamos la partida
         indice = backup.getPartida(identificador);
@@ -264,7 +268,7 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
             View item = convertView;
             
             if (position % 2 == 1) {
-                item.setBackgroundColor(Color.parseColor("#E3F2FD"));  
+                item.setBackgroundColor(Color.parseColor("#E3F2FD"));
             } else {
                 item.setBackgroundColor(Color.parseColor("#E0F7FA"));  
             }
