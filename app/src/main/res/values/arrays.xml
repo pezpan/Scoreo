@@ -6,6 +6,13 @@
         <item>Duplicar</item>
         <item>Reiniciar</item>
     </string-array>
+    
+    <string-array name="menujugadores">
+        <item>Borrar</item>
+        <item>Cambiar color</item>
+        <item>Cambiar nombre</item>
+        <item>Reiniciar</item>
+    </string-array>
 
     <string-array name="default_color_choice_values" translatable="false">
         <item>#33b5e5</item>
