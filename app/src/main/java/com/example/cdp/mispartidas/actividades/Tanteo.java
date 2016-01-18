@@ -58,6 +58,9 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
 
         // Habilitamos la fecha volver a la activity principal
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        
+        // Registramos la lista para el menu contextual
+        registerForContextMenu(listapartidas);
 
         // Buscamos la partida
         indice = backup.getPartida(identificador);
@@ -72,6 +75,88 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
         }
 
     }
+    
+    // Menu contextual para nuestra lista de jugadores
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        if (v.getId()==R.id.jugadorestanteo) {
+            AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)menuInfo;
+            menu.setHeaderTitle("Elije una opcion");
+            String[] menuItems = getResources().getStringArray(R.array.menujugadores);
+            for (int i = 0; i<menuItems.length; i++) {
+                menu.add(Menu.NONE, i, i, menuItems[i]);
+            }
+        }
+    }
+    
+    // Gestionamos la opcion elegida del menu contextual
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
+        int menuItemIndex = item.getItemId();
+        String[] menuItems = getResources().getStringArray(R.array.menujugadores);
+        //String menuItemName = menuItems[menuItemIndex];
+        //String listItemName = ((Partida) mispartidas.get(info.position)).getNombre();
+        
+        switch(menuItemIndex){
+            // Borrar jugador
+            case 0:
+                partida.getJugadores().remove(info.position);
+                // Actualizamos la lista
+                adaptador.notifyDataSetChanged();
+                break;
+            // Cambiar el color del jugador
+            case 1:
+                
+                break;
+            // Cambiamos el nombre del jugador
+            case 2:
+                try {
+                    // Decrementamos el tanteo
+                    Log.i("MILOG", "Cambiamos el nombre de la partida");
+                    // Lanzamos el dialog
+                    NombreDialogFragment fragmento = new NombreDialogFragment();
+                    Bundle bundles = new Bundle();
+                    bundles.putInt("posicion", info.position);
+                    fragmento.setArguments(bundles);
+                    FragmentManager fragmentManager = this.getFragmentManager();
+                    fragmento.show(fragmentManager, "Dialogo_jugador");
+                } catch (Exception ex) {
+                    Toast.makeText(this.getApplicationContext(), "Se produjo un error al cambiar el nombre", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            // Reiniciamos el jugador
+            case 3:
+                partida.getJugadores().get(info.position).setPuntuacion(0);
+                // Actualizamos la lista
+                adaptador.notifyDataSetChanged();
+                break;
+        }
+        
+        // Almacenamos
+        Log.i("MILOG", "Guardamos el backup");
+        backup.guardarBackup();
+
+        return true;
+    }
+    
+    // Sobreescribimos el metodo del dialogo para cambiar el numero
+    @Override
+    public void onNombreSelected(String nombre, int position) {
+
+        Log.i("MILOG", "Actualizamos el nombre del jugador");
+
+        // Actualizamos el jugador
+        partida.getJugadores().get(position).setNombre(nombre);
+
+        // Actualizamos la lista
+        adaptador.notifyDataSetChanged();
+
+        // Actualizamos el backup
+        Log.i("MILOG", "Guardamos el backup");
+        backup.guardarBackup();
+    }
+    
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
