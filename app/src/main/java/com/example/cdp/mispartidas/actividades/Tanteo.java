@@ -262,6 +262,12 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
         public View getView(final int position, View convertView, ViewGroup parent) {
 
             View item = convertView;
+            
+            if (position % 2 == 1) {
+                item.setBackgroundColor(Color.BLUE);  
+            } else {
+                item.setBackgroundColor(Color.CYAN);  
+            }
 
             // Optimizamos el rendimiento de nuestra lista
             // Si la vista no existe, la creamos
