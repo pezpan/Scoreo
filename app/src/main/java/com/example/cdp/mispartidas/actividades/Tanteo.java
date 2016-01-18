@@ -264,9 +264,9 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
             View item = convertView;
             
             if (position % 2 == 1) {
-                item.setBackgroundColor(Color.BLUE);  
+                item.setBackgroundColor(Color.parseColor("#E3F2FD"));  
             } else {
-                item.setBackgroundColor(Color.CYAN);  
+                item.setBackgroundColor(Color.parseColor("#E0F7FA"));  
             }
 
             // Optimizamos el rendimiento de nuestra lista
