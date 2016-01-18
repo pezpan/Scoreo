@@ -36,7 +36,8 @@ public class SetupJugadores extends ActionBarActivity {
 
     private ListView listviewjugadores;
     private int jugadores = 0;
-    private JugadorSetup players[];
+    //private JugadorSetup players[];
+    private List<JugadorSetup> players;
     int mSelectedColorCal0 = 0;
 
     @Override
@@ -51,16 +52,21 @@ public class SetupJugadores extends ActionBarActivity {
         // Obtenemos el numero de jugadores
         Bundle bundle = getIntent().getExtras();
         jugadores = bundle.getInt("numjugadores");
-        players = new JugadorSetup[jugadores];
+        //players = new JugadorSetup[jugadores];
+        playeres = new ArrayList<JugadorSetup>();
         for(int i = 0; i < jugadores; i++){
-            players[i] = new JugadorSetup();
-            players[i].setNombre("Jugador" + Integer.toString(i + 1));
+            JugadorSetup aux = new JugadorSetup();
+            aux.setNombre("Jugador" + Integer.toString(i + 1));
+            aux.setCambiado(false);
+            //players[i] = new JugadorSetup();
+            //players[i].setNombre("Jugador" + Integer.toString(i + 1));
         }
         // Habilitamos la fecha volver a la activity principal
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // Establecemos el adaptador
-        final AdaptadorSetup adaptador = new AdaptadorSetup(this);
+        final AdaptadorSetup adaptador = new AdaptadorSetup(this, getTaskId(), players);
+        //adaptador = new AdaptadorTanteo(this, getTaskId(), partida.getJugadores());
         listviewjugadores.setAdapter(adaptador);
 
         aceptar.setOnClickListener(new View.OnClickListener() {
@@ -108,7 +114,7 @@ public class SetupJugadores extends ActionBarActivity {
 
             Jugador player = new Jugador();
             // Guardamos el nombre
-            player.setNombre(players[i].getNombre());
+            player.setNombre(players.get(i).getNombre());
             // Anadimos el numero de jugador
             player.setNumerojugador(i);
             // Anadimos la puntuacion
@@ -157,18 +163,21 @@ public class SetupJugadores extends ActionBarActivity {
     }
 
     // Adaptador para el layout del listview
-    public class AdaptadorSetup extends ArrayAdapter{
+    public class AdaptadorSetup extends ArrayAdapter ArrayAdapter<JugadorSetup>{
 
         Activity context;
-        AdaptadorSetup(Activity context){
-            super(context, R.layout.setup_jugador, players);
+        List<JugadorSetup> jugadores;
+        ViewHolder holder;
+        
+        AdaptadorSetup(Activity context, int textViewResourceId, List<JugadorSetup> listanombre){
+            super(context, textViewResourceId, listanombre);
             this.context = context;
+            this.jugadores = listanombre;
         }
 
         public View getView(final int position, View convertView, ViewGroup parent)
         {
             View item = convertView;
-            ViewHolder holder;
          
         	// Optimizamos el rendimiento de nuestra lista
         	// Si la vista no existe, la creamos
@@ -192,8 +201,31 @@ public class SetupJugadores extends ActionBarActivity {
 
             holder.colores.setTag(position);
             holder.listener = new CustomListener(position);
-            holder.nombre.setText(players[position].getNombre());
-
+            holder.colores.setOnClickListener(holder.listener);
+            
+            // Comprobamos si tenemos que poner hint o texto
+            if(jugadores.get(position).getCambiado() == true){
+                holder.nombre.setText(jugadores.get(position).getNombre());
+            }else{
+                holder.nombre.setHint(jugadores.get(position).getNombre());
+            }
+            
+            private TextWatcher filterTextWatcher = new TextWatcher() {
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                }
+            
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                }
+            
+                @Override
+                public void afterTextChanged(Editable s) {
+                    // Si ha cambiado el texto de los edittext, indicamos que ya no hay que poner un valor para el hint
+                    jugadores.get(position).setCambiado(true);
+                }
+            };
+            
             // Tenemos que guardar los nombres de los jugadores para que cada vez que una vista pierda el foco
             // no se modifiquen los valores introducidos por el reciclaje de vistas de la lista
             holder.nombre.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -201,13 +233,11 @@ public class SetupJugadores extends ActionBarActivity {
                 public void onFocusChange(View v, boolean hasFocus) {
                     if(!hasFocus){
                         EditText et = (EditText) v.findViewById(R.id.nombre);
-                        players[position].setNombre(et.getText().toString());
+                        jugadores.get(position).setNombre(et.getText().toString());
+                        //players[position].setNombre(et.getText().toString());
                     }
                 }
             });
-
-            holder.colores.setOnClickListener(holder.listener);
-
 
             return(item);
         }
@@ -222,32 +252,28 @@ public class SetupJugadores extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 //Comprobamos que vista ha lanzado el evento y lo gestionamos
-                switch (v.getId()) {
-                    case R.id.imgcolor:
-                        try {
-                            int[] mColor = Utils.ColorUtils.colorChoice(getApplicationContext());
-                            ColorPickerDialog colorcalendar = ColorPickerDialog.newInstance(
-                                    R.string.color_picker_default_title,
-                                    mColor,
-                                    mSelectedColorCal0,
-                                    5,
-                                    Utils.isTablet(getApplicationContext()) ? ColorPickerDialog.SIZE_LARGE : ColorPickerDialog.SIZE_SMALL);
+                try {
+                    int[] mColor = Utils.ColorUtils.colorChoice(getApplicationContext());
+                    ColorPickerDialog colorcalendar = ColorPickerDialog.newInstance(
+                            R.string.color_picker_default_title,
+                            mColor,
+                            mSelectedColorCal0,
+                            5,
+                            Utils.isTablet(getApplicationContext()) ? ColorPickerDialog.SIZE_LARGE : ColorPickerDialog.SIZE_SMALL);
 
-                            //Implement listener to get selected color value
-                            colorcalendar.setOnColorSelectedListener(new OnColorSelectedListener() {
+                    //Implement listener to get selected color value
+                    colorcalendar.setOnColorSelectedListener(new OnColorSelectedListener() {
 
-                                @Override
-                                public void onColorSelected(int color) {
-                                    mSelectedColorCal0 = color;
-                                }
-
-                            });
-
-                            colorcalendar.show(getFragmentManager(), "cal");
-                        }catch(Exception e){
-                            Log.i("MILOG", "Exception en colorpicker: " + e.getMessage());
+                        @Override
+                        public void onColorSelected(int color) {
+                            mSelectedColorCal0 = color;
                         }
-                        break;
+
+                    });
+                    colorcalendar.show(getFragmentManager(), "cal");
+                    
+                }catch(Exception e){
+                    Log.i("MILOG", "Exception en colorpicker: " + e.getMessage());
                 }
             }
         }
