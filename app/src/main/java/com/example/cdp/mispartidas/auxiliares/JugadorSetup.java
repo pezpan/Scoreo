@@ -6,6 +6,7 @@ package com.example.cdp.mispartidas.auxiliares;
 public class JugadorSetup {
 
     private String nombre;
+    boolean cambiado = false;
 
     public String getNombre() {
         return nombre;
@@ -13,5 +14,13 @@ public class JugadorSetup {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+    
+    public boolean getCambiado(){
+        return cambiado;
+    }
+    
+    public void setCambiado(boolean nuevo){
+        this.cambiado = nuevo;
     }
 }
