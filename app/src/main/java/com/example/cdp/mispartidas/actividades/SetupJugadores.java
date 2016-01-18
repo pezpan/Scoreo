@@ -75,8 +75,6 @@ public class SetupJugadores extends ActionBarActivity {
                 llamarTanteo();
             }
         });
-
-
     }
 
     @Override
@@ -211,6 +209,7 @@ public class SetupJugadores extends ActionBarActivity {
                 holder.nombre.setHint(jugadores.get(position).getNombre());
             }
             
+            // Definimos un listener para ver cuando cambia el texto de los edittext
             private TextWatcher filterTextWatcher = new TextWatcher() {
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
