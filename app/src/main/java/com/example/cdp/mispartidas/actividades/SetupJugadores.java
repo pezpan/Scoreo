@@ -202,6 +202,7 @@ public class SetupJugadores extends ActionBarActivity {
             holder.colores.setTag(position);
             holder.listener = new CustomListener(position);
             holder.colores.setOnClickListener(holder.listener);
+            holder.nombre.addTextChangedListener(filterTextWatcher);
             
             // Comprobamos si tenemos que poner hint o texto
             if(jugadores.get(position).getCambiado() == true){
