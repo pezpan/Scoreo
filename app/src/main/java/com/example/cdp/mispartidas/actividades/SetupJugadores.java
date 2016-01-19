@@ -60,6 +60,7 @@ public class SetupJugadores extends ActionBarActivity {
             JugadorSetup aux = new JugadorSetup();
             aux.setNombre("Jugador" + Integer.toString(i + 1));
             aux.setCambiado(false);
+            players.add(aux);
             //players[i] = new JugadorSetup();
             //players[i].setNombre("Jugador" + Integer.toString(i + 1));
         }
