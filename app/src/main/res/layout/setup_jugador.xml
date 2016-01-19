@@ -16,9 +16,12 @@
 
     <ImageView
         android:id="@+id/imgcolor"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_alignParentRight="true"
-        android:src="@drawable/ic_brush_black_24dp" />
+        android:scaleType="fitXY"
+        android:background="@drawable/botonredondo"
+        android:src="@drawable/ic_brush_black_24dp" 
+        android:layout_gravity="center"/>
 
 </LinearLayout>
