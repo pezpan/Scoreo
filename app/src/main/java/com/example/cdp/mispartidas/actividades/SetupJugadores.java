@@ -201,7 +201,7 @@ public class SetupJugadores extends ActionBarActivity {
             }
 
             holder.colores.setTag(position);
-            holder.listener = new CustomListener(position);
+            holder.listener = new ColorListener(position);
             holder.colores.setOnClickListener(holder.listener);
             
             // Comprobamos si tenemos que poner hint o texto
@@ -247,10 +247,10 @@ public class SetupJugadores extends ActionBarActivity {
             return(item);
         }
 
-        public class CustomListener implements View.OnClickListener {
+        public class ColorListener implements View.OnClickListener {
             private int position;
 
-            protected CustomListener(int position) {
+            protected ColorListener(int position) {
                 this.position = position;
             }
 
@@ -287,6 +287,6 @@ public class SetupJugadores extends ActionBarActivity {
     static class ViewHolder {
         EditText nombre;
         ImageView colores;
-        AdaptadorSetup.CustomListener listener;
+        AdaptadorSetup.ColorListener listener;
     }
 }
