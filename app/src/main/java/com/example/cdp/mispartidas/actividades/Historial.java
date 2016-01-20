@@ -108,6 +108,8 @@ public class Historial extends ActionBarActivity implements NombreDialogFragment
             case 0:
                 // Eliminamos de la lista la partida seleccionada
                 backup.deletePartida(backup.getBackup().get(info.position));
+                // Actualizamos la lista
+                adaptador.notifyDataSetChanged();
                 break;
             // Cambiar nombre de la partida
             case 1:
