@@ -83,13 +83,11 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
     // Menu contextual para nuestra lista de jugadores
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        if (v.getId()==R.id.jugadorestanteo) {
-            AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)menuInfo;
-            menu.setHeaderTitle(partida.getJugadores().get(info.position).getNombre());
-            String[] menuItems = getResources().getStringArray(R.array.menujugadores);
-            for (int i = 0; i<menuItems.length; i++) {
-                menu.add(Menu.NONE, i, i, menuItems[i]);
-            }
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)menuInfo;
+        menu.setHeaderTitle(partida.getJugadores().get(info.position).getNombre());
+        String[] menuItems = getResources().getStringArray(R.array.menujugadores);
+        for (int i = 0; i<menuItems.length; i++) {
+            menu.add(Menu.NONE, i, i, menuItems[i]);
         }
     }
     
