@@ -205,13 +205,6 @@ public class SetupJugadores extends ActionBarActivity {
             holder.listener = new ColorListener(position);
             holder.colores.setOnClickListener(holder.listener);
             
-            // Comprobamos si tenemos que poner hint o texto
-            if(jugadores.get(position).getCambiado() == true){
-                holder.nombre.setText(jugadores.get(position).getNombre());
-            }else{
-                holder.nombre.setHint(jugadores.get(position).getNombre());
-            }
-            
             // Definimos un listener para ver cuando cambia el texto de los edittext
             TextWatcher filterTextWatcher = new TextWatcher() {
                 @Override
@@ -244,6 +237,13 @@ public class SetupJugadores extends ActionBarActivity {
                     }
                 }
             });
+            
+            // Comprobamos si tenemos que poner hint o texto
+            if(jugadores.get(position).getCambiado() == true){
+                holder.nombre.setText(jugadores.get(position).getNombre());
+            }else{
+                holder.nombre.setHint(jugadores.get(position).getNombre());
+            }
 
             return(item);
         }
