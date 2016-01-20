@@ -41,6 +41,7 @@ public class SetupJugadores extends ActionBarActivity {
     //private JugadorSetup players[];
     private List<JugadorSetup> players;
     int mSelectedColorCal0 = 0;
+    ColorPickerDialog colorcalendar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -259,7 +260,7 @@ public class SetupJugadores extends ActionBarActivity {
                 //Comprobamos que vista ha lanzado el evento y lo gestionamos
                 try {
                     int[] mColor = Utils.ColorUtils.colorChoice(getApplicationContext());
-                    ColorPickerDialog colorcalendar = ColorPickerDialog.newInstance(
+                    colorcalendar = ColorPickerDialog.newInstance(
                             R.string.color_picker_default_title,
                             mColor,
                             mSelectedColorCal0,
