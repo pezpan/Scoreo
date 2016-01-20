@@ -21,30 +21,36 @@
         </activity>
         <activity
             android:name=".actividades.SetupJugadores"
-            android:label="@string/title_activity_setup_jugadores" 
-            android:windowSoftInputMode="adjustPan"
-            android:parentActivityName=".actividades.MainActivity" >
+            android:label="@string/title_activity_setup_jugadores"
+            android:parentActivityName=".actividades.MainActivity"
+            android:windowSoftInputMode="adjustPan">
+
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".actividades.MainActivity" />
         </activity>
-        <activity android:name=".actividades.Tanteo"
+        <activity
+            android:name=".actividades.Tanteo"
             android:label="@string/title_activity_tanteo"
-            android:parentActivityName=".actividades.MainActivity" >
+            android:parentActivityName=".actividades.MainActivity">
+
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".actividades.MainActivity" />
         </activity>
-        <activity android:name=".actividades.Historial"
+        <activity
+            android:name=".actividades.Historial"
             android:label="@string/title_activity_historial"
-            android:parentActivityName=".actividades.MainActivity" >
+            android:parentActivityName=".actividades.MainActivity">
+
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".actividades.MainActivity" />
         </activity>
+        <activity android:name=".actividades.Duelo"></activity>
     </application>
 
 </manifest>

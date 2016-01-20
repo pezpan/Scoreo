@@ -10,7 +10,7 @@
     <string name="cancelar">Cancelar</string>
     <string name="archivo">backup</string>
     <string name="title_activity_setup_jugadores">Configura la partida</string>
-    <string name="title_activity_tanteo">Tanteo</string>	
+    <string name="title_activity_tanteo">Tanteo</string>
     <string name="titulo_partida">Titulo de la partida (opcional)</string>
     <string name="sumar_puntos">Selecciona el valor</string>
     <string name="title_activity_historial">Historial</string>
@@ -40,5 +40,6 @@
         <a href="https://plus.google.com/114432517923423045208">By Gabriele Mariotti</a><br><br>
 
     ]]></string>
+    <string name="title_activity_duelo">Duelo</string>
 
 </resources>
