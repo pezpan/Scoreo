@@ -21,7 +21,7 @@ public class Utilidades {
 
         Date fecha = new Date();
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-        formato.setTimeZone(TimeZone.getTimeZone("UTC"));
+        formato.setTimeZone(TimeZone.getTimeZone("Europe/Copenhagen"));
         return(formato.format(fecha));
     }
 
