@@ -12,13 +12,11 @@
         android:layout_weight="1"
         android:layout_alignParentLeft="true"
         android:layout_gravity="center"
-        android:fontFamily="sans-serif"           
-        android:textSize="18sp"
-        android:textColor="@color/textColorPrimary"
+        style="@style/TextoNegro"
         android:maxLines="1"
         android:ellipsize="marquee"
         android:scrollHorizontally="true"
-        android:textAppearance="?android:attr/textAppearanceMedium"/>
+        />
 
     <ImageButton android:id="@+id/restar"
         android:layout_width="40dp"
