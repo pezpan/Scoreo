@@ -74,6 +74,7 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
             Log.i("MILOG", "Establecemos el adaptador");
             adaptador = new AdaptadorTanteo(this, getTaskId(), partida.getJugadores());
             listviewjugadores.setAdapter(adaptador);
+            getActionBar().setTitle(partida.getNombre().toString());
         } else {
             Toast.makeText(this, "No se ha encontrado la partida " + identificador, Toast.LENGTH_SHORT).show();
         }
