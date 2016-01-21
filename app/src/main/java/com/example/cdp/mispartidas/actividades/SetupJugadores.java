@@ -191,6 +191,7 @@ public class SetupJugadores extends ActionBarActivity {
                 holder = new ViewHolder();
                 holder.nombre = (EditText) item.findViewById(R.id.nombre);
                 holder.colores = (ImageView) item.findViewById(R.id.imgcolor);
+                holder.nombre.setHint(jugadores.get(position).getNombre());
          
         		// Establecemos el tag
                 item.setTag(holder);
@@ -205,26 +206,6 @@ public class SetupJugadores extends ActionBarActivity {
             holder.listener = new ColorListener(position);
             holder.colores.setOnClickListener(holder.listener);
             
-            // Definimos un listener para ver cuando cambia el texto de los edittext
-            TextWatcher filterTextWatcher = new TextWatcher() {
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                }
-            
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                }
-            
-                @Override
-                public void afterTextChanged(Editable s) {
-                    // Si ha cambiado el texto de los edittext, indicamos que ya no hay que poner un valor para el hint
-                    jugadores.get(position).setCambiado(true);
-                }
-            };
-
-            // Anadimos el listener
-            holder.nombre.addTextChangedListener(filterTextWatcher);
-            
             // Tenemos que guardar los nombres de los jugadores para que cada vez que una vista pierda el foco
             // no se modifiquen los valores introducidos por el reciclaje de vistas de la lista
             holder.nombre.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -237,13 +218,8 @@ public class SetupJugadores extends ActionBarActivity {
                     }
                 }
             });
-            
-            // Comprobamos si tenemos que poner hint o texto
-            if(jugadores.get(position).getCambiado() == true){
-                holder.nombre.setText(jugadores.get(position).getNombre());
-            }else{
-                holder.nombre.setHint(jugadores.get(position).getNombre());
-            }
+
+            holder.nombre.setText(jugadores.get(position).getNombre());
 
             return(item);
         }
