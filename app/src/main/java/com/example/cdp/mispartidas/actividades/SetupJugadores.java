@@ -216,8 +216,12 @@ public class SetupJugadores extends ActionBarActivity {
             });
             
             // Aqui comprobamos si tenemos que poner el texto o el hint
-
-            holder.nombre.setText(jugadores.get(position).getNombre());
+            if(jugadores.get(position).getNombre().compareTO("") == 0){
+                holder.nombre.setText("");
+                holder.nombre.setHint(jugadores.get(position).getHint());
+            }else{
+                holder.nombre.setText(jugadores.get(position).getNombre());
+            }
 
             return(item);
         }
