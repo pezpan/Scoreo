@@ -59,11 +59,9 @@ public class SetupJugadores extends ActionBarActivity {
         players = new ArrayList<JugadorSetup>();
         for(int i = 0; i < jugadores; i++){
             JugadorSetup aux = new JugadorSetup();
-            aux.setNombre("Jugador" + Integer.toString(i + 1));
-            aux.setCambiado(false);
+            aux.setHint("Jugador" + Integer.toString(i + 1));
+            aux.setNombre("");
             players.add(aux);
-            //players[i] = new JugadorSetup();
-            //players[i].setNombre("Jugador" + Integer.toString(i + 1));
         }
         // Habilitamos la fecha volver a la activity principal
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -191,8 +189,7 @@ public class SetupJugadores extends ActionBarActivity {
                 holder = new ViewHolder();
                 holder.nombre = (EditText) item.findViewById(R.id.nombre);
                 holder.colores = (ImageView) item.findViewById(R.id.imgcolor);
-                holder.nombre.setHint(jugadores.get(position).getNombre());
-         
+                
         		// Establecemos el tag
                 item.setTag(holder);
             }
@@ -214,10 +211,11 @@ public class SetupJugadores extends ActionBarActivity {
                     if(!hasFocus){
                         EditText et = (EditText) v.findViewById(R.id.nombre);
                         jugadores.get(position).setNombre(et.getText().toString());
-                        //players[position].setNombre(et.getText().toString());
                     }
                 }
             });
+            
+            // Aqui comprobamos si tenemos que poner el texto o el hint
 
             holder.nombre.setText(jugadores.get(position).getNombre());
 
