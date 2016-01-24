@@ -12,7 +12,10 @@
         android:layout_weight="1"
         android:layout_alignParentLeft="true"
         android:layout_gravity="center"
-        style="@style/TextoNegro"
+        android:textColor="@color/darkText"
+        android:textSize="18sp"
+        android:fontFamily="sans-serif"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:maxLines="1"
         android:ellipsize="marquee"
         android:scrollHorizontally="true"
@@ -34,7 +37,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:gravity="center"
-        android:textSize="16sp"
+        android:textSize="18sp"
         android:fontFamily="sans-serif"    
         android:layout_gravity="center"/>
 

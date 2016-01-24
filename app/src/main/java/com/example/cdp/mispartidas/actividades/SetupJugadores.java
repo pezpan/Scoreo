@@ -114,7 +114,12 @@ public class SetupJugadores extends ActionBarActivity {
 
             Jugador player = new Jugador();
             // Guardamos el nombre
-            player.setNombre(players.get(i).getNombre());
+            // Comprobamos si se ha cambiado el valor de tento hint
+            if(players.get(i).getNombre().compareTo("") == 0) {
+                player.setNombre(players.get(i).getHint());
+            }else{
+                player.setNombre(players.get(i).getNombre());
+            }
             // Anadimos el numero de jugador
             player.setNumerojugador(i);
             // Anadimos la puntuacion
@@ -216,7 +221,7 @@ public class SetupJugadores extends ActionBarActivity {
             });
             
             // Aqui comprobamos si tenemos que poner el texto o el hint
-            if(jugadores.get(position).getNombre().compareTO("") == 0){
+            if(jugadores.get(position).getNombre().toString().compareTo("") == 0){
                 holder.nombre.setText("");
                 holder.nombre.setHint(jugadores.get(position).getHint());
             }else{

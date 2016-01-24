@@ -62,8 +62,7 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
 
         // Habilitamos la fecha volver a la activity principal
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        
-        // Registramos la lista para el menu contextual
+
         registerForContextMenu(listviewjugadores);
 
         // Buscamos la partida
@@ -74,22 +73,25 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
             Log.i("MILOG", "Establecemos el adaptador");
             adaptador = new AdaptadorTanteo(this, getTaskId(), partida.getJugadores());
             listviewjugadores.setAdapter(adaptador);
-            getActionBar().setTitle(partida.getNombre().toString());
+            setTitle(partida.getNombre().toString());
         } else {
             Toast.makeText(this, "No se ha encontrado la partida " + identificador, Toast.LENGTH_SHORT).show();
         }
+
 
     }
     
     // Menu contextual para nuestra lista de jugadores
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)menuInfo;
+
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
         menu.setHeaderTitle(partida.getJugadores().get(info.position).getNombre());
         String[] menuItems = getResources().getStringArray(R.array.menujugadores);
-        for (int i = 0; i<menuItems.length; i++) {
+        for (int i = 0; i < menuItems.length; i++) {
             menu.add(Menu.NONE, i, i, menuItems[i]);
         }
+
     }
     
     // Gestionamos la opcion elegida del menu contextual
@@ -304,9 +306,9 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
             holder.puntos.setText(String.valueOf(jugadores.get(position).getPuntuacion()));
             
             if (position % 2 == 1) {
-                item.setBackgroundColor(Color.parseColor("#E3F2FD"));
+                item.setBackgroundColor(getResources().getColor(R.color.background1));
             } else {
-                item.setBackgroundColor(Color.parseColor("#E0F7FA"));  
+                item.setBackgroundColor(getResources().getColor(R.color.background2));
             }
             
 
@@ -325,7 +327,7 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
                 //Comprobamos que vista ha lanzado el evento y lo gestionamos
                 switch (v.getId()) {
                     case R.id.nombrejugador:
-
+                            Toast.makeText(Tanteo.context, "Nombre", Toast.LENGTH_SHORT).show();
                         break;
 
                     case R.id.puntos:
