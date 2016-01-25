@@ -12,6 +12,8 @@ import com.example.cdp.mispartidas.R;
 import com.example.cdp.mispartidas.almacenamiento.operaciones.Backup;
 
 public class MainActivity extends ActionBarActivity implements NumeroJugadoresDialogFragment.NumberDialogListener {
+    
+    private MainListener listeneropciones;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +27,18 @@ public class MainActivity extends ActionBarActivity implements NumeroJugadoresDi
         if((backup.getBackup() == null) || (backup.getBackup().size() == 0)) {
             backup.obtenerBackup();
         }
+        
+        // Obtenemos los botones
+        Button botonaceptar = (Button) findViewById(R.id.botonaceptar);
+        Button botonhistorial = (Button) findViewById(R.id.botonhistorial);
+        Button botonduelo = (Button) findViewById(R.id.botonduelo);
+        Button botoncontinuar = (Button) findViewById(R.id.botoncontinuar);
+        // Definimos nuestro listener
+        listeneropciones = new MainListener();
+        botonaceptar.setOnClickListener(listeneropciones);
+        botonhistorial.setOnClickListener(listeneropciones);
+        botonduelo.setOnClickListener(listeneropciones);
+        botoncontinuar.setOnClickListener(listeneropciones);
     }
 
     @Override
@@ -42,21 +56,6 @@ public class MainActivity extends ActionBarActivity implements NumeroJugadoresDi
         int id = item.getItemId();
 
         switch(id){
-            // Lanzamos una nueva partida
-            case R.id.nuevapartida:
-                NumeroJugadoresDialogFragment fragmento = new NumeroJugadoresDialogFragment();
-                Bundle bundles = new Bundle();
-                bundles.putString("titulo", getString(R.string.mensaje_jugadores));
-                bundles.putInt("maximo", 30);
-                bundles.putInt("minimo", 1);
-                fragmento.setArguments(bundles);
-                fragmento.show(getFragmentManager(),"Dialogo_jugadores");
-                break;
-            case R.id.partidasguardadas:
-                // Llamamos al intent de nuestras partidas guardadas
-                Intent intenthistorial = new Intent(this, Historial.class);
-                startActivity(intenthistorial);
-                break;
             default:
                 return true;
         }
@@ -81,6 +80,36 @@ public class MainActivity extends ActionBarActivity implements NumeroJugadoresDi
         intentjugadores.putExtras(b);
         // Lanzamos la actividad
         startActivity(intentjugadores);
+    }
+    
+    public class MainListener implements View.OnClickListener {
+    
+        @Override
+        public void onClick(View v) {
+            //Comprobamos que vista ha lanzado el evento y lo gestionamos
+            switch (v.getId()) {
+                case R.id.botonnueva:
+                    NumeroJugadoresDialogFragment fragmento = new NumeroJugadoresDialogFragment();
+                    Bundle bundles = new Bundle();
+                    bundles.putString("titulo", getString(R.string.mensaje_jugadores));
+                    bundles.putInt("maximo", 30);
+                    bundles.putInt("minimo", 1);
+                    fragmento.setArguments(bundles);
+                    fragmento.show(getFragmentManager(),"Dialogo_jugadores");
+                    break;
+                case R.id.botonhistorial:
+                    // Llamamos al intent de nuestras partidas guardadas
+                    Intent intenthistorial = new Intent(this, Historial.class);
+                    startActivity(intenthistorial);
+                    break;
+                case R.id.botonduelo:
+                    break;
+                case R.id.botoncontinuar:
+                    break;
+                
+            }
+        }
+        
     }
 
 }
