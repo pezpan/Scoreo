@@ -19,6 +19,7 @@
         android:maxLines="1"
         android:ellipsize="marquee"
         android:scrollHorizontally="true"
+        android:paddingLeft="8dp"
         />
 
     <ImageButton android:id="@+id/restar"
