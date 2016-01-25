@@ -31,13 +31,13 @@
         android:layout_gravity="center"/>
 
     <TextView android:id="@+id/puntos"
-        android:layout_width="18dp"
+        android:layout_width="19dp"
         android:layout_height="wrap_content"
-        android:maxWidth="18dp"
+        android:maxWidth="19dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:gravity="center"
-        android:textSize="18sp"
+        android:textSize="17sp"
         android:fontFamily="sans-serif"    
         android:layout_gravity="center"/>
 
