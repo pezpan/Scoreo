@@ -24,4 +24,9 @@ public class Utilidades {
         formato.setTimeZone(TimeZone.getTimeZone("Europe/Madrid"));
         return(formato.format(fecha));
     }
+
+    public static String colorIntToHex(int intcolor){
+        String hexColor = String.format("#%06X", (0xFFFFFF & intcolor));
+        return hexColor;
+    }
 }

@@ -6,6 +6,8 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import com.example.cdp.mispartidas.dialogos.NumeroJugadoresDialogFragment;
 import com.example.cdp.mispartidas.R;
@@ -14,6 +16,7 @@ import com.example.cdp.mispartidas.almacenamiento.operaciones.Backup;
 public class MainActivity extends ActionBarActivity implements NumeroJugadoresDialogFragment.NumberDialogListener {
     
     private MainListener listeneropciones;
+    private Backup backup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,7 +24,7 @@ public class MainActivity extends ActionBarActivity implements NumeroJugadoresDi
         setContentView(R.layout.activity_main);
         // Indicamos el archivo de backup
         Log.i("MILOG", "Obtenemos el backup");
-        Backup backup = Backup.getMiBackup(getApplicationContext());
+        backup = Backup.getMiBackup(getApplicationContext());
         // Obtenemos el backup para tenerlo disponible desde ahora
         Log.i("MILOG", "Leemos el archivo y obtenemos la variable backup");
         if((backup.getBackup() == null) || (backup.getBackup().size() == 0)) {
@@ -29,7 +32,7 @@ public class MainActivity extends ActionBarActivity implements NumeroJugadoresDi
         }
         
         // Obtenemos los botones
-        Button botonaceptar = (Button) findViewById(R.id.botonaceptar);
+        Button botonaceptar = (Button) findViewById(R.id.botonnueva);
         Button botonhistorial = (Button) findViewById(R.id.botonhistorial);
         Button botonduelo = (Button) findViewById(R.id.botonduelo);
         Button botoncontinuar = (Button) findViewById(R.id.botoncontinuar);
@@ -54,11 +57,6 @@ public class MainActivity extends ActionBarActivity implements NumeroJugadoresDi
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        switch(id){
-            default:
-                return true;
-        }
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
@@ -99,7 +97,7 @@ public class MainActivity extends ActionBarActivity implements NumeroJugadoresDi
                     break;
                 case R.id.botonhistorial:
                     // Llamamos al intent de nuestras partidas guardadas
-                    Intent intenthistorial = new Intent(this, Historial.class);
+                    Intent intenthistorial = new Intent(getApplicationContext(), Historial.class);
                     startActivity(intenthistorial);
                     break;
                 case R.id.botonduelo:

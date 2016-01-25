@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 
-public class Partida implements Comparable<Partida>{
+public class Partida{
 		
 	String nombre;	
 	String fechainicio;		

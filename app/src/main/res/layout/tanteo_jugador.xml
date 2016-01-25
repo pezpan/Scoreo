@@ -2,8 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="match_parent"
     android:gravity="center_horizontal"
-    android:paddingTop="10dip"
-    android:paddingBottom="10dip"
+    android:padding="10dip"
     android:layout_height="64dp">
 
     <TextView android:id="@+id/nombrejugador"
@@ -19,7 +18,6 @@
         android:maxLines="1"
         android:ellipsize="marquee"
         android:scrollHorizontally="true"
-        android:paddingLeft="8dp"
         />
 
     <ImageButton android:id="@+id/restar"
@@ -32,13 +30,14 @@
         android:layout_gravity="center"/>
 
     <TextView android:id="@+id/puntos"
-        android:layout_width="19dp"
+        android:layout_width="20dp"
         android:layout_height="wrap_content"
-        android:maxWidth="19dp"
+        android:maxWidth="20dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:gravity="center"
-        android:textSize="17sp"
+        android:textSize="16sp"
+        android:textStyle="bold"
         android:fontFamily="sans-serif"    
         android:layout_gravity="center"/>
 

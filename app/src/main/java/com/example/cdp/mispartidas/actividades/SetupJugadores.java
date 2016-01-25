@@ -2,6 +2,8 @@ package com.example.cdp.mispartidas.actividades;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -40,7 +42,7 @@ public class SetupJugadores extends ActionBarActivity {
     private int jugadores = 0;
     //private JugadorSetup players[];
     private List<JugadorSetup> players;
-    int mSelectedColorCal0 = 0;
+    int mSelectedColorCal0 = Color.parseColor("#9E9E9E");
     ColorPickerDialog colorcalendar;
 
     @Override
@@ -256,6 +258,8 @@ public class SetupJugadores extends ActionBarActivity {
                         @Override
                         public void onColorSelected(int color) {
                             mSelectedColorCal0 = color;
+                            GradientDrawable bgShape = (GradientDrawable)holder.colores.getDrawable();
+                            bgShape.setColor(mSelectedColorCal0);
                         }
 
                     });

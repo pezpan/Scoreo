@@ -8,7 +8,11 @@ import com.example.cdp.mispartidas.almacenamiento.objetos.Partida;
 import com.example.cdp.mispartidas.almacenamiento.sax.SAXXMLParser;
 import com.example.cdp.mispartidas.almacenamiento.sax.SAXXMLSerializer;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 
@@ -106,23 +110,29 @@ public class Backup {
         Log.i("MILOG", "Salimos de la tarea asincrona de guardar el backup");
     }
     
-    public void getUltimaActualizada(){
-        List<Partida> auxpartidas = new ArrayLis<Partida>();
+    public String getUltimaActualizada(){
+        List<Partida> auxpartidas = new ArrayList<Partida>();
         auxpartidas = this.partidas;
         ordenarPartidas(auxpartidas);
         // Obtenemos la primera partida de la lista ordenada
-        String identificador = auxpartidas.get(0).getIdentificador();
+        String identificador = auxpartidas.get(auxpartidas.size() - 1).getIdentificador();
         return identificador;
     }
     
     public void ordenarPartidas(List<Partida> listapartidas){
         Collections.sort(listapartidas, new Comparator<Partida>() {
-          public int compare(Partida p1, Partida p2) {
-              SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
-              Date fechao1 = formato.parse(p1.getFechaactualizacion());
-              Date fechao2 = formato.parse(p2.getFechaactualizacion());
-              return fechao1.getDateTime().compareTo(fechao2.getDateTime());
-          }
+            public int compare(Partida p1, Partida p2) {
+                Date fechao1 = null;
+                Date fechao2 = null;
+                try {
+                    SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+                    fechao1 = formato.parse(p1.getFechaactualizacion());
+                    fechao2 = formato.parse(p2.getFechaactualizacion());
+                }catch (Exception ex){
+                    Log.i("MILOG", "Error al parsear las fechas");
+                }
+                return fechao1.compareTo(fechao2);
+            }
         });
     }
 
