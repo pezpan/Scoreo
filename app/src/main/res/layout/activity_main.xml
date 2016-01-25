@@ -20,7 +20,7 @@
             android:layout_gravity="top|left"
             android:layout_weight="0.5"
             android:textAlignment="center"
-            android:background="#8bc34a"
+            android:background="#64DD17"
             android:textColor="@color/textColorPrimary"/>
 
         <Button
@@ -30,7 +30,7 @@
             android:id="@+id/button5"
             android:layout_column="1"
             android:layout_weight="0.5"
-            android:background="#ffc107"
+            android:background="#FFAB00"
             android:layout_gravity="top|right"
             android:textColor="@color/textColorPrimary"/>
 
@@ -47,7 +47,7 @@
             android:text="Duelo"
             android:id="@+id/button6"
             android:layout_column="0"
-            android:background="#f44336"
+            android:background="#D50000"
             android:layout_gravity="bottom"
             android:textColor="@color/textColorPrimary"
             android:layout_weight="0.5" />
@@ -58,7 +58,7 @@
             android:text="Continuar"
             android:id="@+id/button7"
             android:layout_column="1"
-            android:background="#673ab7"
+            android:background="#6200EA"
             android:singleLine="true"
             android:layout_gravity="bottom"
             android:textColor="@color/textColorPrimary"
