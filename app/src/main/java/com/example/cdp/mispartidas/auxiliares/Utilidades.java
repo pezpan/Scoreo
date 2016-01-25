@@ -24,6 +24,4 @@ public class Utilidades {
         formato.setTimeZone(TimeZone.getTimeZone("Europe/Madrid"));
         return(formato.format(fecha));
     }
-
-
 }
