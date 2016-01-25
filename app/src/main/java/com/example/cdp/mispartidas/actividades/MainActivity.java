@@ -105,8 +105,20 @@ public class MainActivity extends ActionBarActivity implements NumeroJugadoresDi
                 case R.id.botonduelo:
                     break;
                 case R.id.botoncontinuar:
+                    // Lanzamos la pantalla de nueva partida, pasando el identificador de la partida creada
+                    Intent intentpartida = new Intent(getApplicationContext(), Tanteo.class);
+                    // Obtenemos la ultima partida
+                    String identificador = backup.getUltimaActualizada();
+                    // Pasamos como datos el numero de jugadores seleccionados
+                    Bundle b = new Bundle();
+                    Log.i("MILOG", "Guardamos los parametros desde la pantalla inicial para llamar al intent de la partida");
+                    b.putString("idpartida", identificador);
+                    //Lo anadimos al intent
+                    intentpartida.putExtras(b);
+                    // Lanzamos la actividad
+                    Log.i("MILOG", "Lanzamos la pantalla de tanteo desde la pantalla inicial");
+                    startActivity(intentpartida);
                     break;
-                
             }
         }
         
