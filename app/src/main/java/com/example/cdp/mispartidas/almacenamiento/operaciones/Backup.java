@@ -105,6 +105,26 @@ public class Backup {
         new SaveBackupAsyncTask().execute(mibackup);
         Log.i("MILOG", "Salimos de la tarea asincrona de guardar el backup");
     }
+    
+    public void getUltimaActualizada(){
+        List<Partida> auxpartidas = new ArrayLis<Partida>();
+        auxpartidas = this.partidas;
+        ordenarPartidas(auxpartidas);
+        // Obtenemos la primera partida de la lista ordenada
+        String identificador = auxpartidas.get(0).getIdentificador();
+        return identificador;
+    }
+    
+    public void ordenarPartidas(List<Partida> listapartidas){
+        Collections.sort(listapartidas, new Comparator<Partida>() {
+          public int compare(Partida p1, Partida p2) {
+              SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+              Date fechao1 = formato.parse(p1.getFechaactualizacion());
+              Date fechao2 = formato.parse(p2.getFechaactualizacion());
+              return fechao1.getDateTime().compareTo(fechao2.getDateTime());
+          }
+        });
+    }
 
     // Vamos a escribir en el almacenamiento interno usando una tarea asincrona
     private class SaveBackupAsyncTask extends AsyncTask<Backup, Void, Void>{
