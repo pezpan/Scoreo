@@ -11,8 +11,7 @@
         android:layout_weight="1"
         android:layout_alignParentLeft="true"
         android:layout_gravity="center"
-        android:textColor="@color/darkText"
-        android:textSize="18sp"
+        android:textSize="17sp"
         android:fontFamily="sans-serif"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:maxLines="1"
@@ -30,14 +29,14 @@
         android:layout_gravity="center"/>
 
     <TextView android:id="@+id/puntos"
-        android:layout_width="20dp"
+        android:layout_width="21dp"
         android:layout_height="wrap_content"
-        android:maxWidth="20dp"
+        android:maxWidth="21dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:gravity="center"
-        android:textSize="16sp"
-        android:textStyle="bold"
+        android:textSize="17sp"
+        android:textColor="@color/darkText"
         android:fontFamily="sans-serif"    
         android:layout_gravity="center"/>
 
