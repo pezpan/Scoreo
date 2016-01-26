@@ -22,7 +22,7 @@
             android:textSize="16sp"
             android:textStyle="bold"
             android:textAlignment="center"
-            android:background="#64DD17"
+            android:background="#388E3C"
             android:textColor="@color/textColorPrimary"/>
 
         <Button
@@ -34,7 +34,7 @@
             android:textSize="16sp"
             android:layout_weight="0.5"
             android:textStyle="bold"
-            android:background="#FFAB00"
+            android:background="#F57C00"
             android:layout_gravity="top|right"
             android:textColor="@color/textColorPrimary"/>
 
@@ -53,7 +53,7 @@
             android:layout_column="0"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:background="#D50000"
+            android:background="#D32F2F"
             android:layout_gravity="bottom"
             android:textColor="@color/textColorPrimary"
             android:layout_weight="0.5" />
@@ -65,7 +65,7 @@
             android:id="@+id/botoncontinuar"
             android:layout_column="1"
             android:textStyle="bold"
-            android:background="#6200EA"
+            android:background="#7B1FA2"
             android:textSize="16sp"
             android:singleLine="true"
             android:layout_gravity="bottom"
