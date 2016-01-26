@@ -108,7 +108,7 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
             case 0:
                 partida.getJugadores().remove(info.position);
                 // Actualizamos la lista
-                adaptador.notifyDataSetChanged();
+                actualizar(info.position);
                 break;
             // Cambiar el color del jugador
             case 1:
@@ -134,13 +134,9 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
             case 3:
                 partida.getJugadores().get(info.position).setPuntuacion(0);
                 // Actualizamos la lista
-                adaptador.notifyDataSetChanged();
+                actualizar(info.position);
                 break;
         }
-        
-        // Almacenamos
-        Log.i("MILOG", "Guardamos el backup");
-        backup.guardarBackup();
 
         return true;
     }
@@ -150,13 +146,10 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
     public void onNombreSelected(String nombre, int position) {
 
         Log.i("MILOG", "Actualizamos el nombre del jugador");
-
         // Actualizamos el jugador
         partida.getJugadores().get(position).setNombre(nombre);
-
         // Actualizamos la lista
         adaptador.notifyDataSetChanged();
-
         // Actualizamos el backup
         Log.i("MILOG", "Guardamos el backup");
         backup.guardarBackup();
@@ -192,12 +185,7 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
                 // Anadimos el jugador a la lista
                 partida.addJugador(player);
                 // Actualizamos el backup
-                backup.getBackup().set(indice, partida);
-                // Almacenamos
-                Log.i("MILOG", "Guardamos el backup");
-                backup.guardarBackup();
-                // Si todo ha ido bien, acutalizamos la lista de jugadores
-                ((AdaptadorTanteo) listviewjugadores.getAdapter()).notifyDataSetChanged();
+                actualizar(indice);
                 break;
 
             case R.id.partidasguardadas:
@@ -210,18 +198,13 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
                 // Reiniciamos la partida
                 partida.reiniciarPartida();
                 // Actualizamos el backup
-                backup.getBackup().set(indice, partida);
-                // Almacenamos
-                Log.i("MILOG", "Guardamos el backup");
-                backup.guardarBackup();
-                // Si todo ha ido bien, acutalizamos la lista de jugadores
-                ((AdaptadorTanteo) listviewjugadores.getAdapter()).notifyDataSetChanged();
+                actualizar(indice);
                 break;
 
             case R.id.action_settings:
                 break;
-            // Fecha de volver atras
             case android.R.id.home:
+                // Fecha de volver atras
                 NavUtils.navigateUpFromSameTask(this);
                 break;
             
@@ -306,7 +289,6 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
                 item.setBackgroundColor(getResources().getColor(R.color.background2));
             }
             
-
             return (item);
         }
 
@@ -392,11 +374,7 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
         backup.guardarBackup();
         Log.i("MILOG", "Actualizamos la vista");
         ((AdaptadorTanteo) listviewjugadores.getAdapter()).notifyDataSetChanged();
-        
-        
     }
-
-
 }
 
 
