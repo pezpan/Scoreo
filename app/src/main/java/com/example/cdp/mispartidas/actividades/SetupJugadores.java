@@ -2,8 +2,12 @@ package com.example.cdp.mispartidas.actividades;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.LayerDrawable;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -257,10 +261,12 @@ public class SetupJugadores extends ActionBarActivity {
 
                         @Override
                         public void onColorSelected(int color) {
-                            mSelectedColorCal0 = color;
-                            LayerDrawable bgDrawable = (LayerDrawable)holder.colores.getBackground();
-                            final GradientDrawable shape = (GradientDrawable) bgDrawable.findDrawableByLayerId(R.id.sombraboton);
-                            shape.setColor(mSelectedColorCal0);
+                            try {
+                                mSelectedColorCal0 = color;
+                                ((GradientDrawable)holder.colores.getBackground()).setColor(mSelectedColorCal0);
+                            }catch(Exception e){
+                                Log.i("MILOG", "Exception en colorpicker: " + e.getMessage());
+                            }
                         }
                     });
                     colorcalendar.show(getFragmentManager(), "cal");

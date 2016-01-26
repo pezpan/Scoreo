@@ -22,6 +22,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.cdp.mispartidas.auxiliares.Utilidades;
 import com.example.cdp.mispartidas.dialogos.NombreDialogFragment;
 import com.example.cdp.mispartidas.dialogos.NumeroTanteoDialogFragment;
 import com.example.cdp.mispartidas.R;
@@ -282,13 +283,13 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
             // Establecemos el nombre por defecto
             holder.nombrejugador.setText(jugadores.get(position).getNombre());
             holder.puntos.setText(String.valueOf(jugadores.get(position).getPuntuacion()));
-            
+            /*
             if (position % 2 == 1) {
                 item.setBackgroundColor(getResources().getColor(R.color.background1));
             } else {
                 item.setBackgroundColor(getResources().getColor(R.color.background2));
             }
-            
+            */
             return (item);
         }
 

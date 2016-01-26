@@ -1,5 +1,12 @@
 package com.example.cdp.mispartidas.auxiliares;
 
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.ColorDrawable;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.Button;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
@@ -31,12 +38,18 @@ public class Utilidades {
     }
     
     public static void buttonEffect(View button){
-        button.setOnTouchListener(new OnTouchListener() {
+        button.setOnTouchListener(new View.OnTouchListener() {
     
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN: {
-                        v.getBackground().setColorFilter(0xe0f47521,PorterDuff.Mode.SRC_ATOP);
+                        ColorDrawable colordraw = (ColorDrawable)v.getBackground();
+                        int color = colordraw.getColor();
+                        float[] hsv = new float[3];
+                        Color.colorToHSV(color, hsv);
+                        hsv[2] *= 0.8f; // value component
+                        color = Color.HSVToColor(hsv);
+                        v.getBackground().setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
                         v.invalidate();
                         break;
                     }
