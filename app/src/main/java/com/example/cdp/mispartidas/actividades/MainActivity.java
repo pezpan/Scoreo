@@ -42,6 +42,11 @@ public class MainActivity extends ActionBarActivity implements NumeroJugadoresDi
         botonhistorial.setOnClickListener(listeneropciones);
         botonduelo.setOnClickListener(listeneropciones);
         botoncontinuar.setOnClickListener(listeneropciones);
+        // Incluimos el efecto de hacer click
+        Utilidades.buttonEffect(botonaceptar);
+        Utilidades.buttonEffect(botonhistorial);
+        Utilidades.buttonEffect(botonduelo);
+        Utilidades.buttonEffect(botoncontinuar);
     }
 
     @Override
