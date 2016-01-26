@@ -249,7 +249,7 @@ public class SetupJugadores extends ActionBarActivity {
                             R.string.color_picker_default_title,
                             mColor,
                             mSelectedColorCal0,
-                            5,
+                            4,
                             Utils.isTablet(getApplicationContext()) ? ColorPickerDialog.SIZE_LARGE : ColorPickerDialog.SIZE_SMALL);
 
                     //Implement listener to get selected color value
@@ -258,10 +258,10 @@ public class SetupJugadores extends ActionBarActivity {
                         @Override
                         public void onColorSelected(int color) {
                             mSelectedColorCal0 = color;
-                            GradientDrawable bgShape = (GradientDrawable)holder.colores.getDrawable();
-                            bgShape.setColor(mSelectedColorCal0);
+                            LayerDrawable bgDrawable = (LayerDrawable)holder.colores.getBackground();
+                            final GradientDrawable shape = (GradientDrawable) bgDrawable.findDrawableByLayerId(R.id.sombraboton);
+                            shape.setColor(mSelectedColorCal0);
                         }
-
                     });
                     colorcalendar.show(getFragmentManager(), "cal");
                     
