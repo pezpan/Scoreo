@@ -26,6 +26,7 @@
         android:background="@drawable/botonredondo"
         android:scaleType="fitXY"
         android:padding="10dp"
+        android:focusable="false"
         android:layout_gravity="center"/>
 
     <TextView android:id="@+id/puntos"
@@ -47,6 +48,7 @@
         android:background="@drawable/botonredondo"
         android:scaleType="fitXY"
         android:padding="10dp"
+        android:focusable="false"
         android:layout_gravity="center"/>
 
 </LinearLayout>
