@@ -243,12 +243,7 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
         adaptador.jugadores.get(position).setPuntuacion(tantos + number);
 
         // Actualizamos el backup
-        backup.getBackup().set(indice, partida);
-        // Almacenamos
-        Log.i("MILOG", "Guardamos el backup");
-        backup.guardarBackup();
-        Log.i("MILOG", "Actualizamos la vista");
-        ((AdaptadorTanteo) listviewjugadores.getAdapter()).notifyDataSetChanged();
+        actualizar(indice);
     }
 
     // Adaptador para el layout del listview
@@ -354,12 +349,7 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
                             int tantos = jugadores.get(position).getPuntuacion();
                             jugadores.get(position).setPuntuacion(tantos + 1);
                             // Actualizamos el backup
-                            backup.getBackup().set(indice, partida);
-                            // Almacenamos
-                            Log.i("MILOG", "Guardamos el backup");
-                            backup.guardarBackup();
-                            Log.i("MILOG", "Actualizamos la vista");
-                            ((AdaptadorTanteo) listviewjugadores.getAdapter()).notifyDataSetChanged();
+                            actualizar(indice);
                         } catch (Exception ex) {
                             Toast.makeText(Tanteo.context, "Se produjo un error al incrementar el tanteo", Toast.LENGTH_SHORT).show();
                         }
@@ -372,12 +362,7 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
                             int tantos = jugadores.get(position).getPuntuacion();
                             jugadores.get(position).setPuntuacion(tantos - 1);
                             // Actualizamos el backup
-                            backup.getBackup().set(indice, partida);
-                            // Almacenamos
-                            Log.i("MILOG", "Guardamos el backup");
-                            backup.guardarBackup();
-                            Log.i("MILOG", "Actualizamos la vista");
-                            ((AdaptadorTanteo) listviewjugadores.getAdapter()).notifyDataSetChanged();
+                            actualizar(indice);
                         } catch (Exception ex) {
                             Toast.makeText(Tanteo.context, "Se produjo un error al decrementar el tanteo", Toast.LENGTH_SHORT).show();
                         }
@@ -394,6 +379,21 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
         ImageButton botonmas;
         ImageButton botonmenos;
         AdaptadorTanteo.CustomListener listener;
+    }
+    
+    // Metodo para actualizar el backup cada vez que modificamos algo en la pantalla
+    public void actualizar(int indice){
+        // Actualizamos el backup
+        partida.setFechaactualizacion(Utilidades.getFechaActual());
+        // Actualizamos el backup
+        backup.getBackup().set(indice, partida);
+        // Almacenamos
+        Log.i("MILOG", "Guardamos el backup");
+        backup.guardarBackup();
+        Log.i("MILOG", "Actualizamos la vista");
+        ((AdaptadorTanteo) listviewjugadores.getAdapter()).notifyDataSetChanged();
+        
+        
     }
 
 
