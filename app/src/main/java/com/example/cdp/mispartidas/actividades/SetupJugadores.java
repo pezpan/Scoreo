@@ -81,6 +81,7 @@ public class SetupJugadores extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 llamarTanteo();
+                // Terminamos esta actividad porque no queremos volver si damos atras en la pantalla de tanteo
                 finish();
             }
         });
