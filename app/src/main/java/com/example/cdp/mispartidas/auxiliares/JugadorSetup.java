@@ -7,6 +7,7 @@ public class JugadorSetup {
 
     private String nombre;
     private String hint;
+    private int color;
 
     public String getNombre() {
         return nombre;
@@ -22,5 +23,13 @@ public class JugadorSetup {
     
     public void setHint(String nuevo){
         this.hint = nuevo;
+    }
+    
+    public int getcolor(){
+        return color;
+    }
+    
+    public void setColor(int nuevocolor){
+        this.color = nuevocolor;;
     }
 }
