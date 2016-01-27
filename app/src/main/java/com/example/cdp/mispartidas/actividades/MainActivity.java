@@ -42,10 +42,12 @@ public class MainActivity extends ActionBarActivity implements NumeroJugadoresDi
         Button botonduelo = (Button) findViewById(R.id.botonduelo);
         Button botoncontinuar = (Button) findViewById(R.id.botoncontinuar);
         // Mostramos el nombre de la ultima partida
+        /*
         if(identificadorultima != null){
             Partida partida = backup.getBackup().get(backup.getPartida(identificadorultima));
             botoncontinuar.setText(botoncontinuar.getText().toString() + "\n" + partida.getNombre());
         }
+        */
         // Definimos nuestro listener
         listeneropciones = new MainListener();
         botonaceptar.setOnClickListener(listeneropciones);
