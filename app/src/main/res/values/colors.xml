@@ -10,4 +10,5 @@
     <color name="background1">#FAFAFA</color>
     <color name="background2">#EEEEEE</color>
     <color name="primary_material_dark">#2196f3</color>
+    <color name="colorbotonbase">#9E9E9E</color>
 </resources>
