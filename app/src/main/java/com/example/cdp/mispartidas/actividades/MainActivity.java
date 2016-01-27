@@ -18,6 +18,7 @@ public class MainActivity extends ActionBarActivity implements NumeroJugadoresDi
     
     private MainListener listeneropciones;
     private Backup backup;
+    private String identificadorultima;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,11 +33,19 @@ public class MainActivity extends ActionBarActivity implements NumeroJugadoresDi
             backup.obtenerBackup();
         }
         
+        // Obtenemos la ultima partida modificada
+        identificadorultima =  = backup.getUltimaActualizada();
+        
         // Obtenemos los botones
         Button botonaceptar = (Button) findViewById(R.id.botonnueva);
         Button botonhistorial = (Button) findViewById(R.id.botonhistorial);
         Button botonduelo = (Button) findViewById(R.id.botonduelo);
         Button botoncontinuar = (Button) findViewById(R.id.botoncontinuar);
+        // Mostramos el nombre de la ultima partida
+        if(identificadorultima != null){
+            Partida partida = backup.getBackup().get(backup.getPartida(identificadorultima));
+            botoncontinuar.setText(botoncontinuar.getText().toString() + "\n" + partida.getNombre());
+        }
         // Definimos nuestro listener
         listeneropciones = new MainListener();
         botonaceptar.setOnClickListener(listeneropciones);
@@ -109,19 +118,19 @@ public class MainActivity extends ActionBarActivity implements NumeroJugadoresDi
                 case R.id.botonduelo:
                     break;
                 case R.id.botoncontinuar:
-                    // Lanzamos la pantalla de nueva partida, pasando el identificador de la partida creada
-                    Intent intentpartida = new Intent(getApplicationContext(), Tanteo.class);
-                    // Obtenemos la ultima partida
-                    String identificador = backup.getUltimaActualizada();
-                    // Pasamos como datos el numero de jugadores seleccionados
-                    Bundle b = new Bundle();
-                    Log.i("MILOG", "Guardamos los parametros desde la pantalla inicial para llamar al intent de la partida");
-                    b.putString("idpartida", identificador);
-                    //Lo anadimos al intent
-                    intentpartida.putExtras(b);
-                    // Lanzamos la actividad
-                    Log.i("MILOG", "Lanzamos la pantalla de tanteo desde la pantalla inicial");
-                    startActivity(intentpartida);
+                    if(identificadorultima != null){
+                        // Lanzamos la pantalla de nueva partida, pasando el identificador de la partida creada
+                        Intent intentpartida = new Intent(getApplicationContext(), Tanteo.class);
+                        // Pasamos como datos el numero de jugadores seleccionados
+                        Bundle b = new Bundle();
+                        Log.i("MILOG", "Guardamos los parametros desde la pantalla inicial para llamar al intent de la partida");
+                        b.putString("idpartida", identificadorultima);
+                        //Lo anadimos al intent
+                        intentpartida.putExtras(b);
+                        // Lanzamos la actividad
+                        Log.i("MILOG", "Lanzamos la pantalla de tanteo desde la pantalla inicial");
+                        startActivity(intentpartida);
+                    }
                     break;
             }
         }
