@@ -22,7 +22,7 @@
             android:textSize="16sp"
             android:textStyle="bold"
             android:textAlignment="center"
-            android:background="#388E3C"
+            android:background="#689F38"
             android:textColor="@color/textColorPrimary"/>
 
         <Button
@@ -34,7 +34,7 @@
             android:textSize="16sp"
             android:layout_weight="0.5"
             android:textStyle="bold"
-            android:background="#F57C00"
+            android:background="#FFC107"
             android:layout_gravity="top|right"
             android:textColor="@color/textColorPrimary"/>
 
