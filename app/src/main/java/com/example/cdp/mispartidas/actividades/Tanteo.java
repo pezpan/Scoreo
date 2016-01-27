@@ -274,11 +274,13 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
             holder.botonmenos.setTag(position);
             holder.puntos.setTag(position);
 
+            /*
             // Definimos los listener para las vistas
             holder.listener = new CustomListener(position);
             holder.botonmenos.setOnClickListener(holder.listener);
             holder.botonmas.setOnClickListener(holder.listener);
             holder.puntos.setOnClickListener(holder.listener);
+            */
 
             // Establecemos el nombre por defecto
             holder.nombrejugador.setText(jugadores.get(position).getNombre());
