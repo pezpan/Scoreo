@@ -67,6 +67,7 @@ public class SetupJugadores extends ActionBarActivity {
             JugadorSetup aux = new JugadorSetup();
             aux.setHint("Jugador" + Integer.toString(i + 1));
             aux.setNombre("");
+            aux.setColor(getResources().getColor(R.color.colorbotonbase));
             players.add(aux);
         }
         // Habilitamos la fecha volver a la activity principal
@@ -264,8 +265,9 @@ public class SetupJugadores extends ActionBarActivity {
                         @Override
                         public void onColorSelected(int color) {
                             try {
-                                mSelectedColorCal0 = color;
-                                ((GradientDrawable)holder.colores.getBackground()).setColor(mSelectedColorCal0);
+                                players.get(position).setColor(color);
+                                ((GradientDrawable)holder.colores.getBackground()).setColor(color);
+                                ((AdaptadorSetup) listviewjugadores.getAdapter()).notifyDataSetChanged();
                             }catch(Exception e){
                                 Log.i("MILOG", "Exception en colorpicker: " + e.getMessage());
                             }
