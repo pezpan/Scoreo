@@ -1,24 +1,21 @@
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".actividades.MainActivity">
 
 
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
+    
 
         <Button
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:text="Nueva partida"
             android:id="@+id/botonnueva"
-            android:layout_column="0"
-            android:layout_gravity="top|left"
-            android:layout_weight="0.5"
+            android:layout_weight="25"
             android:textSize="16sp"
             android:textStyle="bold"
             android:textAlignment="center"
@@ -26,50 +23,36 @@
             android:textColor="@color/textColorPrimary"/>
 
         <Button
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:text="Historial"
             android:id="@+id/botonhistorial"
-            android:layout_column="1"
             android:textSize="16sp"
-            android:layout_weight="0.5"
+            android:layout_weight="25"
             android:textStyle="bold"
             android:background="#FFC107"
-            android:layout_gravity="top|right"
             android:textColor="@color/textColorPrimary"/>
-
-    </TableRow>
-
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-
+            
         <Button
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+           android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:text="Duelo"
             android:id="@+id/botonduelo"
-            android:layout_column="0"
             android:textSize="16sp"
             android:textStyle="bold"
             android:background="#D32F2F"
-            android:layout_gravity="bottom"
             android:textColor="@color/textColorPrimary"
-            android:layout_weight="0.5" />
+            android:layout_weight="25" />
 
         <Button
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:text="Continuar"
             android:id="@+id/botoncontinuar"
-            android:layout_column="1"
             android:textStyle="bold"
             android:background="#7B1FA2"
             android:textSize="16sp"
-            android:singleLine="true"
-            android:layout_gravity="bottom"
             android:textColor="@color/textColorPrimary"
-            android:layout_weight="0.5" />
-    </TableRow>
-</TableLayout>
+            android:layout_weight="25" />
+    
+</RelativeLayout>
