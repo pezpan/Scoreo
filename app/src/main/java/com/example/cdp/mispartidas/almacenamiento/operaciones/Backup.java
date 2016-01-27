@@ -111,11 +111,14 @@ public class Backup {
     }
     
     public String getUltimaActualizada(){
-        List<Partida> auxpartidas = new ArrayList<Partida>();
-        auxpartidas = this.partidas;
-        ordenarPartidas(auxpartidas);
-        // Obtenemos la primera partida de la lista ordenada
-        String identificador = auxpartidas.get(auxpartidas.size() - 1).getIdentificador();
+        String identificador = null;
+        if((this.partidas != null) && (this.partidas.size() != 0)){
+            List<Partida> auxpartidas = new ArrayList<Partida>();
+            auxpartidas = this.partidas;
+            ordenarPartidas(auxpartidas);
+            // Obtenemos la primera partida de la lista ordenada
+            identificador = auxpartidas.get(auxpartidas.size() - 1).getIdentificador();
+        }
         return identificador;
     }
     
