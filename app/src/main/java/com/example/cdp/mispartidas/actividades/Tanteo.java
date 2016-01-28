@@ -64,8 +64,6 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
         // Habilitamos la fecha volver a la activity principal
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        registerForContextMenu(listviewjugadores);
-
         // Buscamos la partida
         indice = backup.getPartida(identificador);
         if (indice >= 0) {
@@ -79,6 +77,7 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
             Toast.makeText(this, "No se ha encontrado la partida " + identificador, Toast.LENGTH_SHORT).show();
         }
 
+        registerForContextMenu(listviewjugadores);
 
     }
     
