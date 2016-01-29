@@ -19,7 +19,7 @@ public class Utilidades {
     public static String getFechaActual(){
 
         Date fecha = new Date();
-        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         formato.setTimeZone(TimeZone.getTimeZone("Europe/Madrid"));
         return(formato.format(fecha));
     }

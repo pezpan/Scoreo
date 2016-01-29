@@ -64,8 +64,6 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
         // Habilitamos la fecha volver a la activity principal
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        registerForContextMenu(listviewjugadores);
-
         // Buscamos la partida
         indice = backup.getPartida(identificador);
         if (indice >= 0) {
@@ -78,7 +76,78 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
         } else {
             Toast.makeText(this, "No se ha encontrado la partida " + identificador, Toast.LENGTH_SHORT).show();
         }
-
+        
+        // Definimos el contextual action bar
+        listviewjugadores.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
+        listviewjugadores.setMultiChoiceModeListener(new MultiChoiceModeListener() {
+        
+            @Override
+            public void onItemCheckedStateChanged(ActionMode mode, int position,
+                                                  long id, boolean checked) {
+                // Here you can do something when items are selected/de-selected,
+                // such as update the title in the CAB
+            }
+        
+            @Override
+            public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+                // Respond to clicks on the actions in the CAB
+                switch (item.getItemId()) {
+                    // Borrar jugador
+                    case R.id.menu_borrar:
+                        partida.getJugadores().remove(position);
+                        // Actualizamos la lista
+                        actualizar(position);
+                        break;
+                    // Cambiar el color del jugador
+                    case R.id.menu_color:
+                        
+                        break;
+                    // Cambiamos el nombre del jugador
+                    case R.id.menu_nombre:
+                        try {
+                            // Decrementamos el tanteo
+                            Log.i("MILOG", "Cambiamos el nombre de la partida");
+                            // Lanzamos el dialog
+                            NombreDialogFragment fragmento = new NombreDialogFragment();
+                            Bundle bundles = new Bundle();
+                            bundles.putInt("posicion", position);
+                            fragmento.setArguments(bundles);
+                            FragmentManager fragmentManager = this.getFragmentManager();
+                            fragmento.show(fragmentManager, "Dialogo_jugador");
+                        } catch (Exception ex) {
+                            Toast.makeText(this.getApplicationContext(), "Se produjo un error al cambiar el nombre", Toast.LENGTH_SHORT).show();
+                        }
+                        break;
+                    // Reiniciamos el jugador
+                    case R.id.menu_reiniciar:
+                        partida.getJugadores().get(position).setPuntuacion(0);
+                        // Actualizamos la lista
+                        actualizar(position);
+                        break;
+                }
+            }
+        
+            @Override
+            public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+                // Inflate the menu for the CAB
+                MenuInflater inflater = mode.getMenuInflater();
+                inflater.inflate(R.menu.context, menu);
+                return true;
+            }
+        
+            @Override
+            public void onDestroyActionMode(ActionMode mode) {
+                // Here you can make any necessary updates to the activity when
+                // the CAB is removed. By default, selected items are deselected/unchecked.
+            }
+        
+            @Override
+            public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+                // Here you can perform updates to the CAB due to
+                // an invalidate() request
+                return false;
+            }
+        });
 
     }
     
