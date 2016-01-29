@@ -1,4 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+  
+  <item
+        android:id="@+id/menu_nombre"
+        android:title="@string/nuevo_nombre"
+        android:icon="@drawable/ic_person_add_white_24dp"
+        app:showAsAction="ifRoom"/>
+        
+  <item
+        android:id="@+id/menu_color"
+        android:title="@string/nuevo_color"
+        android:icon="@drawable/ic_person_add_white_24dp"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/menu_reiniciar"
+        android:title="@string/reiniciar"
+        android:icon="@drawable/ic_folder_white_24dp"
+        app:showAsAction="always"/>
+        
+    <item
+        android:id="@+id/menu_borrar"
+        android:title="@string/borrar"
+        app:showAsAction="always"/>    
+
 
 </menu>
