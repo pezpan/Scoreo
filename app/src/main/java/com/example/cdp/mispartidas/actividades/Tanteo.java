@@ -9,12 +9,14 @@ import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ActionMode;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
@@ -79,7 +81,7 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
         
         // Definimos el contextual action bar
         listviewjugadores.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
-        listviewjugadores.setMultiChoiceModeListener(new MultiChoiceModeListener() {
+        listviewjugadores.setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener() {
         
             @Override
             public void onItemCheckedStateChanged(ActionMode mode, int position,
@@ -343,13 +345,11 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
             holder.botonmenos.setTag(position);
             holder.puntos.setTag(position);
 
-            /*
             // Definimos los listener para las vistas
             holder.listener = new CustomListener(position);
             holder.botonmenos.setOnClickListener(holder.listener);
             holder.botonmas.setOnClickListener(holder.listener);
             holder.puntos.setOnClickListener(holder.listener);
-            */
 
             // Establecemos el nombre por defecto
             holder.nombrejugador.setText(jugadores.get(position).getNombre());
