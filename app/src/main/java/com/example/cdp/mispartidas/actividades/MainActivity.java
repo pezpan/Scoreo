@@ -34,7 +34,7 @@ public class MainActivity extends ActionBarActivity implements NumeroJugadoresDi
         }
         
         // Obtenemos la ultima partida modificada
-        identificadorultima =  = backup.getUltimaActualizada();
+        identificadorultima = backup.getUltimaActualizada();
         
         // Obtenemos los botones
         Button botonaceptar = (Button) findViewById(R.id.botonnueva);
