@@ -41,8 +41,8 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
     private Backup backup;
     private int indice;
     private static Context context;
-    AdaptadorTanteo adaptador;
-    ListView listviewjugadores;
+    private AdaptadorTanteo adaptador;
+    private ListView listviewjugadores;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -133,7 +133,7 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
             public boolean onCreateActionMode(ActionMode mode, Menu menu) {
                 // Inflate the menu for the CAB
                 MenuInflater inflater = mode.getMenuInflater();
-                inflater.inflate(R.menu.context, menu);
+                inflater.inflate(R.menu.cab_tanteo, menu);
                 return true;
             }
         
@@ -151,66 +151,6 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
             }
         });
 
-    }
-    
-    // Menu contextual para nuestra lista de jugadores
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
-        menu.setHeaderTitle(partida.getJugadores().get(info.position).getNombre());
-        String[] menuItems = getResources().getStringArray(R.array.menujugadores);
-        for (int i = 0; i < menuItems.length; i++) {
-            menu.add(Menu.NONE, i, i, menuItems[i]);
-        }
-
-    }
-    
-    // Gestionamos la opcion elegida del menu contextual
-    @Override
-    public boolean onContextItemSelected(MenuItem item) {
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
-        int menuItemIndex = item.getItemId();
-        String[] menuItems = getResources().getStringArray(R.array.menujugadores);
-        //String menuItemName = menuItems[menuItemIndex];
-        //String listItemName = ((Partida) mispartidas.get(info.position)).getNombre();
-        
-        switch(menuItemIndex){
-            // Borrar jugador
-            case 0:
-                partida.getJugadores().remove(info.position);
-                // Actualizamos la lista
-                actualizar(info.position);
-                break;
-            // Cambiar el color del jugador
-            case 1:
-                
-                break;
-            // Cambiamos el nombre del jugador
-            case 2:
-                try {
-                    // Decrementamos el tanteo
-                    Log.i("MILOG", "Cambiamos el nombre de la partida");
-                    // Lanzamos el dialog
-                    NombreDialogFragment fragmento = new NombreDialogFragment();
-                    Bundle bundles = new Bundle();
-                    bundles.putInt("posicion", info.position);
-                    fragmento.setArguments(bundles);
-                    FragmentManager fragmentManager = this.getFragmentManager();
-                    fragmento.show(fragmentManager, "Dialogo_jugador");
-                } catch (Exception ex) {
-                    Toast.makeText(this.getApplicationContext(), "Se produjo un error al cambiar el nombre", Toast.LENGTH_SHORT).show();
-                }
-                break;
-            // Reiniciamos el jugador
-            case 3:
-                partida.getJugadores().get(info.position).setPuntuacion(0);
-                // Actualizamos la lista
-                actualizar(info.position);
-                break;
-        }
-
-        return true;
     }
     
     // Sobreescribimos el metodo del dialogo para cambiar el numero
@@ -307,16 +247,43 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
         Activity context;
         List<Jugador> jugadores;
         ViewHolder holder;
+        private HashMap<Integer, Boolean> mSelection = new HashMap<Integer, Boolean>();
 
         AdaptadorTanteo(Activity context, int textViewResourceId, List<Jugador> listajugadores) {
             super(context, textViewResourceId, listajugadores);
             this.context = context;
             this.jugadores = listajugadores;
         }
+        
+        public void setNewSelection(int position, boolean value) {
+            mSelection.put(position, value);
+            notifyDataSetChanged();
+        }
+  
+        public boolean isPositionChecked(int position) {
+            Boolean result = mSelection.get(position);
+            return result == null ? false : result;
+        }
+  
+        public Set<Integer> getCurrentCheckedPosition() {
+            return mSelection.keySet();
+        }
+  
+        public void removeSelection(int position) {
+            mSelection.remove(position);
+            notifyDataSetChanged();
+        }
+  
+        public void clearSelection() {
+            mSelection = new HashMap<Integer, Boolean>();
+            notifyDataSetChanged();
+        }
 
         public View getView(final int position, View convertView, ViewGroup parent) {
 
-            View item = convertView;
+            //View item = convertView;
+            
+            View item = super.getView(position, convertView, parent);//let the adapter handle setting up the row views
 
             // Optimizamos el rendimiento de nuestra lista
             // Si la vista no existe, la creamos
@@ -338,6 +305,13 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
             // Si la vista existe, la reusamos
             else {
                 holder = (ViewHolder) item.getTag();
+            }
+            
+            // Definimos lo que necesitamos para el cab
+            item.setBackgroundColor(getResources().getColor(android.R.color.background_light)); //default color
+              
+            if (mSelection.get(position) != null) {
+                item.setBackgroundColor(getResources().getColor(android.R.color.holo_blue_light));// this is a selected position so make it red
             }
 
             // Guardamos la posicion en el holder para usarlo en los listener
