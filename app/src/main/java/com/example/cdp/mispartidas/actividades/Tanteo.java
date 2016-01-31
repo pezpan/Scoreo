@@ -13,6 +13,7 @@ import android.view.ActionMode;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +33,9 @@ import com.example.cdp.mispartidas.almacenamiento.objetos.Jugador;
 import com.example.cdp.mispartidas.almacenamiento.objetos.Partida;
 import com.example.cdp.mispartidas.almacenamiento.operaciones.Backup;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragment.NumberTanteoDialogListener, NombreDialogFragment.NuevoNombreListener {
 
@@ -78,79 +81,126 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
         } else {
             Toast.makeText(this, "No se ha encontrado la partida " + identificador, Toast.LENGTH_SHORT).show();
         }
-        
+
         // Definimos el contextual action bar
+        Log.i("MILOG", "Definimos el contextual action bar");
         listviewjugadores.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
         listviewjugadores.setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener() {
-        
+
+            private int nr = 0;
+
             @Override
             public void onItemCheckedStateChanged(ActionMode mode, int position,
                                                   long id, boolean checked) {
-                // Here you can do something when items are selected/de-selected,
-                // such as update the title in the CAB
+                // TODO Auto-generated method stub
+                Log.i("MILOG", "onitemcheckedstatechanged()");
+                if (checked) {
+                    nr++;
+                    adaptador.setNewSelection(position, checked);
+                } else {
+                    nr--;
+                    adaptador.removeSelection(position);
+                }
+                mode.setTitle(nr + " selected");
+
             }
-        
+
             @Override
             public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+                Log.i("MILOG", "onactionitemclicked()");
                 // Respond to clicks on the actions in the CAB
                 switch (item.getItemId()) {
                     // Borrar jugador
                     case R.id.menu_borrar:
-                        partida.getJugadores().remove(position);
-                        // Actualizamos la lista
-                        actualizar(position);
+                        nr = 0;
+                        Set<Integer> seleccionados = adaptador.getCurrentCheckedPosition();
+                        if ((seleccionados != null) && (seleccionados.size() != 0)) {
+                            for (int indice : seleccionados) {
+                                partida.getJugadores().remove(indice);
+                                // Actualizamos la lista
+                                actualizar(indice);
+                            }
+                        }
+                        adaptador.clearSelection();
+                        mode.finish();
                         break;
                     // Cambiar el color del jugador
                     case R.id.menu_color:
-                        
+
                         break;
                     // Cambiamos el nombre del jugador
                     case R.id.menu_nombre:
+
                         try {
-                            // Decrementamos el tanteo
-                            Log.i("MILOG", "Cambiamos el nombre de la partida");
-                            // Lanzamos el dialog
-                            NombreDialogFragment fragmento = new NombreDialogFragment();
-                            Bundle bundles = new Bundle();
-                            bundles.putInt("posicion", position);
-                            fragmento.setArguments(bundles);
-                            FragmentManager fragmentManager = this.getFragmentManager();
-                            fragmento.show(fragmentManager, "Dialogo_jugador");
+                        /*
+                        // Decrementamos el tanteo
+                        Log.i("MILOG", "Cambiamos el nombre de la partida");
+                        // Lanzamos el dialog
+                        NombreDialogFragment fragmento = new NombreDialogFragment();
+                        Bundle bundles = new Bundle();
+                        bundles.putInt("posicion", position);
+                        fragmento.setArguments(bundles);
+                        FragmentManager fragmentManager = getFragmentManager();
+                        fragmento.show(fragmentManager, "Dialogo_jugador");
+                        */
                         } catch (Exception ex) {
-                            Toast.makeText(this.getApplicationContext(), "Se produjo un error al cambiar el nombre", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Se produjo un error al cambiar el nombre", Toast.LENGTH_SHORT).show();
                         }
+
                         break;
                     // Reiniciamos el jugador
                     case R.id.menu_reiniciar:
-                        partida.getJugadores().get(position).setPuntuacion(0);
-                        // Actualizamos la lista
-                        actualizar(position);
+                    /*
+                    partida.getJugadores().get(position).setPuntuacion(0);
+                    // Actualizamos la lista
+                    actualizar(position);
+                    */
                         break;
                 }
+                return false;
             }
-        
+
             @Override
             public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+                Log.i("MILOG", "oncreateactionmode");
                 // Inflate the menu for the CAB
                 MenuInflater inflater = mode.getMenuInflater();
                 inflater.inflate(R.menu.cab_tanteo, menu);
                 return true;
             }
-        
+
             @Override
             public void onDestroyActionMode(ActionMode mode) {
+                Log.i("MILOG", "ondestroyactionmode");
                 // Here you can make any necessary updates to the activity when
                 // the CAB is removed. By default, selected items are deselected/unchecked.
+
             }
-        
+
             @Override
             public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
                 // Here you can perform updates to the CAB due to
                 // an invalidate() request
+                Log.i("MILOG", "onprepareactionmode");
                 return false;
             }
         });
 
+        listviewjugadores.setLongClickable(true);
+
+        listviewjugadores.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+
+            @Override
+            public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+                                           int position, long arg3) {
+                // TODO Auto-generated method stub
+
+                listviewjugadores.setItemChecked(position, !adaptador.isPositionChecked(position));
+                return true;
+            }
+        });
+
+        Log.i("MILOG", "Fin de oncreate tanteo");
     }
     
     // Sobreescribimos el metodo del dialogo para cambiar el numero
@@ -281,9 +331,7 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
 
         public View getView(final int position, View convertView, ViewGroup parent) {
 
-            //View item = convertView;
-            
-            View item = super.getView(position, convertView, parent);//let the adapter handle setting up the row views
+            View item = convertView;
 
             // Optimizamos el rendimiento de nuestra lista
             // Si la vista no existe, la creamos

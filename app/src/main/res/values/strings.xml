@@ -41,5 +41,9 @@
 
     ]]></string>
     <string name="title_activity_duelo">Duelo</string>
+    <string name="nuevo_nombre">Cambiar nombre</string>
+    <string name="nuevo_color">Cambiar color</string>
+    <string name="reiniciar">Reiniciar tanteo</string>
+    <string name="borrar">Eliminar jugador</string>
 
 </resources>

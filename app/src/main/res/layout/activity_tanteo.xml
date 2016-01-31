@@ -16,7 +16,7 @@
         android:id="@+id/jugadorestanteo"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:choiceMode="singleChoice"/>
+        android:choiceMode="multipleChoice"/>
 
 
 </RelativeLayout>
