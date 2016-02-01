@@ -18,6 +18,11 @@
         android:id="@+id/reiniciarpartida"
         android:title="@string/reiniciar_partida"
         app:showAsAction="never"/>    
+        
+    <item
+        android:id="@+id/mododuelo"
+        android:title="@string/vista_duelo"
+        app:showAsAction="never"/>    
 
 
 </menu>
