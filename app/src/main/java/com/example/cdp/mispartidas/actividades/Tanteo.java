@@ -269,6 +269,11 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
                 // Fecha de volver atras
                 NavUtils.navigateUpFromSameTask(this);
                 break;
+                
+            case android.R.id.mododuelo:
+                // Fecha de volver atras
+                NavUtils.navigateUpFromSameTask(this);
+                break;
             
             default:
                 return true;
