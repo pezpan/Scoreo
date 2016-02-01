@@ -16,6 +16,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:maxLines="1"
         android:ellipsize="marquee"
+        android:focusable="false"
         android:scrollHorizontally="true"
         />
 
@@ -39,6 +40,7 @@
         android:textSize="17sp"
         android:textColor="@color/darkText"
         android:fontFamily="sans-serif"
+        android:focusable="false"
         android:focusable="false"
         android:layout_gravity="center"/>
 
