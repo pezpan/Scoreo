@@ -86,6 +86,10 @@ public class MainActivity extends ActionBarActivity implements NumeroJugadoresDi
     @Override
     // Sobreescribimos el método de la interfaz para obtener el numero de jugadores seleccionados
     public void onNumberSelected(int number) {
+        llamarSetupJugadores(number);
+    }
+    
+    public void llamarSetupJugadores(int numero){
         // Llamamos al intent para la configuracion inicial de la partida
         Intent intentjugadores = new Intent(this, SetupJugadores.class);
         // Pasamos como datos el numero de jugadores seleccionados
@@ -118,6 +122,8 @@ public class MainActivity extends ActionBarActivity implements NumeroJugadoresDi
                     startActivity(intenthistorial);
                     break;
                 case R.id.botonduelo:
+                    // Creamos una partida de dos jugadores
+                    llamarSetupJugadores(2);
                     break;
                 case R.id.botoncontinuar:
                     if(identificadorultima != null){
