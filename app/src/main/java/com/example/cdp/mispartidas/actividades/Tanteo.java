@@ -272,7 +272,17 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
                 
             case android.R.id.mododuelo:
                 // Fecha de volver atras
-                NavUtils.navigateUpFromSameTask(this);
+                // Lanzamos la pantalla de nueva partida, pasando el identificador de la partida creada
+                Intent intentduelo = new Intent(getApplicationContext(), Duelo.class);
+                // Pasamos como datos el numero de jugadores seleccionados
+                Bundle b = new Bundle();
+                Log.i("MILOG", "Guardamos los parametros desde el tanteo para llamar al intent de duelo");
+                b.putString("idpartida", partida.getIdentificador());
+                //Lo anadimos al intent
+                intentduelo.putExtras(b);
+                // Lanzamos la actividad
+                Log.i("MILOG", "Lanzamos la pantalla de duelo desde tanteo");
+                startActivity(intentpartida);
                 break;
             
             default:
