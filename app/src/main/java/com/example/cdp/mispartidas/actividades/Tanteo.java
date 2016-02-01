@@ -186,7 +186,7 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
             }
         });
 
-        listviewjugadores.setLongClickable(true);
+        //listviewjugadores.setLongClickable(true);
 
         listviewjugadores.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 
