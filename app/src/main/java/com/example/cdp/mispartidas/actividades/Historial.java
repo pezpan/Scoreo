@@ -237,6 +237,7 @@ public class Historial extends ActionBarActivity implements NombreDialogFragment
 
                 holder = new ViewHolder();
                 holder.nombrepartida = (TextView) item.findViewById(R.id.nombrepartida);
+                holder.numerojugadores = (TextView) item.findViewById(R.id.cuantosjugadores);
                 holder.actualizacion = (TextView) item.findViewById(R.id.actualizada);
 
                 // Establecemos el tag
@@ -256,6 +257,8 @@ public class Historial extends ActionBarActivity implements NombreDialogFragment
             }else{
                 holder.nombrepartida.setText(partidas.get(position).getNombre());
             }
+            // Guardamos el numero de jugadores
+            holder.numerojugadores.setText(partidas.getJugadores().size() + " jugadores");
             // Guardamos la fecha de actualizacion
             holder.actualizacion.setText("Actualizada " + String.valueOf(partidas.get(position).getFechaactualizacion()));
 
@@ -265,6 +268,7 @@ public class Historial extends ActionBarActivity implements NombreDialogFragment
 
     static class ViewHolder {
         TextView nombrepartida;
+        TextView numerojugadores;
         TextView actualizacion;
     }
 }
