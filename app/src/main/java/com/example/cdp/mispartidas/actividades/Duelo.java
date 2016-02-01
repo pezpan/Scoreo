@@ -13,4 +13,9 @@ public class Duelo extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_duelo);
     }
+    
+    
+    
+    
+    
 }
