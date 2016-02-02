@@ -96,7 +96,7 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
                 Log.i("MILOG", "onitemcheckedstatechanged()");
                 if (checked) {
                     nr++;
-                    adaptador.setNewSelection(position, checked);
+                    adaptador.setNewSelection(position);
                 } else {
                     nr--;
                     adaptador.removeSelection(position);
@@ -113,13 +113,10 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
                     // Borrar jugador
                     case R.id.menu_borrar:
                         nr = 0;
-                        Set<Integer> seleccionados = adaptador.getCurrentCheckedPosition();
-                        if ((seleccionados != null) && (seleccionados.size() != 0)) {
-                            for (int indice : seleccionados) {
-                                partida.getJugadores().remove(indice);
-                                // Actualizamos la lista
-                                actualizar(indice);
-                            }
+                        // Ordenamos la lista en orden inverso para un borrado seguro
+                        Collections.sort(adaptador.getCurrentCheckedPosition(), Collections.reverseOrder());
+                        for (Integer indice : adaptador.getCurrentCheckedPosition()) {
+                            partida.getJugadores().remove(indice);
                         }
                         adaptador.clearSelection();
                         mode.finish();
@@ -130,32 +127,39 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
                         break;
                     // Cambiamos el nombre del jugador
                     case R.id.menu_nombre:
-
+                        nr = 0;
                         try {
-                        /*
-                        // Decrementamos el tanteo
-                        Log.i("MILOG", "Cambiamos el nombre de la partida");
-                        // Lanzamos el dialog
-                        NombreDialogFragment fragmento = new NombreDialogFragment();
-                        Bundle bundles = new Bundle();
-                        bundles.putInt("posicion", position);
-                        fragmento.setArguments(bundles);
-                        FragmentManager fragmentManager = getFragmentManager();
-                        fragmento.show(fragmentManager, "Dialogo_jugador");
-                        */
+                            // Decrementamos el tanteo
+                            Log.i("MILOG", "Cambiamos el nombre de la partida");
+                            // Lanzamos el dialog
+                            NombreDialogFragment fragmento = new NombreDialogFragment();
+                            Bundle bundles = new Bundle();
+                            // Pasamos el indice como parametro
+                            bundles.putInt("posicion", adaptador.getCurrentCheckedPosition().get(0));
+                            fragmento.setArguments(bundles);
+                            FragmentManager fragmentManager = getFragmentManager();
+                            fragmento.show(fragmentManager, "Dialogo_jugador");
+                        
                         } catch (Exception ex) {
                             Toast.makeText(getApplicationContext(), "Se produjo un error al cambiar el nombre", Toast.LENGTH_SHORT).show();
                         }
+                        adaptador.clearSelection();
+                        mode.finish();
 
                         break;
-                    // Reiniciamos el jugador
+                        // Reiniciamos el jugador
                     case R.id.menu_reiniciar:
-                    /*
-                    partida.getJugadores().get(position).setPuntuacion(0);
-                    // Actualizamos la lista
-                    actualizar(position);
-                    */
+                        nr = 0;
+                        // Reiniciamos la puntuacion
+                        for (Integer indice : adaptador.getCurrentCheckedPosition())
+                        {   
+                            partida.getJugadores().get(indice).setPuntuacion(0);
+                        }
+                        adaptador.clearSelection();
+                        mode.finish();
                         break;
+                    // Actualizamos la partida
+                    actualizar(position);
                 }
                 return false;
             }
@@ -174,7 +178,8 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
                 Log.i("MILOG", "ondestroyactionmode");
                 // Here you can make any necessary updates to the activity when
                 // the CAB is removed. By default, selected items are deselected/unchecked.
-
+                adaptador.clearSelection();
+                mode.finish();
             }
 
             @Override
@@ -191,11 +196,9 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
         listviewjugadores.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 
             @Override
-            public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
-                                           int position, long arg3) {
+            public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
                 // TODO Auto-generated method stub
-
-                listviewjugadores.setItemChecked(position, !adaptador.isPositionChecked(position));
+                listviewjugadores.setItemChecked(position, !adaptador.getCurrentCheckedPosition().contains(position));
                 return true;
             }
         });
@@ -312,7 +315,8 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
         Activity context;
         List<Jugador> jugadores;
         ViewHolder holder;
-        private HashMap<Integer, Boolean> mSelection = new HashMap<Integer, Boolean>();
+        
+        private ArrayList<Integer> mSelection = new ArrayList<Integer>();
 
         AdaptadorTanteo(Activity context, int textViewResourceId, List<Jugador> listajugadores) {
             super(context, textViewResourceId, listajugadores);
@@ -320,29 +324,24 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
             this.jugadores = listajugadores;
         }
         
-        public void setNewSelection(int position, boolean value) {
-            mSelection.put(position, value);
-            notifyDataSetChanged();
-        }
+        public void setNewSelection(int position) {
+    		mSelection.add(position);
+    		notifyDataSetChanged();
+    	}
   
-        public boolean isPositionChecked(int position) {
-            Boolean result = mSelection.get(position);
-            return result == null ? false : result;
-        }
-  
-        public Set<Integer> getCurrentCheckedPosition() {
-            return mSelection.keySet();
-        }
+        public ArrayList<Integer> getCurrentCheckedPosition() {
+    		return mSelection;
+    	}
   
         public void removeSelection(int position) {
-            mSelection.remove(position);
-            notifyDataSetChanged();
-        }
+    		mSelection.remove(Integer.valueOf(position));
+    		notifyDataSetChanged();
+    	}
   
         public void clearSelection() {
-            mSelection = new HashMap<Integer, Boolean>();
-            notifyDataSetChanged();
-        }
+    		mSelection = new ArrayList<Integer>();
+    		notifyDataSetChanged();
+    	}
 
         public View getView(final int position, View convertView, ViewGroup parent) {
 
@@ -373,7 +372,7 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
             // Definimos lo que necesitamos para el cab
             item.setBackgroundColor(getResources().getColor(android.R.color.background_light)); //default color
               
-            if (mSelection.get(position) != null) {
+            if (mSelection.contains(position)) {
                 item.setBackgroundColor(getResources().getColor(android.R.color.holo_blue_light));// this is a selected position so make it red
             }
 
