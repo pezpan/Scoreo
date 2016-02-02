@@ -45,7 +45,7 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Continuar"
+            android:text="Continuar ultima"
             android:id="@+id/botoncontinuar"
             android:textStyle="bold"
             android:background="#7B1FA2"

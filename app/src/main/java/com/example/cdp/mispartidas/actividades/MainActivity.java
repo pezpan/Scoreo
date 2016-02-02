@@ -32,7 +32,7 @@ public class MainActivity extends ActionBarActivity implements NumeroJugadoresDi
         if((backup.getBackup() == null) || (backup.getBackup().size() == 0)) {
             backup.obtenerBackup();
         }
-
+        
         // Obtenemos los botones
         Button botonaceptar = (Button) findViewById(R.id.botonnueva);
         Button botonhistorial = (Button) findViewById(R.id.botonhistorial);
