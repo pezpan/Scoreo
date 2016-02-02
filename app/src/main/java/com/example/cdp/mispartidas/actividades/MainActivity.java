@@ -32,10 +32,7 @@ public class MainActivity extends ActionBarActivity implements NumeroJugadoresDi
         if((backup.getBackup() == null) || (backup.getBackup().size() == 0)) {
             backup.obtenerBackup();
         }
-        
-        // Obtenemos la ultima partida modificada
-        identificadorultima = backup.getUltimaActualizada();
-        
+
         // Obtenemos los botones
         Button botonaceptar = (Button) findViewById(R.id.botonnueva);
         Button botonhistorial = (Button) findViewById(R.id.botonhistorial);
@@ -94,7 +91,7 @@ public class MainActivity extends ActionBarActivity implements NumeroJugadoresDi
         Intent intentjugadores = new Intent(this, SetupJugadores.class);
         // Pasamos como datos el numero de jugadores seleccionados
         Bundle b = new Bundle();
-        b.putInt("numjugadores", number);
+        b.putInt("numjugadores", numero);
         //Lo anadimos al intent
         intentjugadores.putExtras(b);
         // Lanzamos la actividad
@@ -126,6 +123,8 @@ public class MainActivity extends ActionBarActivity implements NumeroJugadoresDi
                     llamarSetupJugadores(2);
                     break;
                 case R.id.botoncontinuar:
+                    // Obtenemos la ultima partida modificada
+                    identificadorultima = backup.getUltimaActualizada();
                     if(identificadorultima != null){
                         // Lanzamos la pantalla de nueva partida, pasando el identificador de la partida creada
                         Intent intentpartida = new Intent(getApplicationContext(), Tanteo.class);
