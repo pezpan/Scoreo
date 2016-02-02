@@ -178,6 +178,7 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
                 Log.i("MILOG", "ondestroyactionmode");
                 // Here you can make any necessary updates to the activity when
                 // the CAB is removed. By default, selected items are deselected/unchecked.
+                nr = 0;
                 adaptador.clearSelection();
                 mode.finish();
             }
