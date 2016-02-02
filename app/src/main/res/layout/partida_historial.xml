@@ -19,8 +19,8 @@
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif"          
         android:id="@+id/cuantosjugadores"
-        android:textSize="14sp"
-        android:paddingBottom="6dp"
+        android:textSize="13sp"
+        android:paddingBottom="3dp"
         android:paddingLeft="10dp"
         android:textAppearance="?android:textAppearanceSmall"
         android:paddingRight="16dp"
@@ -31,11 +31,11 @@
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif"          
         android:id="@+id/actualizada"
-        android:textSize="14sp"
+        android:textSize="13sp"
         android:paddingBottom="10dp"
         android:paddingLeft="10dp"
         android:textAppearance="?android:textAppearanceSmall"
         android:paddingRight="16dp"
-        android:paddingTop="8dp"/>
+        android:paddingTop="3dp"/>
 
 </LinearLayout>

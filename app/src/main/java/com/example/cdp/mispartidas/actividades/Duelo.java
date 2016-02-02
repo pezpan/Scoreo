@@ -3,10 +3,17 @@ package com.example.cdp.mispartidas.actividades;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.example.cdp.mispartidas.R;
+import com.example.cdp.mispartidas.almacenamiento.operaciones.Backup;
 
 public class Duelo extends ActionBarActivity {
+
+    private Backup backup;
+    private String identificador;
+    private int indice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

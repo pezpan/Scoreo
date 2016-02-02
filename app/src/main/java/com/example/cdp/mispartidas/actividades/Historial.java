@@ -258,7 +258,7 @@ public class Historial extends ActionBarActivity implements NombreDialogFragment
                 holder.nombrepartida.setText(partidas.get(position).getNombre());
             }
             // Guardamos el numero de jugadores
-            holder.numerojugadores.setText(partidas.getJugadores().size() + " jugadores");
+            holder.numerojugadores.setText(partidas.get(position).getJugadores().size() + " jugadores");
             // Guardamos la fecha de actualizacion
             holder.actualizacion.setText("Actualizada " + String.valueOf(partidas.get(position).getFechaactualizacion()));
 

@@ -43,7 +43,6 @@
         android:textColor="@color/darkText"
         android:fontFamily="sans-serif"
         android:focusable="false"
-        android:focusable="false"
         android:layout_gravity="center"/>
 
     <ImageButton android:id="@+id/sumar"

@@ -33,6 +33,7 @@ import com.example.cdp.mispartidas.almacenamiento.objetos.Jugador;
 import com.example.cdp.mispartidas.almacenamiento.objetos.Partida;
 import com.example.cdp.mispartidas.almacenamiento.operaciones.Backup;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
@@ -265,12 +266,12 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
 
             case R.id.action_settings:
                 break;
-            case android.R.id.home:
+            case R.id.home:
                 // Fecha de volver atras
                 NavUtils.navigateUpFromSameTask(this);
                 break;
                 
-            case android.R.id.mododuelo:
+            case R.id.mododuelo:
                 // Fecha de volver atras
                 // Lanzamos la pantalla de nueva partida, pasando el identificador de la partida creada
                 Intent intentduelo = new Intent(getApplicationContext(), Duelo.class);
@@ -282,7 +283,7 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
                 intentduelo.putExtras(b);
                 // Lanzamos la actividad
                 Log.i("MILOG", "Lanzamos la pantalla de duelo desde tanteo");
-                startActivity(intentpartida);
+                startActivity(intentduelo);
                 break;
             
             default:
@@ -319,26 +320,26 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
             this.context = context;
             this.jugadores = listajugadores;
         }
-        
+
         public void setNewSelection(int position, boolean value) {
             mSelection.put(position, value);
             notifyDataSetChanged();
         }
-  
+
         public boolean isPositionChecked(int position) {
             Boolean result = mSelection.get(position);
             return result == null ? false : result;
         }
-  
+
         public Set<Integer> getCurrentCheckedPosition() {
             return mSelection.keySet();
         }
-  
+
         public void removeSelection(int position) {
             mSelection.remove(position);
             notifyDataSetChanged();
         }
-  
+
         public void clearSelection() {
             mSelection = new HashMap<Integer, Boolean>();
             notifyDataSetChanged();
@@ -372,7 +373,7 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
             
             // Definimos lo que necesitamos para el cab
             item.setBackgroundColor(getResources().getColor(android.R.color.background_light)); //default color
-              
+
             if (mSelection.get(position) != null) {
                 item.setBackgroundColor(getResources().getColor(android.R.color.holo_blue_light));// this is a selected position so make it red
             }

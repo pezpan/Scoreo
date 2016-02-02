@@ -16,7 +16,7 @@
         android:layout_gravity="top">
         
         <LinearLayout 
-            android:id="@+id/botonesizquierda"
+            android:id="@+id/botonesizquierdaa"
             android:layout_alignParentLeft="true"
             android:layout_width="70dp"
             android:layout_height="match_parent"
@@ -24,7 +24,7 @@
             android:orientation="vertical" 
             android:layout_gravity="right">
             
-            <ImageButton android:id="@+id/dadoduelo"
+            <ImageButton android:id="@+id/dadodueloa"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:src="@drawable/ic_add_white_24dp"
@@ -35,7 +35,7 @@
                 android:focusableInTouchMode="false"
                 android:layout_gravity="top"/>
                 
-            <ImageButton android:id="@+id/girarduelo"
+            <ImageButton android:id="@+id/girardueloa"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:src="@drawable/ic_remove_white_24dp"
@@ -49,7 +49,7 @@
         </LinearLayout>
             
         <TextView  
-            android:id="@+id/tantosduelo"
+            android:id="@+id/tantosdueloa"
             android:layout_alignParentLeft="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -63,14 +63,14 @@
         />    
     
         <LinearLayout 
-            android:id="@+id/botonesderecha"
+            android:id="@+id/botonesderechaa"
             android:layout_alignParentLeft="true"
             android:layout_width="70dp"
             android:layout_height="match_parent"
             android:gravity="right"
             android:orientation="vertical" >
     
-                <ImageButton android:id="@+id/sumarduelo"
+                <ImageButton android:id="@+id/sumardueloa"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:src="@drawable/ic_add_white_24dp"
@@ -79,7 +79,7 @@
                     android:padding="10dp"
                     android:layout_gravity="top"/>
                     
-                <ImageButton android:id="@+id/restarduelo"
+                <ImageButton android:id="@+id/restardueloa"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:src="@drawable/ic_remove_white_24dp"
