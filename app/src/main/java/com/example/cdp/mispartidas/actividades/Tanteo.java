@@ -33,6 +33,8 @@ import com.example.cdp.mispartidas.almacenamiento.objetos.Jugador;
 import com.example.cdp.mispartidas.almacenamiento.objetos.Partida;
 import com.example.cdp.mispartidas.almacenamiento.operaciones.Backup;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
@@ -118,8 +120,7 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
                         for (Integer indice : adaptador.getCurrentCheckedPosition()) {
                             partida.getJugadores().remove(indice);
                         }
-                        adaptador.clearSelection();
-                        mode.finish();
+
                         break;
                     // Cambiar el color del jugador
                     case R.id.menu_color:
@@ -143,8 +144,6 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
                         } catch (Exception ex) {
                             Toast.makeText(getApplicationContext(), "Se produjo un error al cambiar el nombre", Toast.LENGTH_SHORT).show();
                         }
-                        adaptador.clearSelection();
-                        mode.finish();
 
                         break;
                         // Reiniciamos el jugador
@@ -155,12 +154,15 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
                         {   
                             partida.getJugadores().get(indice).setPuntuacion(0);
                         }
-                        adaptador.clearSelection();
-                        mode.finish();
+
                         break;
-                    // Actualizamos la partida
-                    actualizar(position);
                 }
+                // Actualizamos la partida
+                actualizar(indice);
+                // Actualizamos la vista
+                adaptador.clearSelection();
+                mode.finish();
+
                 return false;
             }
 
@@ -317,7 +319,7 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
         List<Jugador> jugadores;
         ViewHolder holder;
         
-        private ArrayList<Integer> mSelection = new ArrayList<Integer>();
+        private List<Integer> mSelection = new ArrayList<Integer>();
 
         AdaptadorTanteo(Activity context, int textViewResourceId, List<Jugador> listajugadores) {
             super(context, textViewResourceId, listajugadores);
@@ -330,7 +332,7 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
     		notifyDataSetChanged();
     	}
   
-        public ArrayList<Integer> getCurrentCheckedPosition() {
+        public List<Integer> getCurrentCheckedPosition() {
     		return mSelection;
     	}
   
