@@ -87,7 +87,7 @@ public class Historial extends ActionBarActivity implements NombreDialogFragment
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         if (v.getId()==R.id.listapartidas) {
             AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)menuInfo;
-            menu.setHeaderTitle("Elije una opcion");
+            menu.setHeaderTitle(backup.getBackup().get(info.position).getNombre());
             String[] menuItems = getResources().getStringArray(R.array.menupartidas);
             for (int i = 0; i<menuItems.length; i++) {
                 menu.add(Menu.NONE, i, i, menuItems[i]);

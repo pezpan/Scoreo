@@ -88,4 +88,8 @@ public class Partida{
 		jugadores.add(jugador);
 	}
 
+	public void deleteJugador(int indice){
+		this.jugadores.remove(indice);
+	}
+
 }

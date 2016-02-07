@@ -2,17 +2,10 @@ package com.example.cdp.mispartidas.actividades;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.LayerDrawable;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -22,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 
@@ -44,9 +36,8 @@ public class SetupJugadores extends ActionBarActivity {
 
     private ListView listviewjugadores;
     private int jugadores = 0;
-    //private JugadorSetup players[];
     private List<JugadorSetup> players;
-    int mSelectedColorCal0 = Color.parseColor("#9E9E9E");
+    int mSelectedColorCal0;
     ColorPickerDialog colorcalendar;
 
     @Override
@@ -67,7 +58,7 @@ public class SetupJugadores extends ActionBarActivity {
             JugadorSetup aux = new JugadorSetup();
             aux.setHint("Jugador" + Integer.toString(i + 1));
             aux.setNombre("");
-            aux.setColor(getResources().getColor(R.color.colorbotonbase));
+            aux.setColor(getResources().getColor(R.color.botonbase));
             players.add(aux);
         }
         // Habilitamos la fecha volver a la activity principal
@@ -133,6 +124,8 @@ public class SetupJugadores extends ActionBarActivity {
             player.setNumerojugador(i);
             // Anadimos la puntuacion
             player.setPuntuacion(0);
+            // Anadimos el color
+            player.setColor(players.get(i).getcolor());
             // Anadimos el jugador a la lista
             listajugadores.add(player);
         }
@@ -161,8 +154,7 @@ public class SetupJugadores extends ActionBarActivity {
         // Guardamos
         Log.i("MILOG", "Guardamos el backup");
         backup.guardarBackup();
-        Log.i("MILOG", "Hemos guardado el backup");
-        
+
         // Lanzamos la pantalla de nueva partida, pasando el identificador de la partida creada
         Intent intentpartida = new Intent(getApplicationContext(), Tanteo.class);
         // Pasamos como datos el numero de jugadores seleccionados
@@ -222,7 +214,7 @@ public class SetupJugadores extends ActionBarActivity {
             holder.nombre.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
                 public void onFocusChange(View v, boolean hasFocus) {
-                    if(!hasFocus){
+                    if (!hasFocus) {
                         EditText et = (EditText) v.findViewById(R.id.nombre);
                         jugadores.get(position).setNombre(et.getText().toString());
                     }
@@ -236,6 +228,11 @@ public class SetupJugadores extends ActionBarActivity {
             }else{
                 holder.nombre.setText(jugadores.get(position).getNombre());
             }
+
+            // Modificamos el color en esta activity
+            GradientDrawable bgShape = (GradientDrawable)holder.colores.getBackground();
+            bgShape.mutate();
+            bgShape.setColor(players.get(position).getcolor());
 
             return(item);
         }
@@ -264,17 +261,14 @@ public class SetupJugadores extends ActionBarActivity {
 
                         @Override
                         public void onColorSelected(int color) {
-                            try {
-                                players.get(position).setColor(color);
-                                ((GradientDrawable)holder.colores.getBackground()).setColor(color);
-                                ((AdaptadorSetup) listviewjugadores.getAdapter()).notifyDataSetChanged();
-                            }catch(Exception e){
-                                Log.i("MILOG", "Exception en colorpicker: " + e.getMessage());
-                            }
+                            // Alamcenamos el color para la siguiente activity
+                            players.get(position).setColor(color);
+                            // Actualizamos el adaptador para ver el nuevo color
+                            ((AdaptadorSetup) listviewjugadores.getAdapter()).notifyDataSetChanged();
                         }
                     });
                     colorcalendar.show(getFragmentManager(), "cal");
-                    
+
                 }catch(Exception e){
                     Log.i("MILOG", "Exception en colorpicker: " + e.getMessage());
                 }

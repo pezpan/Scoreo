@@ -153,13 +153,6 @@ public class ColorPickerDialog extends DialogFragment implements ColorPickerSwat
         }
     }
 
-    public void showProgressBarView() {
-        if (mProgress != null && mPalette != null) {
-            mProgress.setVisibility(View.VISIBLE);
-            mPalette.setVisibility(View.GONE);
-        }
-    }
-
     public void setColors(int[] colors, int selectedColor) {
         if (mColors != colors || mSelectedColor != selectedColor) {
             mColors = colors;
@@ -168,32 +161,10 @@ public class ColorPickerDialog extends DialogFragment implements ColorPickerSwat
         }
     }
 
-    public void setColors(int[] colors) {
-        if (mColors != colors) {
-            mColors = colors;
-            refreshPalette();
-        }
-    }
-
-    public void setSelectedColor(int color) {
-        if (mSelectedColor != color) {
-            mSelectedColor = color;
-            refreshPalette();
-        }
-    }
-
     private void refreshPalette() {
         if (mPalette != null && mColors != null) {
             mPalette.drawPalette(mColors, mSelectedColor);
         }
-    }
-
-    public int[] getColors() {
-        return mColors;
-    }
-
-    public int getSelectedColor() {
-        return mSelectedColor;
     }
 
     @Override
