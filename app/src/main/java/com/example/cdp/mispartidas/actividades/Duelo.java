@@ -103,10 +103,8 @@ public class Duelo extends ActionBarActivity implements NumeroTanteoDialogFragme
             // Rellenamos las vistas
             nombreA.setText(partida.getJugadores().get(0).getNombre());
             puntosA.setText(partida.getJugadores().get(0).getPuntuacion());
-
-
-
             nombreB.setText(partida.getJugadores().get(1).getNombre());
+            puntosB.setText(partida.getJugadores().get(1).getPuntuacion());
 
         } else {
             Toast.makeText(this, "No se ha encontrado la partida " + identificador, Toast.LENGTH_SHORT).show();
@@ -166,6 +164,7 @@ public class Duelo extends ActionBarActivity implements NumeroTanteoDialogFragme
                         Log.i("MILOG", "Sumamos uno");
                         int tantos = partida.getJugadores().get(position).getPuntuacion();
                         partida.getJugadores().get(position).setPuntuacion(tantos + 1);
+                        puntosA.invalidate();
                         // Actualizamos el backup
                         actualizar(indice);
                     } catch (Exception ex) {
