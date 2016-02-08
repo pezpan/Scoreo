@@ -11,7 +11,13 @@ import com.example.cdp.mispartidas.R;
 
 public class ConfirmacionDialogFragment extends DialogFragment {
 
+    // Definimos constantes para las distintas opciones
+    public static final int BORRAR_PARTIDA = 0;
+    public static final int BORRAR_HISTORIAL = 1;
+    public static final int BORRAR_JUGADOR = 2;
+    
     private int posicion;
+    private int opcion;
     
     public void getParameters(){
         Bundle bundle = getArguments();
@@ -20,7 +26,7 @@ public class ConfirmacionDialogFragment extends DialogFragment {
 
     // Container Activity must implement this interface
       public interface ConfirmarListener {
-          public void onAceptarSelected(int position);
+          public void onAceptarSelected(int opcion, int position);
       }
 
     @Override
@@ -30,6 +36,7 @@ public class ConfirmacionDialogFragment extends DialogFragment {
         // Obtenemos los parametros
         getParameters();
         final int posicion = this.posicion;
+        final int opcion = this.opcion;
         
         // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -37,7 +44,7 @@ public class ConfirmacionDialogFragment extends DialogFragment {
                .setPositiveButton(R.string.aceptar, new DialogInterface.OnClickListener() {
                    public void onClick(DialogInterface dialog, int id) {
                         ConfirmarListener activity = (ConfirmarListener) getActivity();
-                        activity.onAceptarSelected(posicion); 
+                        activity.onAceptarSelected(opcion, posicion); 
                    }
                })
                .setNegativeButton(R.string.cancelar, new DialogInterface.OnClickListener() {
