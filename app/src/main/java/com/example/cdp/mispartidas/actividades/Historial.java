@@ -105,8 +105,8 @@ public class Historial extends ActionBarActivity implements NombreDialogFragment
                 // Lanzamos el dialog
                 ConfirmacionDialogFragment fragmento = new ConfirmacionDialogFragment();
                 Bundle bundles = new Bundle();
-                bundles.putInt("posicion", info.position);
-                bundles.putInt("opcion", ConfirmacionDialogFragment.BORRAR_TODO);
+                bundles.putInt("posicion", 0);
+                bundles.putInt("opcion", ConfirmacionDialogFragment.BORRAR_HISTORIAL);
                 fragmento.setArguments(bundles);
                 FragmentManager fragmentManager = this.getFragmentManager();
                 fragmento.show(fragmentManager, "Dialogo_confirmacion");
@@ -152,13 +152,13 @@ public class Historial extends ActionBarActivity implements NombreDialogFragment
             // Borrar partida
             case 0:
                 // Lanzamos el dialog
-                ConfirmacionDialogFragment fragmento = new ConfirmacionDialogFragment();
-                Bundle bundles = new Bundle();
-                bundles.putInt("posicion", info.position);
-                bundles.putInt("opcion", ConfirmacionDialogFragment.BORRAR_ITEM);
-                fragmento.setArguments(bundles);
-                FragmentManager fragmentManager = this.getFragmentManager();
-                fragmento.show(fragmentManager, "Dialogo_confirmacion");
+                ConfirmacionDialogFragment fragmentoborrar = new ConfirmacionDialogFragment();
+                Bundle bundlesborrar = new Bundle();
+                bundlesborrar.putInt("posicion", info.position);
+                bundlesborrar.putInt("opcion", ConfirmacionDialogFragment.BORRAR_PARTIDA);
+                fragmentoborrar.setArguments(bundlesborrar);
+                FragmentManager fragmentManagerborrar = this.getFragmentManager();
+                fragmentoborrar.show(fragmentManagerborrar, "Dialogo_confirmacion");
                 break;
             // Cambiar nombre de la partida
             case 1:
@@ -166,12 +166,12 @@ public class Historial extends ActionBarActivity implements NombreDialogFragment
                     // Decrementamos el tanteo
                     Log.i("MILOG", "Cambiamos el nombre de la partida");
                     // Lanzamos el dialog
-                    NombreDialogFragment fragmento = new NombreDialogFragment();
+                    NombreDialogFragment fragmentonombre = new NombreDialogFragment();
                     Bundle bundles = new Bundle();
                     bundles.putInt("posicion", info.position);
-                    fragmento.setArguments(bundles);
-                    FragmentManager fragmentManager = this.getFragmentManager();
-                    fragmento.show(fragmentManager, "Dialogo_nombre");
+                    fragmentonombre.setArguments(bundles);
+                    FragmentManager fragmentManagernombre = this.getFragmentManager();
+                    fragmentonombre.show(fragmentManagernombre, "Dialogo_nombre");
                 } catch (Exception ex) {
                     Toast.makeText(this.getApplicationContext(), "Se produjo un error al cambiar el nombre", Toast.LENGTH_SHORT).show();
                 }

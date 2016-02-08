@@ -128,12 +128,12 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
                     case R.id.menu_borrar:
                         // Lanzamos el dialog
                         ConfirmacionDialogFragment fragmentoconfirmacion = new ConfirmacionDialogFragment();
-                        Bundle bundles = new Bundle();
-                        bundles.putInt("posicion", 0);
-                        bundles.putInt("opcion", ConfirmacionDialogFragment.BORRAR_JUGADOR);
-                        fragmentoconfirmacion.setArguments(bundles);
-                        FragmentManager fragmentManager = this.getFragmentManager();
-                        fragmentoconfirmacion.show(fragmentManager, "Dialogo_confirmacion");
+                        Bundle bundlesborrar = new Bundle();
+                        bundlesborrar.putInt("posicion", 0);
+                        bundlesborrar.putInt("opcion", ConfirmacionDialogFragment.BORRAR_JUGADOR);
+                        fragmentoconfirmacion.setArguments(bundlesborrar);
+                        FragmentManager fragmentManagerborrar = getFragmentManager();
+                        fragmentoconfirmacion.show(fragmentManagerborrar, "Dialogo_confirmacion");
                         break;
                     // Cambiar el color del jugador
                     case R.id.menu_color:
@@ -146,13 +146,13 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
                         // Decrementamos el tanteo
                         Log.i("MILOG", "Cambiamos el nombre de la partida");
                         // Lanzamos el dialog
-                        NombreDialogFragment fragmento = new NombreDialogFragment();
+                        NombreDialogFragment fragmentonombre = new NombreDialogFragment();
                         Bundle bundles = new Bundle();
                         // Pasamos el indice como parametro
                         bundles.putInt("posicion", adaptador.getCurrentCheckedPosition().get(0));
-                        fragmento.setArguments(bundles);
-                        FragmentManager fragmentManager = getFragmentManager();
-                        fragmento.show(fragmentManager, "Dialogo_jugador");
+                        fragmentonombre.setArguments(bundles);
+                        FragmentManager fragmentManagernombre = getFragmentManager();
+                        fragmentonombre.show(fragmentManagernombre, "Dialogo_jugador");
                         break;
                         // Reiniciamos el jugador
                     case R.id.menu_reiniciar:
@@ -466,8 +466,8 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
 
                     case R.id.sumar:
                         Log.i("MILOG", "Sumamos uno");
-                        int tantos = jugadores.get(position).getPuntuacion();
-                        jugadores.get(position).setPuntuacion(tantos + 1);
+                        int suma = jugadores.get(position).getPuntuacion();
+                        jugadores.get(position).setPuntuacion(suma + 1);
                         // Actualizamos el backup
                         actualizar(indice);
                         break;
@@ -475,8 +475,8 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
                     case R.id.restar:
                         // Decrementamos el tanteo
                         Log.i("MILOG", "Restamos uno");
-                        int tantos = jugadores.get(position).getPuntuacion();
-                        jugadores.get(position).setPuntuacion(tantos - 1);
+                        int resta = jugadores.get(position).getPuntuacion();
+                        jugadores.get(position).setPuntuacion(resta - 1);
                         // Actualizamos el backup
                         actualizar(indice);
                         break;
