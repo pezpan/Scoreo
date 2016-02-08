@@ -127,13 +127,13 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
                     // Borrar jugador
                     case R.id.menu_borrar:
                         // Lanzamos el dialog
-                        ConfirmacionDialogFragment fragmento = new ConfirmacionDialogFragment();
+                        ConfirmacionDialogFragment fragmentoconfirmacion = new ConfirmacionDialogFragment();
                         Bundle bundles = new Bundle();
                         bundles.putInt("posicion", 0);
                         bundles.putInt("opcion", ConfirmacionDialogFragment.BORRAR_JUGADOR);
-                        fragmento.setArguments(bundles);
+                        fragmentoconfirmacion.setArguments(bundles);
                         FragmentManager fragmentManager = this.getFragmentManager();
-                        fragmento.show(fragmentManager, "Dialogo_confirmacion");
+                        fragmentoconfirmacion.show(fragmentManager, "Dialogo_confirmacion");
                         break;
                     // Cambiar el color del jugador
                     case R.id.menu_color:
