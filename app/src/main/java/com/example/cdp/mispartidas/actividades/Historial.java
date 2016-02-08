@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.example.cdp.mispartidas.auxiliares.Utilidades;
 import com.example.cdp.mispartidas.dialogos.NombreDialogFragment;
+import com.example.cdp.mispartidas.dialogos.ConfirmacionDialogFragment;
 import com.example.cdp.mispartidas.R;
 import com.example.cdp.mispartidas.almacenamiento.objetos.Partida;
 import com.example.cdp.mispartidas.almacenamiento.operaciones.Backup;
@@ -203,11 +204,11 @@ public class Historial extends ActionBarActivity implements NombreDialogFragment
     @Override
     public void onAceptarSelected(int opcion, int position) {
         switch(opcion){
-            case ConfirmacionDialogFragment.BORRAR_ITEM:
+            case ConfirmacionDialogFragment.BORRAR_PARTIDA:
                 // Eliminamos de la lista la partida seleccionada
                 backup.deletePartida(backup.getBackup().get(position));
                 break;
-            case ConfirmacionDialogFragment.BORRAR_TODO:
+            case ConfirmacionDialogFragment.BORRAR_HISTORIAL:
                 // Borramos todas las partidas que tenemos guardadas
                 backup.deleteAll();
                 break;
