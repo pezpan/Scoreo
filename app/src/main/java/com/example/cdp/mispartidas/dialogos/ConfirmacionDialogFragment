@@ -9,7 +9,7 @@ import android.os.Bundle;
 import com.example.cdp.mispartidas.R;
 
 
-public class DialogoConfirmacion extends DialogFragment {
+public class ConfirmacionDialogFragment extends DialogFragment {
 
     private int posicion;
     
