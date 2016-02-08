@@ -19,7 +19,7 @@ public class NumeroTanteoDialogFragment extends DialogFragment {
 
     private String titulo;
     private int posicion;
-    private final int MAX = 20;
+    private final int MAX = 100;
     private final int MIN = 1;
 
     public NumeroTanteoDialogFragment(){
