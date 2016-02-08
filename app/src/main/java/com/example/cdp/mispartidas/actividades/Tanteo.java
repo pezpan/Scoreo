@@ -143,22 +143,16 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
                         break;
                     // Cambiamos el nombre del jugador
                     case R.id.menu_nombre:
-                        try {
-                            // Decrementamos el tanteo
-                            Log.i("MILOG", "Cambiamos el nombre de la partida");
-                            // Lanzamos el dialog
-                            NombreDialogFragment fragmento = new NombreDialogFragment();
-                            Bundle bundles = new Bundle();
-                            // Pasamos el indice como parametro
-                            bundles.putInt("posicion", adaptador.getCurrentCheckedPosition().get(0));
-                            fragmento.setArguments(bundles);
-                            FragmentManager fragmentManager = getFragmentManager();
-                            fragmento.show(fragmentManager, "Dialogo_jugador");
-                        
-                        } catch (Exception ex) {
-                            Toast.makeText(getApplicationContext(), "Se produjo un error al cambiar el nombre", Toast.LENGTH_SHORT).show();
-                        }
-
+                        // Decrementamos el tanteo
+                        Log.i("MILOG", "Cambiamos el nombre de la partida");
+                        // Lanzamos el dialog
+                        NombreDialogFragment fragmento = new NombreDialogFragment();
+                        Bundle bundles = new Bundle();
+                        // Pasamos el indice como parametro
+                        bundles.putInt("posicion", adaptador.getCurrentCheckedPosition().get(0));
+                        fragmento.setArguments(bundles);
+                        FragmentManager fragmentManager = getFragmentManager();
+                        fragmento.show(fragmentManager, "Dialogo_jugador");
                         break;
                         // Reiniciamos el jugador
                     case R.id.menu_reiniciar:
@@ -457,46 +451,34 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
                 //Comprobamos que vista ha lanzado el evento y lo gestionamos
                 switch (v.getId()) {
                     case R.id.puntos:
-                        try {
-                            // Decrementamos el tanteo
-                            Log.i("MILOG", "Modificamos el tanteo");
-                            // Lanzamos el dialog
-                            NumeroTanteoDialogFragment fragmento = new NumeroTanteoDialogFragment();
-                            Bundle bundles = new Bundle();
-                            bundles.putString("titulo", getString(R.string.sumar_puntos));
-                            bundles.putInt("posicion", position);
-                            fragmento.setArguments(bundles);
-                            Log.i("MILOG", "Mostramos el dialog para elegir el numero que queremos modificar");
-                            FragmentManager fragmentManager = ((Activity) context).getFragmentManager();
-                            fragmento.show(fragmentManager, "Dialogo_tanteo");
-                        } catch (Exception ex) {
-                            Toast.makeText(Tanteo.context, "Se produjo un error al modificar el tanteo", Toast.LENGTH_SHORT).show();
-                        }
+                        // Decrementamos el tanteo
+                        Log.i("MILOG", "Modificamos el tanteo");
+                        // Lanzamos el dialog
+                        NumeroTanteoDialogFragment fragmento = new NumeroTanteoDialogFragment();
+                        Bundle bundles = new Bundle();
+                        bundles.putString("titulo", getString(R.string.sumar_puntos));
+                        bundles.putInt("posicion", position);
+                        fragmento.setArguments(bundles);
+                        Log.i("MILOG", "Mostramos el dialog para elegir el numero que queremos modificar");
+                        FragmentManager fragmentManager = ((Activity) context).getFragmentManager();
+                        fragmento.show(fragmentManager, "Dialogo_tanteo");
                         break;
 
                     case R.id.sumar:
-                        try {
-                            Log.i("MILOG", "Sumamos uno");
-                            int tantos = jugadores.get(position).getPuntuacion();
-                            jugadores.get(position).setPuntuacion(tantos + 1);
-                            // Actualizamos el backup
-                            actualizar(indice);
-                        } catch (Exception ex) {
-                            Toast.makeText(Tanteo.context, "Se produjo un error al incrementar el tanteo", Toast.LENGTH_SHORT).show();
-                        }
+                        Log.i("MILOG", "Sumamos uno");
+                        int tantos = jugadores.get(position).getPuntuacion();
+                        jugadores.get(position).setPuntuacion(tantos + 1);
+                        // Actualizamos el backup
+                        actualizar(indice);
                         break;
 
                     case R.id.restar:
-                        try {
-                            // Decrementamos el tanteo
-                            Log.i("MILOG", "Restamos uno");
-                            int tantos = jugadores.get(position).getPuntuacion();
-                            jugadores.get(position).setPuntuacion(tantos - 1);
-                            // Actualizamos el backup
-                            actualizar(indice);
-                        } catch (Exception ex) {
-                            Toast.makeText(Tanteo.context, "Se produjo un error al decrementar el tanteo", Toast.LENGTH_SHORT).show();
-                        }
+                        // Decrementamos el tanteo
+                        Log.i("MILOG", "Restamos uno");
+                        int tantos = jugadores.get(position).getPuntuacion();
+                        jugadores.get(position).setPuntuacion(tantos - 1);
+                        // Actualizamos el backup
+                        actualizar(indice);
                         break;
                 }
             }
