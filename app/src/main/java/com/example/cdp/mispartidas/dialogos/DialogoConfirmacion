@@ -10,14 +10,34 @@ import com.example.cdp.mispartidas.R;
 
 
 public class DialogoConfirmacion extends DialogFragment {
+
+    private int posicion;
+    
+    public void getParameters(){
+        Bundle bundle = getArguments();
+        this.posicion = bundle.getInt("posicion");
+    }
+
+    // Container Activity must implement this interface
+      public interface ConfirmarListener {
+          public void onAceptarSelected(int position);
+      }
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+    
+        //final Activity actividad = getActivity();
+        // Obtenemos los parametros
+        getParameters();
+        final int posicion = this.posicion;
+        
         // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage(R.string.confirmacion)
                .setPositiveButton(R.string.aceptar, new DialogInterface.OnClickListener() {
                    public void onClick(DialogInterface dialog, int id) {
-                       
+                        ConfirmarListener activity = (ConfirmarListener) getActivity();
+                        activity.onAceptarSelected(posicion); 
                    }
                })
                .setNegativeButton(R.string.cancelar, new DialogInterface.OnClickListener() {
