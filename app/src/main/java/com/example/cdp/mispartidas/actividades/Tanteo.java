@@ -36,6 +36,7 @@ import com.example.cdp.mispartidas.colorpicker.ColorPickerDialog;
 import com.example.cdp.mispartidas.colorpicker.ColorPickerSwatch;
 import com.example.cdp.mispartidas.dialogos.NombreDialogFragment;
 import com.example.cdp.mispartidas.dialogos.NumeroTanteoDialogFragment;
+import com.example.cdp.mispartidas.dialogos.ConfirmacionDialogFragment;
 import com.example.cdp.mispartidas.R;
 import com.example.cdp.mispartidas.almacenamiento.objetos.Jugador;
 import com.example.cdp.mispartidas.almacenamiento.objetos.Partida;
@@ -47,7 +48,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
-public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragment.NumberTanteoDialogListener, NombreDialogFragment.NuevoNombreListener {
+public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragment.NumberTanteoDialogListener, NombreDialogFragment.NuevoNombreListener, ConfirmacionDialogFragment.ConfirmarListener {
 
     private String identificador;
     private Partida partida;
@@ -115,9 +116,7 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
                     adaptador.removeSelection(position);
                 }
                 mode.setTitle(nr + " selected");
-
                 mode.invalidate();
-
             }
 
             @Override
@@ -127,14 +126,14 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
                 switch (item.getItemId()) {
                     // Borrar jugador
                     case R.id.menu_borrar:
-                        // Ordenamos la lista en orden inverso para un borrado seguro
-                        List<Integer> selected = adaptador.getCurrentCheckedPosition();
-                        Collections.sort(selected, Collections.reverseOrder());
-                        for (Integer indice : selected) {
-                            partida.deleteJugador(indice);
-                        }
-                        // Actualizamos la vista
-                        mode.finish();
+                        // Lanzamos el dialog
+                        ConfirmacionDialogFragment fragmento = new ConfirmacionDialogFragment();
+                        Bundle bundles = new Bundle();
+                        bundles.putInt("posicion", 0);
+                        bundles.putInt("opcion", ConfirmacionDialogFragment.BORRAR_JUGADOR);
+                        fragmento.setArguments(bundles);
+                        FragmentManager fragmentManager = this.getFragmentManager();
+                        fragmento.show(fragmentManager, "Dialogo_confirmacion");
                         break;
                     // Cambiar el color del jugador
                     case R.id.menu_color:
@@ -219,21 +218,6 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
         Log.i("MILOG", "Fin de oncreate tanteo");
     }
     
-    // Sobreescribimos el metodo del dialogo para cambiar el numero
-    @Override
-    public void onNombreSelected(String nombre, int position) {
-
-        Log.i("MILOG", "Actualizamos el nombre del jugador");
-        // Actualizamos el jugador
-        partida.getJugadores().get(position).setNombre(nombre);
-        // Actualizamos el backup
-        Log.i("MILOG", "Guardamos el backup");
-        // Actualizamos la vista
-        actionMode.finish();
-        // Actualizamos la partida
-        actualizar(indice);
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -309,6 +293,21 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
 
         return super.onOptionsItemSelected(item);
     }
+    
+    // Sobreescribimos el metodo del dialogo para cambiar el numero
+    @Override
+    public void onNombreSelected(String nombre, int position) {
+
+        Log.i("MILOG", "Actualizamos el nombre del jugador");
+        // Actualizamos el jugador
+        partida.getJugadores().get(position).setNombre(nombre);
+        // Actualizamos el backup
+        Log.i("MILOG", "Guardamos el backup");
+        // Actualizamos la vista
+        actionMode.finish();
+        // Actualizamos la partida
+        actualizar(indice);
+    }
 
     // Sobreescribimos el metodo del dialogo para elegir el numero
     @Override
@@ -320,6 +319,26 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
         int tantos = adaptador.jugadores.get(position).getPuntuacion();
         adaptador.jugadores.get(position).setPuntuacion(tantos + number);
 
+        // Actualizamos el backup
+        actualizar(indice);
+    }
+    
+    // Sobreescribimos el metodo del dialogo de confirmacion
+    @Override
+    public void onAceptarSelected(int opcion, int position) {
+        switch(opcion){
+            case ConfirmacionDialogFragment.BORRAR_JUGADOR:
+                // Ordenamos la lista en orden inverso para un borrado seguro
+                List<Integer> selected = adaptador.getCurrentCheckedPosition();
+                Collections.sort(selected, Collections.reverseOrder());
+                for (Integer indice : selected) {
+                    partida.deleteJugador(indice);
+                }
+                // Actualizamos la vista
+                actionMode.finish();
+                actionMode = null;
+                break;
+        }
         // Actualizamos el backup
         actualizar(indice);
     }
@@ -407,10 +426,11 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
             holder.puntos.setText(String.valueOf(jugadores.get(position).getPuntuacion()));
 
             // Definimos el color de fondo del boton
+            // boton mas
             GradientDrawable bgShapemas = (GradientDrawable)holder.botonmas.getBackground();
             bgShapemas.mutate();
             bgShapemas.setColor(partida.getJugadores().get(position).getColor());
-
+            // boton menos
             GradientDrawable bgShapemenos = (GradientDrawable)holder.botonmenos.getBackground();
             bgShapemenos.mutate();
             bgShapemenos.setColor(partida.getJugadores().get(position).getColor());
@@ -436,10 +456,6 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
             public void onClick(View v) {
                 //Comprobamos que vista ha lanzado el evento y lo gestionamos
                 switch (v.getId()) {
-                    case R.id.nombrejugador:
-
-                        break;
-
                     case R.id.puntos:
                         try {
                             // Decrementamos el tanteo
@@ -497,12 +513,8 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
         public void muestraColores(){
             int[] mColor = Utils.ColorUtils.colorChoice(getApplicationContext());
             try {
-                colorcalendar = ColorPickerDialog.newInstance(
-                        R.string.color_picker_default_title,
-                        mColor,
-                        mSelectedColorCal0,
-                        4,
-                        Utils.isTablet(getApplicationContext()) ? ColorPickerDialog.SIZE_LARGE : ColorPickerDialog.SIZE_SMALL);
+                colorcalendar = ColorPickerDialog.newInstance(R.string.color_picker_default_title, mColor, mSelectedColorCal0,
+                        4, Utils.isTablet(getApplicationContext()) ? ColorPickerDialog.SIZE_LARGE : ColorPickerDialog.SIZE_SMALL);
                 //Implement listener to get selected color value
                 colorcalendar.setOnColorSelectedListener(new ColorPickerSwatch.OnColorSelectedListener() {
 
