@@ -29,7 +29,7 @@ import com.example.cdp.mispartidas.almacenamiento.operaciones.Backup;
 import java.util.Date;
 import java.util.List;
 
-public class Historial extends ActionBarActivity implements NombreDialogFragment.NuevoNombreListener {
+public class Historial extends ActionBarActivity implements NombreDialogFragment.NuevoNombreListener, ConfirmacionDialogFragment.ConfirmarListener  {
 
     private ListView listapartidas;
     //private List<Partida> mispartidas;
@@ -81,6 +81,50 @@ public class Historial extends ActionBarActivity implements NombreDialogFragment
             }
         });
     }
+    
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_historial, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        switch(id){
+
+            case R.id.borrarhistorial:
+                // Borramos todo el historial si el usuario lo confirma
+                Log.i("MILOG", "Cambiamos el nombre de la partida");
+                // Lanzamos el dialog
+                ConfirmacionDialogFragment fragmento = new ConfirmacionDialogFragment();
+                Bundle bundles = new Bundle();
+                bundles.putInt("posicion", info.position);
+                bundles.putInt("opcion", ConfirmacionDialogFragment.BORRAR_TODO);
+                fragmento.setArguments(bundles);
+                FragmentManager fragmentManager = this.getFragmentManager();
+                fragmento.show(fragmentManager, "Dialogo_confirmacion");
+                break;
+
+            // Fecha de volver atras
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                break;
+
+            case R.id.action_settings:
+                break;
+            default:
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
 
     // Menu contextual para nuestra lista de partidas
     @Override
@@ -106,10 +150,14 @@ public class Historial extends ActionBarActivity implements NombreDialogFragment
         switch(menuItemIndex){
             // Borrar partida
             case 0:
-                // Eliminamos de la lista la partida seleccionada
-                backup.deletePartida(backup.getBackup().get(info.position));
-                // Actualizamos la lista
-                adaptador.notifyDataSetChanged();
+                // Lanzamos el dialog
+                ConfirmacionDialogFragment fragmento = new ConfirmacionDialogFragment();
+                Bundle bundles = new Bundle();
+                bundles.putInt("posicion", info.position);
+                bundles.putInt("opcion", ConfirmacionDialogFragment.BORRAR_ITEM);
+                fragmento.setArguments(bundles);
+                FragmentManager fragmentManager = this.getFragmentManager();
+                fragmento.show(fragmentManager, "Dialogo_confirmacion");
                 break;
             // Cambiar nombre de la partida
             case 1:
@@ -151,6 +199,26 @@ public class Historial extends ActionBarActivity implements NombreDialogFragment
         return true;
     }
     
+    // Sobreescribimos el metodo del dialogo de confirmacion
+    @Override
+    public void onAceptarSelected(int opcion, int position) {
+        switch(opcion){
+            case ConfirmacionDialogFragment.BORRAR_ITEM:
+                // Eliminamos de la lista la partida seleccionada
+                backup.deletePartida(backup.getBackup().get(position));
+                break;
+            case ConfirmacionDialogFragment.BORRAR_TODO:
+                // Borramos todas las partidas que tenemos guardadas
+                backup.deleteAll();
+                break;
+        }
+        // Actualizamos el backup
+        Log.i("MILOG", "Guardamos el backup");
+        backup.guardarBackup();
+        // Actualizamos la lista
+        ((AdaptadorHistorial) listapartidas.getAdapter()).notifyDataSetChanged();
+    }
+    
     // Sobreescribimos el metodo del dialogo para cambiar el numero
     @Override
     public void onNombreSelected(String nombre, int position) {
@@ -167,49 +235,6 @@ public class Historial extends ActionBarActivity implements NombreDialogFragment
         Log.i("MILOG", "Guardamos el backup");
         backup.guardarBackup();
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_historial, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        switch(id){
-
-            case R.id.borrarhistorial:
-                // Borramos todas las partidas que tenemos guardadas
-                backup.deleteAll();
-                // Actualizamos el backup
-                // Almacenamos
-                Log.i("MILOG", "Guardamos el backup");
-                backup.guardarBackup();
-                // Actualizamos la lista
-                adaptador.notifyDataSetChanged();
-
-                break;
-
-            // Fecha de volver atras
-            case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
-                break;
-
-            case R.id.action_settings:
-                break;
-            default:
-                return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
 
     // Adaptador para el layout del listview
     public class AdaptadorHistorial extends ArrayAdapter<Partida> {
