@@ -34,12 +34,16 @@ import java.util.List;
 
 public class SetupJugadores extends ActionBarActivity {
 
+    public static final int NORMAL = 0;
+    public static final int DUELO = 1;
+    
     private ListView listviewjugadores;
     private int jugadores = 0;
+    private int tipopartida = NORMAL;
     private List<JugadorSetup> players;
     int mSelectedColorCal0;
     ColorPickerDialog colorcalendar;
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +56,7 @@ public class SetupJugadores extends ActionBarActivity {
         // Obtenemos el numero de jugadores
         Bundle bundle = getIntent().getExtras();
         jugadores = bundle.getInt("numjugadores");
+        tipopartida = bundle.getInt("duelo");
         //players = new JugadorSetup[jugadores];
         players = new ArrayList<JugadorSetup>();
         for(int i = 0; i < jugadores; i++){
@@ -155,16 +160,24 @@ public class SetupJugadores extends ActionBarActivity {
         Log.i("MILOG", "Guardamos el backup");
         backup.guardarBackup();
 
-        // Lanzamos la pantalla de nueva partida, pasando el identificador de la partida creada
-        Intent intentpartida = new Intent(getApplicationContext(), Tanteo.class);
+        // Comprobamos si es un tipo de partida normal o una partida con opcion de duelo
         // Pasamos como datos el numero de jugadores seleccionados
+        Intent intentpartida;
         Bundle b = new Bundle();
         Log.i("MILOG", "Guardamos los parametros para llamar al intent de la partida");
         b.putString("idpartida", identificador);
+        
+        if(tipopartida == NORMAL){
+            // Lanzamos la pantalla de nueva partida, pasando el identificador de la partida creada
+            intentpartida = new Intent(getApplicationContext(), Tanteo.class);    
+        }else{
+            intentpartida = new Intent(getApplicationContext(), Duelo.class);    
+        }
+        
         //Lo anadimos al intent
         intentpartida.putExtras(b);
         // Lanzamos la actividad
-        Log.i("MILOG", "Lanzamos la pantalla de tanteo");
+        Log.i("MILOG", "Lanzamos la pantalla de tanteo/duelo");
         startActivity(intentpartida);
     }
 
