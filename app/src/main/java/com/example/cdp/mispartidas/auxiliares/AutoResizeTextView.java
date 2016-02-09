@@ -1,3 +1,5 @@
+package com.example.cdp.mispartidas.auxiliares
+
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.Resources;
