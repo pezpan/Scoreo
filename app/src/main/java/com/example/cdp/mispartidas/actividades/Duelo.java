@@ -102,9 +102,9 @@ public class Duelo extends ActionBarActivity implements NumeroTanteoDialogFragme
 
             // Rellenamos las vistas
             nombreA.setText(partida.getJugadores().get(0).getNombre());
-            puntosA.setText(partida.getJugadores().get(0).getPuntuacion());
+            puntosA.setText(String.valueOf(partida.getJugadores().get(0).getPuntuacion()));
             nombreB.setText(partida.getJugadores().get(1).getNombre());
-            puntosB.setText(partida.getJugadores().get(1).getPuntuacion());
+            puntosB.setText(String.valueOf(partida.getJugadores().get(1).getPuntuacion()));
 
         } else {
             Toast.makeText(this, "No se ha encontrado la partida " + identificador, Toast.LENGTH_SHORT).show();
@@ -122,6 +122,11 @@ public class Duelo extends ActionBarActivity implements NumeroTanteoDialogFragme
         // Actualizamos los jugadores
         int tantos = partida.getJugadores().get(position).getPuntuacion();
         partida.getJugadores().get(position).setPuntuacion(tantos + number);
+
+        if(position == 0)
+            puntosA.setText(String.valueOf(tantos));
+        else
+            puntosB.setText(String.valueOf(tantos));
 
         // Actualizamos el backup
         actualizar(indice);
@@ -159,12 +164,21 @@ public class Duelo extends ActionBarActivity implements NumeroTanteoDialogFragme
                     break;
 
                 case R.id.sumardueloA:
+                    Log.i("MILOG", "Sumamos uno");
+                    int tantosa = partida.getJugadores().get(position).getPuntuacion();
+                    partida.getJugadores().get(position).setPuntuacion(tantosa + 1);
+                    puntosA.setText(String.valueOf(tantosa));
+                    //puntosA.invalidate();
+                    // Actualizamos el backup
+                    actualizar(indice);
+                    break;
                 case R.id.sumardueloB:
                     try {
                         Log.i("MILOG", "Sumamos uno");
-                        int tantos = partida.getJugadores().get(position).getPuntuacion();
-                        partida.getJugadores().get(position).setPuntuacion(tantos + 1);
-                        puntosA.invalidate();
+                        int tantosb = partida.getJugadores().get(position).getPuntuacion();
+                        partida.getJugadores().get(position).setPuntuacion(tantosb + 1);
+                        puntosB.setText(String.valueOf(tantosb));
+                        //puntosA.invalidate();
                         // Actualizamos el backup
                         actualizar(indice);
                     } catch (Exception ex) {
@@ -173,12 +187,21 @@ public class Duelo extends ActionBarActivity implements NumeroTanteoDialogFragme
                     break;
 
                 case R.id.restardueloA:
+                    // Decrementamos el tanteo
+                    Log.i("MILOG", "Restamos uno");
+                    int tantosaa = partida.getJugadores().get(position).getPuntuacion();
+                    partida.getJugadores().get(position).setPuntuacion(tantosaa - 1);
+                    puntosA.setText(String.valueOf(tantosaa));
+                    // Actualizamos el backup
+                    actualizar(indice);
+
                 case R.id.restardueloB:
                     try {
                         // Decrementamos el tanteo
                         Log.i("MILOG", "Restamos uno");
-                        int tantos = partida.getJugadores().get(position).getPuntuacion();
-                        partida.getJugadores().get(position).setPuntuacion(tantos - 1);
+                        int tantosbb = partida.getJugadores().get(position).getPuntuacion();
+                        partida.getJugadores().get(position).setPuntuacion(tantosbb - 1);
+                        puntosB.setText(String.valueOf(tantosbb));
                         // Actualizamos el backup
                         actualizar(indice);
                     } catch (Exception ex) {
