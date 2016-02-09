@@ -76,6 +76,8 @@ public class Backup {
     }
     
     public List<Partida> getBackup(){
+        // Devolvemos las partidas por orden cronologico, las mas recientes primero
+        ordenarPartidas(mibackup.partidas);
         return mibackup.partidas;
     }
     
