@@ -22,6 +22,7 @@
     <string name="context_borrar">Borrar</string>
     <string name="dialogonombre">Nuevo nombre</string>
     <string name="vista_duelo">Pantalla duelo</string>
+    <string name="vista_lista">Pantalla lista</string>
     <string name="confirmacion">¿Estas seguro?</string>
 
     <string name="ns_menu_main_header_dash">Dashclock</string>
