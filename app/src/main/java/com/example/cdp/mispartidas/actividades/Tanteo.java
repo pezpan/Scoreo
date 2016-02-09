@@ -280,6 +280,12 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
                 Log.i("MILOG", "Lanzamos la pantalla de duelo desde tanteo");
                 startActivity(intentduelo);
                 break;
+                
+            case R.id.ordenarpartida:
+                partida.ordenarJugadores();
+                // Actualizamos el backup
+                actualizar(indice);
+                break;
             
             default:
                 break;
