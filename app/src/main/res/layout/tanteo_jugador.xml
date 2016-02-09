@@ -33,9 +33,9 @@
         android:layout_gravity="center"/>
 
     <TextView android:id="@+id/puntos"
-        android:layout_width="21dp"
+        android:layout_width="25dp"
         android:layout_height="wrap_content"
-        android:maxWidth="21dp"
+        android:maxWidth="25dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:gravity="center"
