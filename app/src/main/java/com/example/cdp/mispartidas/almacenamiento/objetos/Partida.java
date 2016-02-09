@@ -91,5 +91,24 @@ public class Partida{
 	public void deleteJugador(int indice){
 		this.jugadores.remove(indice);
 	}
+	
+	public void ordenarJugadores(List<Jugador> listajugadores){
+        Collections.sort(listajugadores, new Comparator<Jugador>() {
+            public int compare(Jugador j1, Jugador j2) {
+                Integer puntuacion1 = 0;
+                Integer puntuacion2 = 0;
+                puntuacion1 = j1.getPuntuacion();
+                puntuacion2 = j2.getPuntuacion();
+                
+                return puntuacion1.compareTo(puntuacion2);
+            }
+        });
+        
+        public List<Jugador> getJugadoresOrdenados() {
+        	ordenarJugadores(this.jugadores);
+		return jugadores;
+	}
+    }
+
 
 }
