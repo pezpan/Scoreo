@@ -18,6 +18,7 @@
     <string name="sumar">Sumar</string>
     <string name="restar">Restar</string>
     <string name="reiniciar_partida">Reiniciar la partida</string>
+    <string name="ordenar_partida">Ordenar descendente</string>
     <string name="borrar_historial">Borrar el historial</string>
     <string name="context_borrar">Borrar</string>
     <string name="dialogonombre">Nuevo nombre</string>
