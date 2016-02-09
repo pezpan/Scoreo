@@ -92,8 +92,8 @@ public class Partida{
 		this.jugadores.remove(indice);
 	}
 	
-	public void ordenarJugadores(List<Jugador> listajugadores){
-        Collections.sort(listajugadores, new Comparator<Jugador>() {
+	public void ordenarJugadores(){
+        Collections.sort(this.jugadores, new Comparator<Jugador>() {
             public int compare(Jugador j1, Jugador j2) {
                 Integer puntuacion1 = 0;
                 Integer puntuacion2 = 0;
