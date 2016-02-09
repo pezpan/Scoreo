@@ -330,7 +330,6 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
                 }
                 // Actualizamos la vista
                 actionMode.finish();
-                actionMode = null;
                 break;
         }
         // Actualizamos el backup
