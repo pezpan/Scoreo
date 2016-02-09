@@ -1,4 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+  
+  <item
+        android:id="@+id/reiniciarpartida"
+        android:title="@string/reiniciar_partida"
+        app:showAsAction="always"/>   
+        
+  <item
+        android:id="@+id/partidasguardadas"
+        android:title="@string/partidas_guardadas"
+        android:icon="@drawable/ic_folder_white_24dp"
+        app:showAsAction="always"/>
+        
+  <item
+        android:id="@+id/modolista"
+        android:title="@string/vista_lista"
+        app:showAsAction="never"/>    
 
 </menu>
