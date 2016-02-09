@@ -19,7 +19,7 @@ public class MainActivity extends ActionBarActivity implements NumeroJugadoresDi
     private MainListener listeneropciones;
     private Backup backup;
     private String identificadorultima;
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,15 +83,16 @@ public class MainActivity extends ActionBarActivity implements NumeroJugadoresDi
     @Override
     // Sobreescribimos el método de la interfaz para obtener el numero de jugadores seleccionados
     public void onNumberSelected(int number) {
-        llamarSetupJugadores(number);
+        llamarSetupJugadores(number, SetupJugadores.NORMAL);
     }
     
-    public void llamarSetupJugadores(int numero){
+    public void llamarSetupJugadores(int numero, int duelo){
         // Llamamos al intent para la configuracion inicial de la partida
         Intent intentjugadores = new Intent(this, SetupJugadores.class);
         // Pasamos como datos el numero de jugadores seleccionados
         Bundle b = new Bundle();
         b.putInt("numjugadores", numero);
+        b.puntInt("duelo", duelo);
         //Lo anadimos al intent
         intentjugadores.putExtras(b);
         // Lanzamos la actividad
@@ -120,7 +121,7 @@ public class MainActivity extends ActionBarActivity implements NumeroJugadoresDi
                     break;
                 case R.id.botonduelo:
                     // Creamos una partida de dos jugadores
-                    llamarSetupJugadores(2);
+                    llamarSetupJugadores(2, SetupJugadores.DUELO);
                     break;
                 case R.id.botoncontinuar:
                     // Obtenemos la ultima partida modificada
