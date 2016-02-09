@@ -97,6 +97,68 @@ public class Duelo extends ActionBarActivity implements NumeroTanteoDialogFragme
             Toast.makeText(this, "No se ha encontrado la partida " + identificador, Toast.LENGTH_SHORT).show();
         }
     }
+    
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_duelo, menu);
+        return true;
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        switch(id){
+            case R.id.partidasguardadas:
+                // Llamamos al intent de nuestras partidas guardadas
+                Intent intenthistorial = new Intent(this, Historial.class);
+                startActivity(intenthistorial);
+                break;
+
+            case R.id.reiniciarpartida:
+                // Reiniciamos la partida
+                partida.reiniciarPartida();
+                for(int i=0; i < jugadores.size(); i++){
+                    ViewHolder holder = (ViewHolder) jugadores[i].getTag();
+                    holder.puntosjugador.setText(String.valueOf(0));
+                }
+                // Actualizamos el backup
+                actualizar(indice);
+                break;
+
+            case R.id.action_settings:
+                break;
+                
+            case R.id.home:
+                // Fecha de volver atras
+                NavUtils.navigateUpFromSameTask(this);
+                break;
+                
+            case R.id.modolista:
+                // Fecha de volver atras
+                // Lanzamos la pantalla de nueva partida, pasando el identificador de la partida creada
+                Intent intenttanteo = new Intent(getApplicationContext(), Tanteo.class);
+                // Pasamos como datos el numero de jugadores seleccionados
+                Bundle b = new Bundle();
+                Log.i("MILOG", "Guardamos los parametros desde el duelo para llamar al intent de tanteo");
+                b.putString("idpartida", partida.getIdentificador());
+                //Lo anadimos al intent
+                intenttanteo.putExtras(b);
+                // Lanzamos la actividad
+                Log.i("MILOG", "Lanzamos la pantalla de tanteo desde duelo");
+                startActivity(intenttanteo);
+                break;
+            
+            default:
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 
     // Sobreescribimos el metodo del dialogo para elegir el numero
     @Override
