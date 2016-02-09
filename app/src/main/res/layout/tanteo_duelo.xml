@@ -68,20 +68,24 @@
                 android:gravity="center"
                 android:paddingTop="10dp"
                 android:textSize="20dp"
+                android:maxLines="1"
+                android:ellipsize="marquee"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:textColor="@android:color/black" />
 
-            <TextView
+            <AutoResizeTextView
                 android:id="@+id/tantosduelo"
                 android:layout_alignParentLeft="false"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical|center_horizontal"
-                android:textSize="80dp"
+                android:textSize="100dp"
                 android:layout_weight="1"
                 android:textStyle="bold"
+                android:maxLines="1"
+                android:ellipsize="none"
                 android:layout_gravity="center"
                 android:textColor="@android:color/black"
                 android:layout_below="@+id/nombrejugador"
