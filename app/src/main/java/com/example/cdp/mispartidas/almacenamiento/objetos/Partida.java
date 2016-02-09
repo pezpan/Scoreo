@@ -3,6 +3,8 @@ package com.example.cdp.mispartidas.almacenamiento.objetos;
 import com.example.cdp.mispartidas.auxiliares.Utilidades;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -94,20 +96,15 @@ public class Partida{
 	
 	public void ordenarJugadores(){
         Collections.sort(this.jugadores, new Comparator<Jugador>() {
-            public int compare(Jugador j1, Jugador j2) {
-                Integer puntuacion1 = 0;
-                Integer puntuacion2 = 0;
-                puntuacion1 = j1.getPuntuacion();
-                puntuacion2 = j2.getPuntuacion();
-                
-                return puntuacion1.compareTo(puntuacion2);
-            }
-        });
-        
-        public List<Jugador> getJugadoresOrdenados() {
-        	ordenarJugadores(this.jugadores);
-		return jugadores;
-	}
+			public int compare(Jugador j1, Jugador j2) {
+				Integer puntuacion1 = 0;
+				Integer puntuacion2 = 0;
+				puntuacion1 = j1.getPuntuacion();
+				puntuacion2 = j2.getPuntuacion();
+
+				return puntuacion1.compareTo(puntuacion2);
+			}
+		});
     }
 
 

@@ -92,7 +92,7 @@ public class MainActivity extends ActionBarActivity implements NumeroJugadoresDi
         // Pasamos como datos el numero de jugadores seleccionados
         Bundle b = new Bundle();
         b.putInt("numjugadores", numero);
-        b.puntInt("duelo", duelo);
+        b.putInt("duelo", duelo);
         //Lo anadimos al intent
         intentjugadores.putExtras(b);
         // Lanzamos la actividad

@@ -3,10 +3,15 @@ package com.example.cdp.mispartidas.actividades;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.drawable.GradientDrawable;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -29,6 +34,7 @@ public class Duelo extends ActionBarActivity implements NumeroTanteoDialogFragme
     private int indice;
     private Partida partida;
     private static Context context;
+    View jugadores[] = new View[2];
 
     private ImageButton botonsumar;
     private ImageButton botonrestar;
@@ -63,13 +69,12 @@ public class Duelo extends ActionBarActivity implements NumeroTanteoDialogFragme
             setTitle(partida.getNombre().toString());
             
             // Obtenemos los dos layouts de los jugadores
-            View jugadores[] = new View[2];
             jugadores[0] = (View)findViewById( R.id.jugador0 );
             jugadores[1] = (View)findViewById( R.id.jugador1 );
 
             // Definimos los listeners y los incluimos en las vistas
             // Actualizamos los valores a mostrar
-            for(int i = 0; i < jugadores.size(); i++){
+            for(int i = 0; i < jugadores.length; i++){
                 ViewHolder holder = new ViewHolder();
                 
                 CustomListener listener = new CustomListener(i);
@@ -131,7 +136,7 @@ public class Duelo extends ActionBarActivity implements NumeroTanteoDialogFragme
             case R.id.reiniciarpartida:
                 // Reiniciamos la partida
                 partida.reiniciarPartida();
-                for(int i=0; i < jugadores.size(); i++){
+                for(int i=0; i < jugadores.length; i++){
                     ViewHolder holder = (ViewHolder) jugadores[i].getTag();
                     holder.puntosjugador.setText(String.valueOf(0));
                 }
@@ -181,7 +186,7 @@ public class Duelo extends ActionBarActivity implements NumeroTanteoDialogFragme
 
         // Actualizamos la vista
         ViewHolder holder = (ViewHolder) jugadores[position].getTag();
-        holder.puntosjugador.setText(String.valueOf(tantos));
+        holder.puntosjugador.setText(String.valueOf(tantos + numero));
 
         // Actualizamos el backup
         actualizar(indice);
@@ -197,6 +202,7 @@ public class Duelo extends ActionBarActivity implements NumeroTanteoDialogFragme
 
         @Override
         public void onClick(View v) {
+            ViewHolder holder;
             //Comprobamos que vista ha lanzado el evento y lo gestionamos
             switch (v.getId()) {
                 case R.id.tantosduelo:
@@ -210,7 +216,7 @@ public class Duelo extends ActionBarActivity implements NumeroTanteoDialogFragme
                         bundles.putInt("posicion", position);
                         fragmento.setArguments(bundles);
                         Log.i("MILOG", "Mostramos el dialog para elegir el numero que queremos modificar");
-                        FragmentManager fragmentManager = ((Activity) context).getFragmentManager();
+                        FragmentManager fragmentManager = getFragmentManager();
                         fragmento.show(fragmentManager, "Dialogo_tanteo");
                     } catch (Exception ex) {
                         Toast.makeText(Duelo.context, "Se produjo un error al modificar el tanteo", Toast.LENGTH_SHORT).show();
@@ -221,7 +227,7 @@ public class Duelo extends ActionBarActivity implements NumeroTanteoDialogFragme
                     Log.i("MILOG", "Sumamos uno");
                     int suma = partida.getJugadores().get(position).getPuntuacion();
                     partida.getJugadores().get(position).setPuntuacion(suma + 1);
-                    ViewHolder holder = (ViewHolder) jugadores[position].getTag();
+                    holder = (ViewHolder) jugadores[position].getTag();
                     holder.puntosjugador.setText(String.valueOf(suma + 1));
                     // Actualizamos el backup
                     actualizar(indice);
@@ -232,13 +238,13 @@ public class Duelo extends ActionBarActivity implements NumeroTanteoDialogFragme
                     Log.i("MILOG", "Restamos uno");
                     int resta = partida.getJugadores().get(position).getPuntuacion();
                     partida.getJugadores().get(position).setPuntuacion(resta - 1);
-                    ViewHolder holder = (ViewHolder) jugadores[position].getTag();
+                    holder = (ViewHolder) jugadores[position].getTag();
                     holder.puntosjugador.setText(String.valueOf(resta - 1));
                     // Actualizamos el backup
                     actualizar(indice);
                     
                 case R.id.dadoduelo:
-                    ViewHolder holder = (ViewHolder) jugadores[position].getTag();
+                    holder = (ViewHolder) jugadores[position].getTag();
                     holder.puntosdado.setText(String.valueOf(Dado.tirar()));
                     break;
             }
@@ -265,7 +271,7 @@ public class Duelo extends ActionBarActivity implements NumeroTanteoDialogFragme
         ImageButton botonmas;
         ImageButton botonmenos;
         ImageButton botondado;
-        AdaptadorTanteo.CustomListener listener;
+        CustomListener listener;
     }
 
 }
