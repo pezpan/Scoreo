@@ -50,7 +50,17 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".actividades.MainActivity" />
         </activity>
-        <activity android:name=".actividades.Duelo"></activity>
+        <activity 
+            android:name=".actividades.Duelo"
+            android:label="@string/title_activity_tanteo"
+            android:screenOrientation="portrait">
+            
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".actividades.MainActivity" />
+                
+        </activity>
     </application>
 
 </manifest>
