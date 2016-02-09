@@ -89,6 +89,15 @@ public class Duelo extends ActionBarActivity implements NumeroTanteoDialogFragme
                 holder.botondado = (ImageButton) jugadores[i].findViewById(R.id.dadoduelo);
                 holder.botondado.setOnClickListener(holder.listener);
                 
+                // Definimos los colores de los botones
+                GradientDrawable bgShapemas = (GradientDrawable)holder.botonmas.getBackground();
+                bgShapemas.mutate();
+                bgShapemas.setColor(partida.getJugadores().get(i).getColor());
+                // boton menos
+                GradientDrawable bgShapemenos = (GradientDrawable)holder.botonmenos.getBackground();
+                bgShapemenos.mutate();
+                bgShapemenos.setColor(partida.getJugadores().get(i).getColor());
+                
                 // Guardamos en el layout apropiado
                 jugadores[i].setTag(holder);
             }
