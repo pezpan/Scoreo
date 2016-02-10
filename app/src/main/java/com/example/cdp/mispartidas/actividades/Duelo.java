@@ -71,6 +71,9 @@ public class Duelo extends ActionBarActivity implements NumeroTanteoDialogFragme
             // Obtenemos los dos layouts de los jugadores
             jugadores[0] = (View)findViewById( R.id.jugador0 );
             jugadores[1] = (View)findViewById( R.id.jugador1 );
+            
+            // Rotamos el layout del primer jugador
+            jugadores[0].setRotation(180.0f);
 
             // Definimos los listeners y los incluimos en las vistas
             // Actualizamos los valores a mostrar
