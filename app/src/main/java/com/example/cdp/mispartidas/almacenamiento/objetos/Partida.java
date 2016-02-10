@@ -94,15 +94,17 @@ public class Partida{
 		this.jugadores.remove(indice);
 	}
 	
-	public void ordenarJugadores(){
+	public void ordenarJugadores(boolean ascendente){
         Collections.sort(this.jugadores, new Comparator<Jugador>() {
 			public int compare(Jugador j1, Jugador j2) {
 				Integer puntuacion1 = 0;
 				Integer puntuacion2 = 0;
 				puntuacion1 = j1.getPuntuacion();
 				puntuacion2 = j2.getPuntuacion();
-
-				return puntuacion1.compareTo(puntuacion2);
+				if(ascendente)
+					return puntuacion1.compareTo(puntuacion2);
+				else
+					return puntuacion2.compareTo(puntuacion1);
 			}
 		});
     }
