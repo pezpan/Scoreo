@@ -77,7 +77,7 @@ public class Backup {
     
     public List<Partida> getBackup(){
         // Devolvemos las partidas por orden cronologico, las mas recientes primero
-        ordenarPartidas(mibackup.partidas);
+        ordenarPartidas(mibackup.partidas, false);
         return mibackup.partidas;
     }
     
@@ -117,14 +117,14 @@ public class Backup {
         if((this.partidas != null) && (this.partidas.size() != 0)){
             List<Partida> auxpartidas = new ArrayList<Partida>();
             auxpartidas = this.partidas;
-            ordenarPartidas(auxpartidas);
+            ordenarPartidas(auxpartidas, true);
             // Obtenemos la primera partida de la lista ordenada
             identificador = auxpartidas.get(auxpartidas.size() - 1).getIdentificador();
         }
         return identificador;
     }
     
-    public void ordenarPartidas(List<Partida> listapartidas){
+    public void ordenarPartidas(List<Partida> listapartidas, boolean ascendente){
         Collections.sort(listapartidas, new Comparator<Partida>() {
             public int compare(Partida p1, Partida p2) {
                 Date fechao1 = null;
@@ -136,7 +136,10 @@ public class Backup {
                 }catch (Exception ex){
                     Log.i("MILOG", "Error al parsear las fechas");
                 }
-                return fechao1.compareTo(fechao2);
+                if(ascendente)
+                    return fechao1.compareTo(fechao2);
+                else
+                    return fechao2.compareTo(fechao1);
             }
         });
     }
