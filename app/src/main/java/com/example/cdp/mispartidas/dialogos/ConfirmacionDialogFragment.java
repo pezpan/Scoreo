@@ -22,6 +22,7 @@ public class ConfirmacionDialogFragment extends DialogFragment {
     public void getParameters(){
         Bundle bundle = getArguments();
         this.posicion = bundle.getInt("posicion");
+        this.opcion = bundle.getInt("opcion");
     }
 
     // Container Activity must implement this interface
@@ -35,8 +36,6 @@ public class ConfirmacionDialogFragment extends DialogFragment {
         //final Activity actividad = getActivity();
         // Obtenemos los parametros
         getParameters();
-        final int posicion = this.posicion;
-        final int opcion = this.opcion;
 
         // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());

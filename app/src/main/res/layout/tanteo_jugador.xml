@@ -32,7 +32,7 @@
         android:focusableInTouchMode="false"
         android:layout_gravity="center"/>
 
-    <com.example.cdp.mispartidas.auxiliares.AutoResizeTextView android:id="@+id/puntos"
+    <TextView android:id="@+id/puntos"
         android:layout_width="27dp"
         android:layout_height="wrap_content"
         android:maxWidth="27dp"
