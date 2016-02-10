@@ -282,7 +282,7 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
                 break;
                 
             case R.id.ordenarpartida:
-                partida.ordenarJugadores();
+                partida.ordenarJugadores(false);
                 // Actualizamos el backup
                 actualizar(indice);
                 break;
