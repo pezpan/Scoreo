@@ -3,15 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/addjugador"
-        android:title="@string/nuevo_jugador"
-        android:icon="@drawable/ic_person_add_white_24dp"
+        android:id="@+id/tirardado"
+        android:title="@string/tirar_dado"
+        android:icon="@drawable/dice"
         app:showAsAction="always"/>
 
     <item
         android:id="@+id/partidasguardadas"
         android:title="@string/partidas_guardadas"
         android:icon="@drawable/ic_folder_white_24dp"
+        app:showAsAction="always"/>
+        
+    <item
+        android:id="@+id/addjugador"
+        android:title="@string/nuevo_jugador"
+        android:icon="@drawable/ic_person_add_white_24dp"
         app:showAsAction="always"/>
         
     <item
