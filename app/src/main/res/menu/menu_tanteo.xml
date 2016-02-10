@@ -23,17 +23,22 @@
     <item
         android:id="@+id/reiniciarpartida"
         android:title="@string/reiniciar_partida"
-        app:showAsAction="never"/>    
-        
-    <item
-        android:id="@+id/mododuelo"
-        android:title="@string/vista_duelo"
-        app:showAsAction="never"/>  
+        app:showAsAction="never"/>   
         
     <item
         android:id="@+id/ordenarpartida"
         android:title="@string/ordenar_partida"
         app:showAsAction="never"/> 
+        
+    <item
+        android:id="@+id/jugadorinicial"
+        android:title="@string/jugador_inicial"
+        app:showAsAction="never"/>  
+        
+    <item
+        android:id="@+id/mododuelo"
+        android:title="@string/vista_duelo"
+        app:showAsAction="never"/>
 
 
 </menu>
