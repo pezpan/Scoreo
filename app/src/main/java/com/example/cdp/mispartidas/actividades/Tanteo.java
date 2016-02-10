@@ -296,6 +296,16 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
                 builder.setPositiveButton("OK", null);
                 builder.show();
                 break;
+                
+            case R.id.jugadorinicial:
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                TextView myMsg = new TextView(this);
+                myMsg.setText(partida.getJugadorAleatorio());
+                myMsg.setGravity(Gravity.CENTER_HORIZONTAL);
+                builder.setView(myMsg);
+                builder.setPositiveButton("OK", null);
+                builder.show();
+                break;
             
             default:
                 break;
