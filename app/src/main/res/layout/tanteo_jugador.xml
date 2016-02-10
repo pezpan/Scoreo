@@ -40,6 +40,7 @@
         android:layout_marginRight="10dp"
         android:gravity="center"
         android:textSize="20sp"
+        android:maxLines="1"
         android:textColor="@color/darkText"
         android:fontFamily="sans-serif"
         android:focusable="false"
