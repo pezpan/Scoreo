@@ -286,6 +286,16 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
                 // Actualizamos el backup
                 actualizar(indice);
                 break;
+                
+            case R.id.tirardado:
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                TextView myMsg = new TextView(this);
+                myMsg.setText(String.valueOf(Dado.tirar()));
+                myMsg.setGravity(Gravity.CENTER_HORIZONTAL);
+                builder.setView(myMsg);
+                builder.setPositiveButton("OK", null);
+                builder.show();
+                break;
             
             default:
                 break;
