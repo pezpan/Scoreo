@@ -27,7 +27,7 @@
         android:src="@drawable/ic_remove_white_24dp"
         android:background="@drawable/botonredondo"
         android:scaleType="fitXY"
-        android:padding="10dp"
+        android:padding="8dp"
         android:focusable="false"
         android:focusableInTouchMode="false"
         android:layout_gravity="center"/>
@@ -52,7 +52,7 @@
         android:src="@drawable/ic_add_white_24dp"
         android:background="@drawable/botonredondo"
         android:scaleType="fitXY"
-        android:padding="10dp"
+        android:padding="8dp"
         android:focusable="false"
         android:focusableInTouchMode="false"
         android:layout_gravity="center"/>
