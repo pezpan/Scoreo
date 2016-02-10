@@ -82,7 +82,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical|center_horizontal"
-                android:textSize="100dp"
+                android:textSize="150dp"
                 android:layout_weight="1"
                 android:textStyle="bold"
                 android:maxLines="1"
