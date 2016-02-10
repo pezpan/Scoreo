@@ -26,6 +26,7 @@
     <string name="vista_lista">Pantalla lista</string>
     <string name="confirmacion">¿Estas seguro?</string>
     <string name="tirar_dado">Tirar el dado</string>
+    <string name="jugador_inicial">Jugador inicial</string>
 
     <string name="ns_menu_main_header_dash">Dashclock</string>
     <string name="ns_menu_main_row_dash_original">Original ColorPreference</string>
