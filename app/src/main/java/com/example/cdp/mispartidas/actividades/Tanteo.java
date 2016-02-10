@@ -126,6 +126,7 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
                 switch (item.getItemId()) {
                     // Borrar jugador
                     case R.id.menu_borrar:
+                         Log.i("MILOG", "Borramos el jugador");
                         // Lanzamos el dialog
                         ConfirmacionDialogFragment fragmentoconfirmacion = new ConfirmacionDialogFragment();
                         Bundle bundlesborrar = new Bundle();
@@ -137,6 +138,7 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
                         break;
                     // Cambiar el color del jugador
                     case R.id.menu_color:
+                         Log.i("MILOG", "Cambiamos el color del jugador");
                         // Mostramos el dialogo para cambiar el color
                         ColorListener colorlistener = new ColorListener(adaptador.getCurrentCheckedPosition());
                         colorlistener.muestraColores();
@@ -144,7 +146,7 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
                     // Cambiamos el nombre del jugador
                     case R.id.menu_nombre:
                         // Decrementamos el tanteo
-                        Log.i("MILOG", "Cambiamos el nombre de la partida");
+                        Log.i("MILOG", "Cambiamos el nombre del jugador");
                         // Lanzamos el dialog
                         NombreDialogFragment fragmentonombre = new NombreDialogFragment();
                         Bundle bundles = new Bundle();
@@ -158,6 +160,7 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
                         break;
                         // Reiniciamos el jugador
                     case R.id.menu_reiniciar:
+                         Log.i("MILOG", "Reiniciamos la partida");
                         // Reiniciamos la puntuacion
                         for (Integer indice : adaptador.getCurrentCheckedPosition())
                         {   
@@ -233,6 +236,7 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
         switch(id){
             // Anadimos un nuevo jugador a la partida
             case R.id.addjugador:
+                Log.i("MILOG", "Anadimos un jugador a la partida");
                 numjugadores = listviewjugadores.getAdapter().getCount();
                 Jugador player = new Jugador();
                 // Ponemos un nombre por defecto
@@ -249,12 +253,14 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
                 break;
 
             case R.id.partidasguardadas:
+                Log.i("MILOG", "Vamos al historial");
                 // Llamamos al intent de nuestras partidas guardadas
                 Intent intenthistorial = new Intent(this, Historial.class);
                 startActivity(intenthistorial);
                 break;
 
             case R.id.reiniciarpartida:
+                Log.i("MILOG", "Reiniciamos la partida");
                 // Reiniciamos la partida
                 partida.reiniciarPartida();
                 // Actualizamos el backup
@@ -262,13 +268,16 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
                 break;
 
             case R.id.action_settings:
+                Log.i("MILOG", "Settings");
                 break;
             case R.id.home:
+                Log.i("MILOG", "Volvemos a la pagina principal");
                 // Fecha de volver atras
                 NavUtils.navigateUpFromSameTask(this);
                 break;
                 
             case R.id.mododuelo:
+                Log.i("MILOG", "Vamos a la pantalla de duelo");
                 // Fecha de volver atras
                 // Lanzamos la pantalla de nueva partida, pasando el identificador de la partida creada
                 Intent intentduelo = new Intent(getApplicationContext(), Duelo.class);
@@ -284,12 +293,14 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
                 break;
                 
             case R.id.ordenarpartida:
+                Log.i("MILOG", "Ordenamos la partida");
                 partida.ordenarJugadores(false);
                 // Actualizamos el backup
                 actualizar(indice);
                 break;
                 
             case R.id.tirardado:
+                Log.i("MILOG", "Tiramos el dado");
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 TextView myMsg = new TextView(this);
                 myMsg.setText(String.valueOf(Dado.tirar()));
@@ -300,6 +311,7 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
                 break;
                 
             case R.id.jugadorinicial:
+                Log.i("MILOG", "Elegimos el jugador inicial");
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 TextView myMsg = new TextView(this);
                 myMsg.setText(partida.getJugadorAleatorio());
@@ -349,6 +361,7 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
     @Override
     public void onAceptarSelected(int opcion, int position) {
         switch(opcion){
+            Log.i("MILOG", "Confirmamos la opcion");
             case ConfirmacionDialogFragment.BORRAR_JUGADOR:
                 // Ordenamos la lista en orden inverso para un borrado seguro
                 List<Integer> selected = adaptador.getCurrentCheckedPosition();
