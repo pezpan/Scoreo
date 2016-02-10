@@ -3,5 +3,5 @@
     android:shape="rectangle"
     android:id="@+id/sombraboton">
     <solid android:color="#9E9E9E" />
-    <corners android:radius="24dp"/>
+    <corners android:radius="25dp"/>
 </shape>
