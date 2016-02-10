@@ -245,6 +245,7 @@ public class Duelo extends ActionBarActivity implements NumeroTanteoDialogFragme
                     holder.puntosjugador.setText(String.valueOf(resta - 1));
                     // Actualizamos el backup
                     actualizar(indice);
+                    break;
                     
                 case R.id.dadoduelo:
                     holder = (ViewHolder) jugadores[position].getTag();
