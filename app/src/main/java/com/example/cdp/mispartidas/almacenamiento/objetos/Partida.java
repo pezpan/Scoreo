@@ -107,7 +107,12 @@ public class Partida{
 					return puntuacion2.compareTo(puntuacion1);
 			}
 		});
-    }
+    	}
+    	
+    	public String getJugadorAleatorio(){
+    		Random randomizer = new Random();
+		return(jugadores.get(randomizer.nextInt(list.size())).getNombre());
+    	}
 
 
 }
