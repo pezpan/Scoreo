@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -172,7 +173,7 @@ public class Historial extends ActionBarActivity implements NombreDialogFragment
                     fragmentonombre.setArguments(bundles);
                     FragmentManager fragmentManagernombre = this.getFragmentManager();
                     // Hacemos que aparezca el teclado sin necesidad de seleccionar el edittext
-                    fragmentManagernombre.getWindow().setSoftInputMode(LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+                    //fragmentManagernombre.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
                     fragmentonombre.show(fragmentManagernombre, "Dialogo_nombre");
                 } catch (Exception ex) {
                     Toast.makeText(this.getApplicationContext(), "Se produjo un error al cambiar el nombre", Toast.LENGTH_SHORT).show();

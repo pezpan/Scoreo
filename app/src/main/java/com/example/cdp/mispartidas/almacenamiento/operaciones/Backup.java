@@ -124,7 +124,7 @@ public class Backup {
         return identificador;
     }
     
-    public void ordenarPartidas(List<Partida> listapartidas, boolean ascendente){
+    public void ordenarPartidas(List<Partida> listapartidas, final boolean ascendente){
         Collections.sort(listapartidas, new Comparator<Partida>() {
             public int compare(Partida p1, Partida p2) {
                 Date fechao1 = null;

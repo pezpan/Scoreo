@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 
 public class Partida{
@@ -94,14 +95,14 @@ public class Partida{
 		this.jugadores.remove(indice);
 	}
 	
-	public void ordenarJugadores(boolean ascendente){
+	public void ordenarJugadores(final boolean ascendente){
         Collections.sort(this.jugadores, new Comparator<Jugador>() {
 			public int compare(Jugador j1, Jugador j2) {
 				Integer puntuacion1 = 0;
 				Integer puntuacion2 = 0;
 				puntuacion1 = j1.getPuntuacion();
 				puntuacion2 = j2.getPuntuacion();
-				if(ascendente)
+				if (ascendente)
 					return puntuacion1.compareTo(puntuacion2);
 				else
 					return puntuacion2.compareTo(puntuacion1);
@@ -111,7 +112,7 @@ public class Partida{
     	
     	public String getJugadorAleatorio(){
     		Random randomizer = new Random();
-		return(jugadores.get(randomizer.nextInt(list.size())).getNombre());
+			return(jugadores.get(randomizer.nextInt(jugadores.size())).getNombre());
     	}
 
 

@@ -13,15 +13,18 @@ import android.support.v4.app.NavUtils;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.ActionMode;
 import android.view.ContextMenu;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -31,6 +34,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cdp.mispartidas.Utils;
+import com.example.cdp.mispartidas.auxiliares.Dado;
 import com.example.cdp.mispartidas.auxiliares.Utilidades;
 import com.example.cdp.mispartidas.colorpicker.ColorPickerDialog;
 import com.example.cdp.mispartidas.colorpicker.ColorPickerSwatch;
@@ -155,7 +159,7 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
                         fragmentonombre.setArguments(bundles);
                         FragmentManager fragmentManagernombre = getFragmentManager();
                         // Hacemos que aparezca el teclado sin necesidad de seleccionar el edittext
-                        fragmentManagernombre.getWindow().setSoftInputMode(LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+                        //fragmentonombre.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
                         fragmentonombre.show(fragmentManagernombre, "Dialogo_jugador");
                         break;
                         // Reiniciamos el jugador
@@ -301,24 +305,24 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
                 
             case R.id.tirardado:
                 Log.i("MILOG", "Tiramos el dado");
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                TextView myMsg = new TextView(this);
-                myMsg.setText(String.valueOf(Dado.tirar()));
-                myMsg.setGravity(Gravity.CENTER_HORIZONTAL);
-                builder.setView(myMsg);
-                builder.setPositiveButton("OK", null);
-                builder.show();
+                AlertDialog.Builder builderdado = new AlertDialog.Builder(this);
+                TextView myMsgdado = new TextView(this);
+                myMsgdado.setText(String.valueOf(Dado.tirar()));
+                myMsgdado.setGravity(Gravity.CENTER_HORIZONTAL);
+                builderdado.setView(myMsgdado);
+                builderdado.setPositiveButton("OK", null);
+                builderdado.show();
                 break;
                 
             case R.id.jugadorinicial:
                 Log.i("MILOG", "Elegimos el jugador inicial");
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                TextView myMsg = new TextView(this);
-                myMsg.setText(partida.getJugadorAleatorio());
-                myMsg.setGravity(Gravity.CENTER_HORIZONTAL);
-                builder.setView(myMsg);
-                builder.setPositiveButton("OK", null);
-                builder.show();
+                AlertDialog.Builder builderinicial = new AlertDialog.Builder(this);
+                TextView myMsginicial = new TextView(this);
+                myMsginicial.setText(partida.getJugadorAleatorio());
+                myMsginicial.setGravity(Gravity.CENTER_HORIZONTAL);
+                builderinicial.setView(myMsginicial);
+                builderinicial.setPositiveButton("OK", null);
+                builderinicial.show();
                 break;
             
             default:
@@ -361,8 +365,8 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
     @Override
     public void onAceptarSelected(int opcion, int position) {
         switch(opcion){
-            Log.i("MILOG", "Confirmamos la opcion");
             case ConfirmacionDialogFragment.BORRAR_JUGADOR:
+                Log.i("MILOG", "Confirmamos la opcion");
                 // Ordenamos la lista en orden inverso para un borrado seguro
                 List<Integer> selected = adaptador.getCurrentCheckedPosition();
                 Collections.sort(selected, Collections.reverseOrder());
