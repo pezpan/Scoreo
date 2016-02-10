@@ -152,6 +152,8 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
                         bundles.putInt("posicion", adaptador.getCurrentCheckedPosition().get(0));
                         fragmentonombre.setArguments(bundles);
                         FragmentManager fragmentManagernombre = getFragmentManager();
+                        // Hacemos que aparezca el teclado sin necesidad de seleccionar el edittext
+                        fragmentManagernombre.getWindow().setSoftInputMode(LayoutParams.SOFT_INPUT_STATE_VISIBLE);
                         fragmentonombre.show(fragmentManagernombre, "Dialogo_jugador");
                         break;
                         // Reiniciamos el jugador
