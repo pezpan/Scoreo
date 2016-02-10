@@ -171,6 +171,8 @@ public class Historial extends ActionBarActivity implements NombreDialogFragment
                     bundles.putInt("posicion", info.position);
                     fragmentonombre.setArguments(bundles);
                     FragmentManager fragmentManagernombre = this.getFragmentManager();
+                    // Hacemos que aparezca el teclado sin necesidad de seleccionar el edittext
+                    fragmentManagernombre.getWindow().setSoftInputMode(LayoutParams.SOFT_INPUT_STATE_VISIBLE);
                     fragmentonombre.show(fragmentManagernombre, "Dialogo_nombre");
                 } catch (Exception ex) {
                     Toast.makeText(this.getApplicationContext(), "Se produjo un error al cambiar el nombre", Toast.LENGTH_SHORT).show();
