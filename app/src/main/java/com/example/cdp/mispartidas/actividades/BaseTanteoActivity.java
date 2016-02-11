@@ -201,7 +201,6 @@ public abstract class BaseTanteoActivity extends ActionBarActivity {
   }
   
   // Metodos abstractos
-  protected abstract void onCreateMenu();
   protected abstract int getLayoutResourceId();
   protected abstract int getCreateOptionsMenu();
   protected abstract void gestionarOnCreate();
