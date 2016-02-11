@@ -2,7 +2,7 @@
 
     <string name="app_name">Mis Partidas</string>
     <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Configuracion</string>
     <string name="nueva_partida">Nueva Partida</string>
     <string name="partidas_guardadas">Partidas Guardadas</string>
     <string name="mensaje_jugadores">Numero de jugadores</string>
