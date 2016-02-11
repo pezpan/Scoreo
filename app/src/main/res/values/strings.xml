@@ -27,6 +27,15 @@
     <string name="confirmacion">¿Estas seguro?</string>
     <string name="tirar_dado">Tirar el dado</string>
     <string name="jugador_inicial">Jugador inicial</string>
+    <string name="settings_configuracion">Configuracion</string>
+    <string name="pref_contador_inicial">Contador inicial</string>
+    <string name="pref_incremento">Boton +</string>
+    <string name="pref_valor_inicial">Puntuacion inicial</string>
+    <string name="pref_decremento">Boton -</string>
+    <string name="pref_caras_dado">Nº caras del dado</string>
+    <string name="pref_numero_caras">Numero de caras</string>
+    
+    
 
     <string name="ns_menu_main_header_dash">Dashclock</string>
     <string name="ns_menu_main_row_dash_original">Original ColorPreference</string>
