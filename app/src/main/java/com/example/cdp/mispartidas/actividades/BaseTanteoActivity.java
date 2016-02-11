@@ -117,6 +117,8 @@ public abstract class BaseTanteoActivity extends ActionBarActivity {
 
           case R.id.reiniciarpartida:
               Log.i("MILOG", "Reiniciamos la partida");
+              // Reiniciamos la partida
+              optionReiniciarPartida();
               // Actualizamos el backup
               actualizar(indice);
               break;
@@ -160,8 +162,8 @@ public abstract class BaseTanteoActivity extends ActionBarActivity {
               TextView myMsgdado = new TextView(this);
               myMsgdado.setText(String.valueOf(Dado.tirar()));
               myMsgdado.setGravity(Gravity.CENTER_HORIZONTAL);
-              myMsgdado.setPaddingRelative(10,10,10,10);
-              myMsgdado.setTextSize(20.0);
+              myMsgdado.setPadding(10,10,10,10);
+              myMsgdado.setTextSize(20);
               builderdado.setView(myMsgdado);
               builderdado.setPositiveButton("OK", null);
               builderdado.show();
@@ -173,8 +175,8 @@ public abstract class BaseTanteoActivity extends ActionBarActivity {
               TextView myMsginicial = new TextView(this);
               myMsginicial.setText(partida.getJugadorAleatorio());
               myMsginicial.setGravity(Gravity.CENTER_HORIZONTAL);
-              myMsginicial.setPaddingRelative(10,10,10,10);
-              myMsginicial.setTextSize(20.0);
+              myMsginicial.setPadding(10,10,10,10);
+              myMsginicial.setTextSize(20);
               builderinicial.setView(myMsginicial);
               builderinicial.setPositiveButton("OK", null);
               builderinicial.show();
@@ -202,7 +204,6 @@ public abstract class BaseTanteoActivity extends ActionBarActivity {
   
   // Metodos abstractos
   protected abstract int getLayoutResourceId();
-  protected abstract int getCreateOptionsMenu();
   protected abstract void gestionarOnCreate();
   protected abstract void notificaCambiosInterfaz();
   protected abstract void optionAddJugador();

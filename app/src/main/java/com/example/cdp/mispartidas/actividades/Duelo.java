@@ -39,12 +39,19 @@ public class Duelo extends BaseTanteoActivity implements NumeroTanteoDialogFragm
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate( R.layout.activity_duelo, menu);
+        getMenuInflater().inflate( R.menu.menu_duelo, menu);
+        return true;
     }
     
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        super.onOptionsItemSelected(MenuItem item);
+        super.onOptionsItemSelected(item);
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected int getLayoutResourceId() {
+        return R.layout.activity_duelo;
     }
 
     // Sobreescribimos el metodo del dialogo para elegir el numero
@@ -92,7 +99,7 @@ public class Duelo extends BaseTanteoActivity implements NumeroTanteoDialogFragm
                         FragmentManager fragmentManager = getFragmentManager();
                         fragmento.show(fragmentManager, "Dialogo_tanteo");
                     } catch (Exception ex) {
-                        Toast.makeText(Duelo.context, "Se produjo un error al modificar el tanteo", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Se produjo un error al modificar el tanteo", Toast.LENGTH_SHORT).show();
                     }
                     break;
 
@@ -139,11 +146,6 @@ public class Duelo extends BaseTanteoActivity implements NumeroTanteoDialogFragm
     // Metodos abstractos implementados
     
     @Override
-    protected int getCreateOptionsMenu() {
-        return R.menu.menu_duelo;
-    }
-    
-    @Override
     protected void optionAddJugador(){
         // En los duelos no anadimos nuevos jugadores
     }
@@ -165,46 +167,46 @@ public class Duelo extends BaseTanteoActivity implements NumeroTanteoDialogFragm
     
      @Override
     protected void gestionarOnCreate() {
-        // Obtenemos los dos layouts de los jugadores
-    jugadores[0] = (View)findViewById( R.id.jugador0 );
-    jugadores[1] = (View)findViewById( R.id.jugador1 );
-    
-    // Rotamos el layout del primer jugador
-    jugadores[0].setRotation(180.0f);
+         // Obtenemos los dos layouts de los jugadores
+         jugadores[0] = (View) findViewById(R.id.jugador0);
+         jugadores[1] = (View) findViewById(R.id.jugador1);
 
-    // Definimos los listeners y los incluimos en las vistas
-    // Actualizamos los valores a mostrar
-    for(int i = 0; i < jugadores.length; i++){
-        ViewHolder holder = new ViewHolder();
-        
-        CustomListener listener = new CustomListener(i);
-        holder.listener = listener;
-        
-        holder.nombrejugador = (TextView)jugadores[i].findViewById(R.id.nombrejugador);
-        holder.nombrejugador.setText(partida.getJugadores().get(i).getNombre());
-        holder.puntosjugador = (TextView)jugadores[i].findViewById(R.id.tantosduelo);
-        holder.puntosjugador.setText(String.valueOf(partida.getJugadores().get(i).getPuntuacion()));
-        holder.puntosjugador.setOnClickListener(holder.listener);
-        holder.puntosdado = (TextView)jugadores[i].findViewById(R.id.resultadodado);
-        holder.puntosdado.setText(String.valueOf(0));
-        holder.botonmas = (ImageButton) jugadores[i].findViewById(R.id.sumarduelo);
-        holder.botonmas.setOnClickListener(holder.listener);
-        holder.botonmenos = (ImageButton) jugadores[i].findViewById(R.id.restarduelo);
-        holder.botonmenos.setOnClickListener(holder.listener);
-        holder.botondado = (ImageButton) jugadores[i].findViewById(R.id.dadoduelo);
-        holder.botondado.setOnClickListener(holder.listener);
-        
-        // Definimos los colores de los botones
-        GradientDrawable bgShapemas = (GradientDrawable)holder.botonmas.getBackground();
-        bgShapemas.mutate();
-        bgShapemas.setColor(partida.getJugadores().get(i).getColor());
-        // boton menos
-        GradientDrawable bgShapemenos = (GradientDrawable)holder.botonmenos.getBackground();
-        bgShapemenos.mutate();
-        bgShapemenos.setColor(partida.getJugadores().get(i).getColor());
-        
-        // Guardamos en el layout apropiado
-        jugadores[i].setTag(holder);
-    }
+         // Rotamos el layout del primer jugador
+         jugadores[0].setRotation(180.0f);
 
+         // Definimos los listeners y los incluimos en las vistas
+         // Actualizamos los valores a mostrar
+         for (int i = 0; i < jugadores.length; i++) {
+             ViewHolder holder = new ViewHolder();
+
+             CustomListener listener = new CustomListener(i);
+             holder.listener = listener;
+
+             holder.nombrejugador = (TextView) jugadores[i].findViewById(R.id.nombrejugador);
+             holder.nombrejugador.setText(partida.getJugadores().get(i).getNombre());
+             holder.puntosjugador = (TextView) jugadores[i].findViewById(R.id.tantosduelo);
+             holder.puntosjugador.setText(String.valueOf(partida.getJugadores().get(i).getPuntuacion()));
+             holder.puntosjugador.setOnClickListener(holder.listener);
+             holder.puntosdado = (TextView) jugadores[i].findViewById(R.id.resultadodado);
+             holder.puntosdado.setText(String.valueOf(0));
+             holder.botonmas = (ImageButton) jugadores[i].findViewById(R.id.sumarduelo);
+             holder.botonmas.setOnClickListener(holder.listener);
+             holder.botonmenos = (ImageButton) jugadores[i].findViewById(R.id.restarduelo);
+             holder.botonmenos.setOnClickListener(holder.listener);
+             holder.botondado = (ImageButton) jugadores[i].findViewById(R.id.dadoduelo);
+             holder.botondado.setOnClickListener(holder.listener);
+
+             // Definimos los colores de los botones
+             GradientDrawable bgShapemas = (GradientDrawable) holder.botonmas.getBackground();
+             bgShapemas.mutate();
+             bgShapemas.setColor(partida.getJugadores().get(i).getColor());
+             // boton menos
+             GradientDrawable bgShapemenos = (GradientDrawable) holder.botonmenos.getBackground();
+             bgShapemenos.mutate();
+             bgShapemenos.setColor(partida.getJugadores().get(i).getColor());
+
+             // Guardamos en el layout apropiado
+             jugadores[i].setTag(holder);
+         }
+     }
 }

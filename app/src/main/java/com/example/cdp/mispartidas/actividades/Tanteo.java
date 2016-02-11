@@ -69,22 +69,28 @@ public class Tanteo extends BaseTanteoActivity implements NumeroTanteoDialogFrag
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate( R.layout.activity_tanteo, menu);
+        getMenuInflater().inflate( R.menu.menu_tanteo, menu);
         // Comprobamos si tenemos que desactivar la opcion de menu de pantalla de duelo
         MenuItem item = menu.findItem(R.id.mododuelo);
         if(hayDuelo){
-            item.setVisible(false); 
+            item.setVisible(true);
         }else{
-            item.setVisible(true); 
+            item.setVisible(false);
         }
-        
+        return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        super.onOptionsItemSelected(MenuItem item);
+        super.onOptionsItemSelected(item);
+        return super.onOptionsItemSelected(item);
     }
-    
+
+    @Override
+    protected int getLayoutResourceId() {
+        return R.layout.activity_tanteo;
+    }
+
     // Sobreescribimos el metodo del dialogo para cambiar el numero
     @Override
     public void onNombreSelected(String nombre, int position) {
@@ -130,14 +136,12 @@ public class Tanteo extends BaseTanteoActivity implements NumeroTanteoDialogFrag
                 actionMode.finish();
                 break;
         }
-        
+
         // Comprobamos si podemos mostrar el modo duelo
         if((listviewjugadores.getAdapter().getCount()) == 2){
-            hayduelo = true; // setting state
-        }else{
-            hayduelo = false; // setting state
+            hayDuelo = false; // setting state
         }
-        
+
         // Actualizamos el menu
         invalidateOptionsMenu(); // now onCreateOptionsMenu(...) is called again
         
@@ -337,12 +341,7 @@ public class Tanteo extends BaseTanteoActivity implements NumeroTanteoDialogFrag
     }
     
     // Metodos abstractos implementados
-    
-    @Override
-    protected int getCreateOptionsMenu() {
-        return R.menu.menu_tanteo;
-    }
-    
+
     @Override
     protected void notificaCambiosInterfaz() {
         ((AdaptadorTanteo) listviewjugadores.getAdapter()).notifyDataSetChanged();
@@ -364,12 +363,12 @@ public class Tanteo extends BaseTanteoActivity implements NumeroTanteoDialogFrag
         player.setColor(getResources().getColor(R.color.botonbase));
         // Anadimos el jugador a la lista
         partida.addJugador(player);
-        
+
         // Comprobamos si podemos mostrar el modo duelo
         if((numjugadores + 1) == 2){
-            hayduelo = true; // setting state
+            hayDuelo = true; // setting state
         }else{
-            hayduelo = false; // setting state
+            hayDuelo = false; // setting state
         }
         // Actualizamos el menu
         invalidateOptionsMenu(); // now onCreateOptionsMenu(...) is called again
@@ -402,7 +401,7 @@ public class Tanteo extends BaseTanteoActivity implements NumeroTanteoDialogFrag
         listviewjugadores.setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener() {
 
             private int nr = 0;
-    
+
             @Override
             public void onItemCheckedStateChanged(ActionMode mode, int position,
                                                   long id, boolean checked) {
@@ -418,7 +417,7 @@ public class Tanteo extends BaseTanteoActivity implements NumeroTanteoDialogFrag
                 mode.setTitle(nr + " selected");
                 mode.invalidate();
             }
-    
+
             @Override
             public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
                 Log.i("MILOG", "onactionitemclicked()");
@@ -426,7 +425,7 @@ public class Tanteo extends BaseTanteoActivity implements NumeroTanteoDialogFrag
                 switch (item.getItemId()) {
                     // Borrar jugador
                     case R.id.menu_borrar:
-                         Log.i("MILOG", "Borramos el jugador");
+                        Log.i("MILOG", "Borramos el jugador");
                         // Lanzamos el dialog
                         ConfirmacionDialogFragment fragmentoconfirmacion = new ConfirmacionDialogFragment();
                         Bundle bundlesborrar = new Bundle();
@@ -438,7 +437,7 @@ public class Tanteo extends BaseTanteoActivity implements NumeroTanteoDialogFrag
                         break;
                     // Cambiar el color del jugador
                     case R.id.menu_color:
-                         Log.i("MILOG", "Cambiamos el color del jugador");
+                        Log.i("MILOG", "Cambiamos el color del jugador");
                         // Mostramos el dialogo para cambiar el color
                         ColorListener colorlistener = new ColorListener(adaptador.getCurrentCheckedPosition());
                         colorlistener.muestraColores();
@@ -458,22 +457,21 @@ public class Tanteo extends BaseTanteoActivity implements NumeroTanteoDialogFrag
                         //fragmentonombre.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
                         fragmentonombre.show(fragmentManagernombre, "Dialogo_jugador");
                         break;
-                        // Reiniciamos el jugador
+                    // Reiniciamos el jugador
                     case R.id.menu_reiniciar:
-                         Log.i("MILOG", "Reiniciamos la partida");
+                        Log.i("MILOG", "Reiniciamos la partida");
                         // Reiniciamos la puntuacion
-                        for (Integer indice : adaptador.getCurrentCheckedPosition())
-                        {   
+                        for (Integer indice : adaptador.getCurrentCheckedPosition()) {
                             partida.getJugadores().get(indice).setPuntuacion(0);
                         }
                         // Actualizamos la vista
                         mode.finish();
-    
+
                         break;
                 }
                 return false;
             }
-    
+
             @Override
             public boolean onCreateActionMode(ActionMode mode, Menu menu) {
                 Log.i("MILOG", "oncreateactionmode");
@@ -484,7 +482,7 @@ public class Tanteo extends BaseTanteoActivity implements NumeroTanteoDialogFrag
                 actionMode = mode;
                 return true;
             }
-    
+
             @Override
             public void onDestroyActionMode(ActionMode mode) {
                 Log.i("MILOG", "ondestroyactionmode");
@@ -496,17 +494,17 @@ public class Tanteo extends BaseTanteoActivity implements NumeroTanteoDialogFrag
                 adaptador.clearSelection();
                 actionMode = null;
             }
-    
+
             @Override
             public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
                 // Here you can perform updates to the CAB due to
                 // an invalidate() request
                 Log.i("MILOG", "onprepareactionmode");
-                if(nr == 2){
+                if (nr == 2) {
                     // Invalidamos las opciones de cambiar el nombre y cambiar el color
                     MenuItem item = menu.findItem(R.id.menu_nombre);
                     item.setVisible(false);
-                }else{
+                } else {
                     MenuItem item = menu.findItem(R.id.menu_nombre);
                     item.setVisible(true);
                 }

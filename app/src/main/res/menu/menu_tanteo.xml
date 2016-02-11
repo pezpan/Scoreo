@@ -5,7 +5,7 @@
     <item
         android:id="@+id/tirardado"
         android:title="@string/tirar_dado"
-        android:icon="@drawable/dice"
+        android:icon="@drawable/ic_casino_white_24dp"
         app:showAsAction="always"/>
 
     <item
