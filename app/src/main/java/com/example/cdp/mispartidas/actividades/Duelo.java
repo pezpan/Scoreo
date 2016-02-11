@@ -27,154 +27,24 @@ import com.example.cdp.mispartidas.auxiliares.Dado;
 import com.example.cdp.mispartidas.auxiliares.Utilidades;
 import com.example.cdp.mispartidas.dialogos.NumeroTanteoDialogFragment;
 
-public class Duelo extends ActionBarActivity implements NumeroTanteoDialogFragment.NumberTanteoDialogListener{
+public class Duelo extends BaseTanteoActivity implements NumeroTanteoDialogFragment.NumberTanteoDialogListener{
 
-    private Backup backup;
-    private String identificador;
-    private int indice;
-    private Partida partida;
-    private static Context context;
     View jugadores[] = new View[2];
-
-    private ImageButton botonsumar;
-    private ImageButton botonrestar;
-    private TextView puntos;
-    private TextView nombre;
-    private TextView tirada;
-    private ImageButton dado;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_duelo);
-
-        this.context = getApplicationContext();
-
-        Log.i("MILOG", "Obtenemos el backup");
-        backup = Backup.getMiBackup(getApplicationContext());
-
-        // Obtenemos el numero de jugadores
-        Bundle bundle = getIntent().getExtras();
-        identificador = bundle.getString("idpartida");
-
-        Log.i("MILOG", "El identificador de la partida es " + identificador);
-
-        // Habilitamos la fecha volver a la activity principal
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        // Buscamos la partida
-        indice = backup.getPartida(identificador);
-        if (indice >= 0) {
-            partida = backup.getBackup().get(indice);
-            setTitle(partida.getNombre().toString());
-            
-            // Obtenemos los dos layouts de los jugadores
-            jugadores[0] = (View)findViewById( R.id.jugador0 );
-            jugadores[1] = (View)findViewById( R.id.jugador1 );
-            
-            // Rotamos el layout del primer jugador
-            jugadores[0].setRotation(180.0f);
-
-            // Definimos los listeners y los incluimos en las vistas
-            // Actualizamos los valores a mostrar
-            for(int i = 0; i < jugadores.length; i++){
-                ViewHolder holder = new ViewHolder();
-                
-                CustomListener listener = new CustomListener(i);
-                holder.listener = listener;
-                
-                holder.nombrejugador = (TextView)jugadores[i].findViewById(R.id.nombrejugador);
-                holder.nombrejugador.setText(partida.getJugadores().get(i).getNombre());
-                holder.puntosjugador = (TextView)jugadores[i].findViewById(R.id.tantosduelo);
-                holder.puntosjugador.setText(String.valueOf(partida.getJugadores().get(i).getPuntuacion()));
-                holder.puntosjugador.setOnClickListener(holder.listener);
-                holder.puntosdado = (TextView)jugadores[i].findViewById(R.id.resultadodado);
-                holder.puntosdado.setText(String.valueOf(0));
-                holder.botonmas = (ImageButton) jugadores[i].findViewById(R.id.sumarduelo);
-                holder.botonmas.setOnClickListener(holder.listener);
-                holder.botonmenos = (ImageButton) jugadores[i].findViewById(R.id.restarduelo);
-                holder.botonmenos.setOnClickListener(holder.listener);
-                holder.botondado = (ImageButton) jugadores[i].findViewById(R.id.dadoduelo);
-                holder.botondado.setOnClickListener(holder.listener);
-                
-                // Definimos los colores de los botones
-                GradientDrawable bgShapemas = (GradientDrawable)holder.botonmas.getBackground();
-                bgShapemas.mutate();
-                bgShapemas.setColor(partida.getJugadores().get(i).getColor());
-                // boton menos
-                GradientDrawable bgShapemenos = (GradientDrawable)holder.botonmenos.getBackground();
-                bgShapemenos.mutate();
-                bgShapemenos.setColor(partida.getJugadores().get(i).getColor());
-                
-                // Guardamos en el layout apropiado
-                jugadores[i].setTag(holder);
-            }
-
-        } else {
-            Toast.makeText(this, "No se ha encontrado la partida " + identificador, Toast.LENGTH_SHORT).show();
-        }
     }
     
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_duelo, menu);
-        return true;
+        super.onCreateOptionsMenu(menu);
     }
     
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        switch(id){
-            case R.id.partidasguardadas:
-                // Llamamos al intent de nuestras partidas guardadas
-                Intent intenthistorial = new Intent(this, Historial.class);
-                startActivity(intenthistorial);
-                break;
-
-            case R.id.reiniciarpartida:
-                // Reiniciamos la partida
-                partida.reiniciarPartida();
-                for(int i=0; i < jugadores.length; i++){
-                    ViewHolder holder = (ViewHolder) jugadores[i].getTag();
-                    holder.puntosjugador.setText(String.valueOf(0));
-                }
-                // Actualizamos el backup
-                actualizar(indice);
-                break;
-
-            case R.id.action_settings:
-                break;
-                
-            case R.id.home:
-                // Fecha de volver atras
-                NavUtils.navigateUpFromSameTask(this);
-                break;
-                
-            case R.id.modolista:
-                // Fecha de volver atras
-                // Lanzamos la pantalla de nueva partida, pasando el identificador de la partida creada
-                Intent intenttanteo = new Intent(getApplicationContext(), Tanteo.class);
-                // Pasamos como datos el numero de jugadores seleccionados
-                Bundle b = new Bundle();
-                Log.i("MILOG", "Guardamos los parametros desde el duelo para llamar al intent de tanteo");
-                b.putString("idpartida", partida.getIdentificador());
-                //Lo anadimos al intent
-                intenttanteo.putExtras(b);
-                // Lanzamos la actividad
-                Log.i("MILOG", "Lanzamos la pantalla de tanteo desde duelo");
-                startActivity(intenttanteo);
-                break;
-            
-            default:
-                break;
-        }
-
-        return super.onOptionsItemSelected(item);
+        super.onOptionsItemSelected(MenuItem item);
     }
 
     // Sobreescribimos el metodo del dialogo para elegir el numero
@@ -254,19 +124,6 @@ public class Duelo extends ActionBarActivity implements NumeroTanteoDialogFragme
             }
         }
     }
-
-    // Metodo para actualizar el backup cada vez que modificamos algo en la pantalla
-    public void actualizar(int indice){
-        // Actualizamos el backup
-        partida.setFechaactualizacion(Utilidades.getFechaActual());
-        // Actualizamos el backup
-        backup.getBackup().set(indice, partida);
-        // Almacenamos
-        Log.i("MILOG", "Guardamos el backup");
-        backup.guardarBackup();
-        //Log.i("MILOG", "Actualizamos la vista");
-        //notifyDataSetChanged();
-    }
     
     static class ViewHolder {
         TextView nombrejugador;
@@ -276,6 +133,82 @@ public class Duelo extends ActionBarActivity implements NumeroTanteoDialogFragme
         ImageButton botonmenos;
         ImageButton botondado;
         CustomListener listener;
+    }
+    
+    
+    // Metodos abstractos implementados
+    @Override
+    protected int getLayoutResourceId() {
+        return R.layout.activity_duelo;
+    }
+    
+    @Override
+    protected int getCreateOptionsMenu() {
+        return R.menu.menu_duelo;
+    }
+    
+    @Override
+    protected void optionAddJugador(){
+        // En los duelos no anadimos nuevos jugadores
+    }
+    
+    @Override
+    protected void optionReiniciarPartida(){
+        // Reiniciamos la partida
+        partida.reiniciarPartida();
+        for(int i=0; i < jugadores.length; i++){
+            ViewHolder holder = (ViewHolder) jugadores[i].getTag();
+            holder.puntosjugador.setText(String.valueOf(0));
+        }
+    }
+    
+    @Override
+    protected void notificaCambiosInterfaz() {
+        // No tenemos adaptador
+    }
+    
+     @Override
+    protected void gestionarOnCreate() {
+        // Obtenemos los dos layouts de los jugadores
+    jugadores[0] = (View)findViewById( R.id.jugador0 );
+    jugadores[1] = (View)findViewById( R.id.jugador1 );
+    
+    // Rotamos el layout del primer jugador
+    jugadores[0].setRotation(180.0f);
+
+    // Definimos los listeners y los incluimos en las vistas
+    // Actualizamos los valores a mostrar
+    for(int i = 0; i < jugadores.length; i++){
+        ViewHolder holder = new ViewHolder();
+        
+        CustomListener listener = new CustomListener(i);
+        holder.listener = listener;
+        
+        holder.nombrejugador = (TextView)jugadores[i].findViewById(R.id.nombrejugador);
+        holder.nombrejugador.setText(partida.getJugadores().get(i).getNombre());
+        holder.puntosjugador = (TextView)jugadores[i].findViewById(R.id.tantosduelo);
+        holder.puntosjugador.setText(String.valueOf(partida.getJugadores().get(i).getPuntuacion()));
+        holder.puntosjugador.setOnClickListener(holder.listener);
+        holder.puntosdado = (TextView)jugadores[i].findViewById(R.id.resultadodado);
+        holder.puntosdado.setText(String.valueOf(0));
+        holder.botonmas = (ImageButton) jugadores[i].findViewById(R.id.sumarduelo);
+        holder.botonmas.setOnClickListener(holder.listener);
+        holder.botonmenos = (ImageButton) jugadores[i].findViewById(R.id.restarduelo);
+        holder.botonmenos.setOnClickListener(holder.listener);
+        holder.botondado = (ImageButton) jugadores[i].findViewById(R.id.dadoduelo);
+        holder.botondado.setOnClickListener(holder.listener);
+        
+        // Definimos los colores de los botones
+        GradientDrawable bgShapemas = (GradientDrawable)holder.botonmas.getBackground();
+        bgShapemas.mutate();
+        bgShapemas.setColor(partida.getJugadores().get(i).getColor());
+        // boton menos
+        GradientDrawable bgShapemenos = (GradientDrawable)holder.botonmenos.getBackground();
+        bgShapemenos.mutate();
+        bgShapemenos.setColor(partida.getJugadores().get(i).getColor());
+        
+        // Guardamos en el layout apropiado
+        jugadores[i].setTag(holder);
     }
 
 }
