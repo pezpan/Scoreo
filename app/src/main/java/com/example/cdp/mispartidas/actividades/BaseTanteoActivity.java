@@ -91,8 +91,6 @@ public abstract class BaseTanteoActivity extends ActionBarActivity {
   
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
-      // Inflate the menu; this adds items to the action bar if it is present.
-      getMenuInflater().inflate(getCreateOptionsMenu, menu);
       return true;
   }
   
@@ -203,6 +201,7 @@ public abstract class BaseTanteoActivity extends ActionBarActivity {
   }
   
   // Metodos abstractos
+  protected abstract void onCreateMenu();
   protected abstract int getLayoutResourceId();
   protected abstract int getCreateOptionsMenu();
   protected abstract void gestionarOnCreate();
