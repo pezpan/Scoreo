@@ -39,7 +39,7 @@ public class Duelo extends BaseTanteoActivity implements NumeroTanteoDialogFragm
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate( R.layout.activity_duelo, menu);
     }
     
     @Override
@@ -137,10 +137,6 @@ public class Duelo extends BaseTanteoActivity implements NumeroTanteoDialogFragm
     
     
     // Metodos abstractos implementados
-    @Override
-    protected int getLayoutResourceId() {
-        return R.layout.activity_duelo;
-    }
     
     @Override
     protected int getCreateOptionsMenu() {
