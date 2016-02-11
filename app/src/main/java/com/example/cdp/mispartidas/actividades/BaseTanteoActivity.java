@@ -1,5 +1,53 @@
 package com.example.cdp.mispartidas.actividades;
 
+import android.app.Activity;
+import android.app.FragmentManager;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
+import android.os.Build;
+import android.support.v4.app.NavUtils;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.ActionBarActivity;
+import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
+import android.util.Log;
+import android.view.ActionMode;
+import android.view.ContextMenu;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.AbsListView;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.example.cdp.mispartidas.Utils;
+import com.example.cdp.mispartidas.auxiliares.Dado;
+import com.example.cdp.mispartidas.auxiliares.Utilidades;
+import com.example.cdp.mispartidas.dialogos.ConfirmacionDialogFragment;
+import com.example.cdp.mispartidas.R;
+import com.example.cdp.mispartidas.almacenamiento.objetos.Jugador;
+import com.example.cdp.mispartidas.almacenamiento.objetos.Partida;
+import com.example.cdp.mispartidas.almacenamiento.operaciones.Backup;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Set;
+
 public abstract class BaseTanteoActivity extends ActionBarActivity {
 
   public String identificador;
