@@ -52,13 +52,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
-public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragment.NumberTanteoDialogListener, NombreDialogFragment.NuevoNombreListener, ConfirmacionDialogFragment.ConfirmarListener {
+public class Tanteo extends BaseTanteoActivity implements NumeroTanteoDialogFragment.NumberTanteoDialogListener, NombreDialogFragment.NuevoNombreListener, ConfirmacionDialogFragment.ConfirmarListener {
 
-    private String identificador;
-    private Partida partida;
-    private Backup backup;
-    private int indice;
-    private static Context context;
     private AdaptadorTanteo adaptador;
     private ListView listviewjugadores;
     ActionMode actionMode = null;
@@ -68,268 +63,17 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tanteo);
-
-        // Parametros
-        listviewjugadores = (ListView) findViewById(R.id.jugadorestanteo);
-
-        this.context = getApplicationContext();
-
-        Log.i("MILOG", "Obtenemos el backup");
-        backup = Backup.getMiBackup(getApplicationContext());
-
-        // Obtenemos el numero de jugadores
-        Bundle bundle = getIntent().getExtras();
-        identificador = bundle.getString("idpartida");
-
-        Log.i("MILOG", "El identificador de la partida es " + identificador);
-
-        // Habilitamos la fecha volver a la activity principal
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        // Buscamos la partida
-        indice = backup.getPartida(identificador);
-        if (indice >= 0) {
-            partida = backup.getBackup().get(indice);
-            // Establecemos el adaptador
-            Log.i("MILOG", "Establecemos el adaptador");
-            adaptador = new AdaptadorTanteo(this, getTaskId(), partida.getJugadores());
-            listviewjugadores.setAdapter(adaptador);
-            setTitle(partida.getNombre().toString());
-        } else {
-            Toast.makeText(this, "No se ha encontrado la partida " + identificador, Toast.LENGTH_SHORT).show();
-        }
-
-        // Definimos el contextual action bar
-        Log.i("MILOG", "Definimos el contextual action bar");
-        listviewjugadores.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
-        listviewjugadores.setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener() {
-
-            private int nr = 0;
-
-            @Override
-            public void onItemCheckedStateChanged(ActionMode mode, int position,
-                                                  long id, boolean checked) {
-                // TODO Auto-generated method stub
-                Log.i("MILOG", "onitemcheckedstatechanged()");
-                if (checked) {
-                    nr++;
-                    adaptador.setNewSelection(position);
-                } else {
-                    nr--;
-                    adaptador.removeSelection(position);
-                }
-                mode.setTitle(nr + " selected");
-                mode.invalidate();
-            }
-
-            @Override
-            public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-                Log.i("MILOG", "onactionitemclicked()");
-                // Respond to clicks on the actions in the CAB
-                switch (item.getItemId()) {
-                    // Borrar jugador
-                    case R.id.menu_borrar:
-                         Log.i("MILOG", "Borramos el jugador");
-                        // Lanzamos el dialog
-                        ConfirmacionDialogFragment fragmentoconfirmacion = new ConfirmacionDialogFragment();
-                        Bundle bundlesborrar = new Bundle();
-                        bundlesborrar.putInt("posicion", 0);
-                        bundlesborrar.putInt("opcion", ConfirmacionDialogFragment.BORRAR_JUGADOR);
-                        fragmentoconfirmacion.setArguments(bundlesborrar);
-                        FragmentManager fragmentManagerborrar = getFragmentManager();
-                        fragmentoconfirmacion.show(fragmentManagerborrar, "Dialogo_confirmacion");
-                        break;
-                    // Cambiar el color del jugador
-                    case R.id.menu_color:
-                         Log.i("MILOG", "Cambiamos el color del jugador");
-                        // Mostramos el dialogo para cambiar el color
-                        ColorListener colorlistener = new ColorListener(adaptador.getCurrentCheckedPosition());
-                        colorlistener.muestraColores();
-                        break;
-                    // Cambiamos el nombre del jugador
-                    case R.id.menu_nombre:
-                        // Decrementamos el tanteo
-                        Log.i("MILOG", "Cambiamos el nombre del jugador");
-                        // Lanzamos el dialog
-                        NombreDialogFragment fragmentonombre = new NombreDialogFragment();
-                        Bundle bundles = new Bundle();
-                        // Pasamos el indice como parametro
-                        bundles.putInt("posicion", adaptador.getCurrentCheckedPosition().get(0));
-                        fragmentonombre.setArguments(bundles);
-                        FragmentManager fragmentManagernombre = getFragmentManager();
-                        // Hacemos que aparezca el teclado sin necesidad de seleccionar el edittext
-                        //fragmentonombre.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-                        fragmentonombre.show(fragmentManagernombre, "Dialogo_jugador");
-                        break;
-                        // Reiniciamos el jugador
-                    case R.id.menu_reiniciar:
-                         Log.i("MILOG", "Reiniciamos la partida");
-                        // Reiniciamos la puntuacion
-                        for (Integer indice : adaptador.getCurrentCheckedPosition())
-                        {   
-                            partida.getJugadores().get(indice).setPuntuacion(0);
-                        }
-                        // Actualizamos la vista
-                        mode.finish();
-
-                        break;
-                }
-                return false;
-            }
-
-            @Override
-            public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-                Log.i("MILOG", "oncreateactionmode");
-                // Inflate the menu for the CAB
-                MenuInflater inflater = mode.getMenuInflater();
-                inflater.inflate(R.menu.cab_tanteo, menu);
-                // Guardamos mode
-                actionMode = mode;
-                return true;
-            }
-
-            @Override
-            public void onDestroyActionMode(ActionMode mode) {
-                Log.i("MILOG", "ondestroyactionmode");
-                // Here you can make any necessary updates to the activity when
-                // the CAB is removed. By default, selected items are deselected/unchecked.
-                nr = 0;
-                // Actualizamos la partida
-                actualizar(indice);
-                adaptador.clearSelection();
-                actionMode = null;
-            }
-
-            @Override
-            public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-                // Here you can perform updates to the CAB due to
-                // an invalidate() request
-                Log.i("MILOG", "onprepareactionmode");
-                if(nr == 2){
-                    // Invalidamos las opciones de cambiar el nombre y cambiar el color
-                    MenuItem item = menu.findItem(R.id.menu_nombre);
-                    item.setVisible(false);
-                }else{
-                    MenuItem item = menu.findItem(R.id.menu_nombre);
-                    item.setVisible(true);
-                }
-                return true;
-            }
-        });
-
-        Log.i("MILOG", "Fin de oncreate tanteo");
     }
     
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_tanteo, menu);
-        return true;
+        super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        int numjugadores;
-
-        switch(id){
-            // Anadimos un nuevo jugador a la partida
-            case R.id.addjugador:
-                Log.i("MILOG", "Anadimos un jugador a la partida");
-                numjugadores = listviewjugadores.getAdapter().getCount();
-                Jugador player = new Jugador();
-                // Ponemos un nombre por defecto
-                player.setNombre("Jugador" + String.valueOf(numjugadores + 1));
-                player.setNumerojugador(numjugadores + 1);
-                // Anadimos la puntuacion
-                player.setPuntuacion(0);
-                // Incluimos el color por defecto de los botones
-                player.setColor(getResources().getColor(R.color.botonbase));
-                // Anadimos el jugador a la lista
-                partida.addJugador(player);
-                // Actualizamos el backup
-                actualizar(indice);
-                break;
-
-            case R.id.partidasguardadas:
-                Log.i("MILOG", "Vamos al historial");
-                // Llamamos al intent de nuestras partidas guardadas
-                Intent intenthistorial = new Intent(this, Historial.class);
-                startActivity(intenthistorial);
-                break;
-
-            case R.id.reiniciarpartida:
-                Log.i("MILOG", "Reiniciamos la partida");
-                // Reiniciamos la partida
-                partida.reiniciarPartida();
-                // Actualizamos el backup
-                actualizar(indice);
-                break;
-
-            case R.id.action_settings:
-                Log.i("MILOG", "Settings");
-                break;
-            case R.id.home:
-                Log.i("MILOG", "Volvemos a la pagina principal");
-                // Fecha de volver atras
-                NavUtils.navigateUpFromSameTask(this);
-                break;
-                
-            case R.id.mododuelo:
-                Log.i("MILOG", "Vamos a la pantalla de duelo");
-                // Fecha de volver atras
-                // Lanzamos la pantalla de nueva partida, pasando el identificador de la partida creada
-                Intent intentduelo = new Intent(getApplicationContext(), Duelo.class);
-                // Pasamos como datos el numero de jugadores seleccionados
-                Bundle b = new Bundle();
-                Log.i("MILOG", "Guardamos los parametros desde el tanteo para llamar al intent de duelo");
-                b.putString("idpartida", partida.getIdentificador());
-                //Lo anadimos al intent
-                intentduelo.putExtras(b);
-                // Lanzamos la actividad
-                Log.i("MILOG", "Lanzamos la pantalla de duelo desde tanteo");
-                startActivity(intentduelo);
-                break;
-                
-            case R.id.ordenarpartida:
-                Log.i("MILOG", "Ordenamos la partida");
-                partida.ordenarJugadores(false);
-                // Actualizamos el backup
-                actualizar(indice);
-                break;
-                
-            case R.id.tirardado:
-                Log.i("MILOG", "Tiramos el dado");
-                AlertDialog.Builder builderdado = new AlertDialog.Builder(this);
-                TextView myMsgdado = new TextView(this);
-                myMsgdado.setText(String.valueOf(Dado.tirar()));
-                myMsgdado.setGravity(Gravity.CENTER_HORIZONTAL);
-                builderdado.setView(myMsgdado);
-                builderdado.setPositiveButton("OK", null);
-                builderdado.show();
-                break;
-                
-            case R.id.jugadorinicial:
-                Log.i("MILOG", "Elegimos el jugador inicial");
-                AlertDialog.Builder builderinicial = new AlertDialog.Builder(this);
-                TextView myMsginicial = new TextView(this);
-                myMsginicial.setText(partida.getJugadorAleatorio());
-                myMsginicial.setGravity(Gravity.CENTER_HORIZONTAL);
-                builderinicial.setView(myMsginicial);
-                builderinicial.setPositiveButton("OK", null);
-                builderinicial.show();
-                break;
-            
-            default:
-                break;
-        }
-
-        return super.onOptionsItemSelected(item);
+        super.onOptionsItemSelected(MenuItem item);
     }
     
     // Sobreescribimos el metodo del dialogo para cambiar el numero
@@ -572,17 +316,178 @@ public class Tanteo extends ActionBarActivity implements NumeroTanteoDialogFragm
         AdaptadorTanteo.CustomListener listener;
     }
     
-    // Metodo para actualizar el backup cada vez que modificamos algo en la pantalla
-    public void actualizar(int indice){
-        // Actualizamos el backup
-        partida.setFechaactualizacion(Utilidades.getFechaActual());
-        // Actualizamos el backup
-        backup.getBackup().set(indice, partida);
-        // Almacenamos
-        Log.i("MILOG", "Guardamos el backup");
-        backup.guardarBackup();
-        Log.i("MILOG", "Actualizamos la vista");
+    
+    
+    
+    // Metodos abstractos implementados
+    @Override
+    protected int getLayoutResourceId() {
+        return R.layout.activity_tanteo;
+    }
+    
+    @Override
+    protected int getCreateOptionsMenu() {
+        return R.menu.menu_tanteo;
+    }
+    
+    @Override
+    protected void notificaCambiosInterfaz() {
         ((AdaptadorTanteo) listviewjugadores.getAdapter()).notifyDataSetChanged();
+    }
+    
+    @Override
+    protected void optionAddJugador(){
+        // Anadimos un nuevo jugador a la partida
+        int numjugadores;
+        Log.i("MILOG", "Anadimos un jugador a la partida");
+        numjugadores = listviewjugadores.getAdapter().getCount();
+        Jugador player = new Jugador();
+        // Ponemos un nombre por defecto
+        player.setNombre("Jugador" + String.valueOf(numjugadores + 1));
+        player.setNumerojugador(numjugadores + 1);
+        // Anadimos la puntuacion
+        player.setPuntuacion(0);
+        // Incluimos el color por defecto de los botones
+        player.setColor(getResources().getColor(R.color.botonbase));
+        // Anadimos el jugador a la lista
+        partida.addJugador(player);
+    }
+    
+    @Override
+    protected void optionReiniciarPartida(){
+        // Reiniciamos la partida
+        partida.reiniciarPartida();
+    }
+    
+    @Override
+    protected void gestionarOnCreate() {
+        // Parametros
+        listviewjugadores = (ListView) findViewById(R.id.jugadorestanteo);
+        // Establecemos el adaptador
+        Log.i("MILOG", "Establecemos el adaptador");
+        adaptador = new AdaptadorTanteo(this, getTaskId(), partida.getJugadores());
+        listviewjugadores.setAdapter(adaptador);
+        setTitle(partida.getNombre().toString());
+        
+        // Definimos el contextual action bar
+        Log.i("MILOG", "Definimos el contextual action bar");
+        listviewjugadores.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
+        listviewjugadores.setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener() {
+
+            private int nr = 0;
+    
+            @Override
+            public void onItemCheckedStateChanged(ActionMode mode, int position,
+                                                  long id, boolean checked) {
+                // TODO Auto-generated method stub
+                Log.i("MILOG", "onitemcheckedstatechanged()");
+                if (checked) {
+                    nr++;
+                    adaptador.setNewSelection(position);
+                } else {
+                    nr--;
+                    adaptador.removeSelection(position);
+                }
+                mode.setTitle(nr + " selected");
+                mode.invalidate();
+            }
+    
+            @Override
+            public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+                Log.i("MILOG", "onactionitemclicked()");
+                // Respond to clicks on the actions in the CAB
+                switch (item.getItemId()) {
+                    // Borrar jugador
+                    case R.id.menu_borrar:
+                         Log.i("MILOG", "Borramos el jugador");
+                        // Lanzamos el dialog
+                        ConfirmacionDialogFragment fragmentoconfirmacion = new ConfirmacionDialogFragment();
+                        Bundle bundlesborrar = new Bundle();
+                        bundlesborrar.putInt("posicion", 0);
+                        bundlesborrar.putInt("opcion", ConfirmacionDialogFragment.BORRAR_JUGADOR);
+                        fragmentoconfirmacion.setArguments(bundlesborrar);
+                        FragmentManager fragmentManagerborrar = getFragmentManager();
+                        fragmentoconfirmacion.show(fragmentManagerborrar, "Dialogo_confirmacion");
+                        break;
+                    // Cambiar el color del jugador
+                    case R.id.menu_color:
+                         Log.i("MILOG", "Cambiamos el color del jugador");
+                        // Mostramos el dialogo para cambiar el color
+                        ColorListener colorlistener = new ColorListener(adaptador.getCurrentCheckedPosition());
+                        colorlistener.muestraColores();
+                        break;
+                    // Cambiamos el nombre del jugador
+                    case R.id.menu_nombre:
+                        // Decrementamos el tanteo
+                        Log.i("MILOG", "Cambiamos el nombre del jugador");
+                        // Lanzamos el dialog
+                        NombreDialogFragment fragmentonombre = new NombreDialogFragment();
+                        Bundle bundles = new Bundle();
+                        // Pasamos el indice como parametro
+                        bundles.putInt("posicion", adaptador.getCurrentCheckedPosition().get(0));
+                        fragmentonombre.setArguments(bundles);
+                        FragmentManager fragmentManagernombre = getFragmentManager();
+                        // Hacemos que aparezca el teclado sin necesidad de seleccionar el edittext
+                        //fragmentonombre.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+                        fragmentonombre.show(fragmentManagernombre, "Dialogo_jugador");
+                        break;
+                        // Reiniciamos el jugador
+                    case R.id.menu_reiniciar:
+                         Log.i("MILOG", "Reiniciamos la partida");
+                        // Reiniciamos la puntuacion
+                        for (Integer indice : adaptador.getCurrentCheckedPosition())
+                        {   
+                            partida.getJugadores().get(indice).setPuntuacion(0);
+                        }
+                        // Actualizamos la vista
+                        mode.finish();
+    
+                        break;
+                }
+                return false;
+            }
+    
+            @Override
+            public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+                Log.i("MILOG", "oncreateactionmode");
+                // Inflate the menu for the CAB
+                MenuInflater inflater = mode.getMenuInflater();
+                inflater.inflate(R.menu.cab_tanteo, menu);
+                // Guardamos mode
+                actionMode = mode;
+                return true;
+            }
+    
+            @Override
+            public void onDestroyActionMode(ActionMode mode) {
+                Log.i("MILOG", "ondestroyactionmode");
+                // Here you can make any necessary updates to the activity when
+                // the CAB is removed. By default, selected items are deselected/unchecked.
+                nr = 0;
+                // Actualizamos la partida
+                actualizar(indice);
+                adaptador.clearSelection();
+                actionMode = null;
+            }
+    
+            @Override
+            public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+                // Here you can perform updates to the CAB due to
+                // an invalidate() request
+                Log.i("MILOG", "onprepareactionmode");
+                if(nr == 2){
+                    // Invalidamos las opciones de cambiar el nombre y cambiar el color
+                    MenuItem item = menu.findItem(R.id.menu_nombre);
+                    item.setVisible(false);
+                }else{
+                    MenuItem item = menu.findItem(R.id.menu_nombre);
+                    item.setVisible(true);
+                }
+                return true;
+            }
+        });
+
+        Log.i("MILOG", "Fin de oncreate tanteo");
     }
 }
 
