@@ -59,6 +59,7 @@ public class Tanteo extends BaseTanteoActivity implements NumeroTanteoDialogFrag
     ActionMode actionMode = null;
     int mSelectedColorCal0;
     ColorPickerDialog colorcalendar;
+    private boolean hayDuelo = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -68,7 +69,15 @@ public class Tanteo extends BaseTanteoActivity implements NumeroTanteoDialogFrag
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate( R.layout.activity_tanteo, menu);
+        // Comprobamos si tenemos que desactivar la opcion de menu de pantalla de duelo
+        MenuItem item = menu.findItem(R.id.mododuelo);
+        if(hayDuelo){
+            item.setVisible(false); 
+        }else{
+            item.setVisible(true); 
+        }
+        
     }
 
     @Override
@@ -121,6 +130,17 @@ public class Tanteo extends BaseTanteoActivity implements NumeroTanteoDialogFrag
                 actionMode.finish();
                 break;
         }
+        
+        // Comprobamos si podemos mostrar el modo duelo
+        if((listviewjugadores.getAdapter().getCount()) == 2){
+            hayduelo = true; // setting state
+        }else{
+            hayduelo = false; // setting state
+        }
+        
+        // Actualizamos el menu
+        invalidateOptionsMenu(); // now onCreateOptionsMenu(...) is called again
+        
         // Actualizamos el backup
         actualizar(indice);
     }
@@ -316,14 +336,7 @@ public class Tanteo extends BaseTanteoActivity implements NumeroTanteoDialogFrag
         AdaptadorTanteo.CustomListener listener;
     }
     
-    
-    
-    
     // Metodos abstractos implementados
-    @Override
-    protected int getLayoutResourceId() {
-        return R.layout.activity_tanteo;
-    }
     
     @Override
     protected int getCreateOptionsMenu() {
@@ -351,6 +364,15 @@ public class Tanteo extends BaseTanteoActivity implements NumeroTanteoDialogFrag
         player.setColor(getResources().getColor(R.color.botonbase));
         // Anadimos el jugador a la lista
         partida.addJugador(player);
+        
+        // Comprobamos si podemos mostrar el modo duelo
+        if((numjugadores + 1) == 2){
+            hayduelo = true; // setting state
+        }else{
+            hayduelo = false; // setting state
+        }
+        // Actualizamos el menu
+        invalidateOptionsMenu(); // now onCreateOptionsMenu(...) is called again
     }
     
     @Override
@@ -368,6 +390,11 @@ public class Tanteo extends BaseTanteoActivity implements NumeroTanteoDialogFrag
         adaptador = new AdaptadorTanteo(this, getTaskId(), partida.getJugadores());
         listviewjugadores.setAdapter(adaptador);
         setTitle(partida.getNombre().toString());
+        
+        // Comprobamos si tenemos que mostrar la opcion de duelo
+        if(partida.getJugadores().size() == 2){
+            hayDuelo = true;
+        }
         
         // Definimos el contextual action bar
         Log.i("MILOG", "Definimos el contextual action bar");
