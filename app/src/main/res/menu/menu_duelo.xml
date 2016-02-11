@@ -17,6 +17,11 @@
   <item
         android:id="@+id/modolista"
         android:title="@string/vista_lista"
-        app:showAsAction="never"/>    
+        app:showAsAction="never"/>   
+        
+    <item android:id="@+id/action_settings" 
+        android:title="@string/action_settings"
+        android:orderInCategory="100" 
+        app:showAsAction="never" />
 
 </menu>
