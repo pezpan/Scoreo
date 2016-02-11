@@ -1,4 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+  <PreferenceCategory 
+    android:title="@string/settings_configuracion"
+    android:key="pref_key_settings">
+      
+      <EditTextPreference
+        android:key="pref_contador_inicial"
+        android:title="@string/pref_contador_inicial"
+        android:dialogTitle="@string/pref_valor_inicial"
+        android:inputType="number"
+        android:defaultValue="0" />
+    
+      <EditTextPreference
+        android:key="pref_incremento"
+        android:title="@string/pref_incremento"
+        android:dialogTitle="@string/sumar_puntos"
+        android:inputType="number"
+        android:defaultValue="1" />  
+        
+      <EditTextPreference
+        android:key="pref_decremento"
+        android:title="@string/pref_decremento"
+        android:dialogTitle="@string/sumar_puntos"
+        android:inputType="number"
+        android:defaultValue="-1" />  
+        
+      <EditTextPreference
+        android:key="pref_caras_dado"
+        android:title="@string/pref_caras_dado"
+        android:dialogTitle="@string/pref_numero_caras"
+        android:inputType="number"
+        android:defaultValue="6" />  
+    
+  </PreferenceCategory>
 
 </PreferenceScreen>
