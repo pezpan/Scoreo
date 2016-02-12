@@ -157,29 +157,27 @@ public abstract class BaseTanteoActivity extends ActionBarActivity {
               break;
               
           case R.id.tirardado:
-              Log.i("MILOG", "Tiramos el dado");
-              AlertDialog.Builder builderdado = new AlertDialog.Builder(this);
-              TextView myMsgdado = new TextView(this);
-              myMsgdado.setText(String.valueOf(Dado.tirar()));
-              myMsgdado.setGravity(Gravity.CENTER_HORIZONTAL);
-              myMsgdado.setPadding(10,10,10,10);
-              myMsgdado.setTextSize(20);
-              builderdado.setView(myMsgdado);
-              builderdado.setPositiveButton("OK", null);
-              builderdado.show();
+              // Lanzamos el dialog
+              MensajeDialogFragment fragmentodado = new MensajeDialogFragment();
+              Bundle bundles = new Bundle();
+              bundles.putString("titulo", getString(R.string.resultado_tirada));
+              bundles.putString("mensaje", String.valueOf(Dado.tirar()));
+              fragmento.setArguments(bundles);
+              Log.i("MILOG", "Mostramos el dialog para tirar el dado");
+              FragmentManager fragmentManagerdado = ((Activity) context).getFragmentManager();
+              fragmento.show(fragmentManagerdado, "Dialogo_dado");
               break;
               
           case R.id.jugadorinicial:
-              Log.i("MILOG", "Elegimos el jugador inicial");
-              AlertDialog.Builder builderinicial = new AlertDialog.Builder(this);
-              TextView myMsginicial = new TextView(this);
-              myMsginicial.setText(partida.getJugadorAleatorio());
-              myMsginicial.setGravity(Gravity.CENTER_HORIZONTAL);
-              myMsginicial.setPadding(10,10,10,10);
-              myMsginicial.setTextSize(20);
-              builderinicial.setView(myMsginicial);
-              builderinicial.setPositiveButton("OK", null);
-              builderinicial.show();
+              // Lanzamos el dialog
+              MensajeDialogFragment fragmentoinicial = new MensajeDialogFragment();
+              Bundle bundles = new Bundle();
+              bundles.putString("titulo", getString(R.string.jugador_inicial));
+              bundles.putString("mensaje", partida.getJugadorAleatorio());
+              fragmento.setArguments(bundles);
+              Log.i("MILOG", "Mostramos el dialog para elegir el jugador inicial");
+              FragmentManager fragmentManagerinicial = ((Activity) context).getFragmentManager();
+              fragmento.show(fragmentManagerinicial, "Dialogo_jugadorinicial");
               break;
           
           default:
