@@ -76,8 +76,6 @@ public class Backup {
     }
     
     public List<Partida> getBackup(){
-        // Devolvemos las partidas por orden cronologico, las mas recientes primero
-        ordenarPartidas(mibackup.partidas, false);
         return mibackup.partidas;
     }
     
@@ -108,6 +106,8 @@ public class Backup {
     
     public void guardarBackup(){
         Log.i("MILOG", "Lanzamos la tarea asincrona de guardar el backup");
+        // Guardamos las partidas por orden cronologico, las mas recientes primero
+        ordenarPartidas(mibackup.partidas, false);
         new SaveBackupAsyncTask().execute(mibackup);
         Log.i("MILOG", "Salimos de la tarea asincrona de guardar el backup");
     }
