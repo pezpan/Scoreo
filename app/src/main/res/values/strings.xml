@@ -34,7 +34,7 @@
     <string name="pref_decremento">Boton -</string>
     <string name="pref_caras_dado">Nº caras del dado</string>
     <string name="pref_numero_caras">Numero de caras</string>
-    
+    <string name="resultado_tirada">Tu tirada</string>
     
 
     <string name="ns_menu_main_header_dash">Dashclock</string>
