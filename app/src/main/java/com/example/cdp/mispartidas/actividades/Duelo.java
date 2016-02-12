@@ -45,7 +45,6 @@ public class Duelo extends BaseTanteoActivity implements NumeroTanteoDialogFragm
     
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        super.onOptionsItemSelected(item);
         return super.onOptionsItemSelected(item);
     }
 
