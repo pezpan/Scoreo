@@ -82,7 +82,6 @@ public class Tanteo extends BaseTanteoActivity implements NumeroTanteoDialogFrag
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        super.onOptionsItemSelected(item);
         return super.onOptionsItemSelected(item);
     }
 
