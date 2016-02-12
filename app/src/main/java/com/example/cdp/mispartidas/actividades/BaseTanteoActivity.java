@@ -137,7 +137,7 @@ public abstract class BaseTanteoActivity extends ActionBarActivity {
               Log.i("MILOG", "Vamos a la pantalla de duelo");
               // Fecha de volver atras
               // Lanzamos la pantalla de nueva partida, pasando el identificador de la partida creada
-              Intent intentmodo = new Intent(getApplicationContext(),  this.getClass() == Tanteo.class ? Duelo.class : Tanteo.class);
+              Intent intentmodo = new Intent(getApplicationContext(),  this.getClass().equals(Tanteo.class) ? Duelo.class : Tanteo.class);
               // Pasamos como datos el numero de jugadores seleccionados
               Bundle b = new Bundle();
               Log.i("MILOG", "Guardamos los parametros para cambiar de activity");
