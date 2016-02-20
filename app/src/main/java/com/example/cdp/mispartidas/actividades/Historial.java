@@ -45,6 +45,8 @@ public class Historial extends ActionBarActivity implements NombreDialogFragment
         Log.i("MILOG", "Obtenemos el backup");
         try {
             backup = Backup.getMiBackup(getApplicationContext());
+            // Ordenamos las partidas para ver las mas recientes primero
+            backup.ordenarRecientes();
             //mispartidas = backup.getBackup();
             adaptador = new AdaptadorHistorial(this, getTaskId(), backup.getBackup());
             listapartidas.setAdapter(adaptador);
@@ -83,6 +85,13 @@ public class Historial extends ActionBarActivity implements NombreDialogFragment
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_historial, menu);
         return true;
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        backup.ordenarRecientes();
+        ((AdaptadorHistorial) listapartidas.getAdapter()).notifyDataSetChanged();
     }
 
     @Override

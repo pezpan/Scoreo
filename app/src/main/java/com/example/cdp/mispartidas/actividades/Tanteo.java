@@ -227,6 +227,9 @@ public class Tanteo extends BaseTanteoActivity implements NumeroTanteoDialogFrag
             if(partida.getJugadores().get(position).getColor() == Color.WHITE){
                 holder.puntos.setTextColor(getResources().getColor(R.color.textonegro));
                 holder.nombrejugador.setTextColor(getResources().getColor(R.color.textonegro));
+            }else{
+                holder.puntos.setTextColor(getResources().getColor(R.color.texto));
+                holder.nombrejugador.setTextColor(getResources().getColor(R.color.texto));
             }
 
             /*
@@ -310,7 +313,7 @@ public class Tanteo extends BaseTanteoActivity implements NumeroTanteoDialogFrag
         player.setNombre("Jugador" + String.valueOf(numjugadores + 1));
         player.setNumerojugador(numjugadores + 1);
         // Anadimos la puntuacion
-        player.setPuntuacion(0);
+        player.setPuntuacion(ConfiguracionActivity.contador_inicial);
         // Incluimos el color por defecto de los botones
         player.setColor(getResources().getColor(R.color.botonbase));
         // Anadimos el jugador a la lista

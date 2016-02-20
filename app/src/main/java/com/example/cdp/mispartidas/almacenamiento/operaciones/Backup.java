@@ -46,7 +46,7 @@ public class Backup {
         if(mibackup.partidas == null){
             mibackup.partidas = new ArrayList<Partida>();
         }
-        mibackup.partidas.add(partida);
+        mibackup.partidas.add(0, partida);
     }
 
     public void deletePartida(Partida partida){
@@ -121,6 +121,10 @@ public class Backup {
             identificador = auxpartidas.get(auxpartidas.size() - 1).getIdentificador();
         }
         return identificador;
+    }
+
+    public void ordenarRecientes(){
+        ordenarPartidas(mibackup.partidas, false);
     }
     
     public void ordenarPartidas(List<Partida> listapartidas, final boolean ascendente){

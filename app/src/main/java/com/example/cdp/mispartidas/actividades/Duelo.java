@@ -1,5 +1,6 @@
 package com.example.cdp.mispartidas.actividades;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -215,6 +216,9 @@ public class Duelo extends BaseTanteoActivity implements NumeroTanteoDialogFragm
              if(partida.getJugadores().get(i).getColor() == Color.WHITE){
                  holder.nombrejugador.setTextColor(getResources().getColor(R.color.textonegro));
                  holder.puntosjugador.setTextColor(getResources().getColor(R.color.textonegro));
+             }else{
+                 holder.puntosjugador.setTextColor(getResources().getColor(R.color.texto));
+                 holder.nombrejugador.setTextColor(getResources().getColor(R.color.texto));
              }
 
              // Guardamos en el layout apropiado
@@ -250,7 +254,7 @@ public class Duelo extends BaseTanteoActivity implements NumeroTanteoDialogFragm
                     elegirInicial();
                     break;
                 case R.id.settings_duelo:
-
+                    startActivity(new Intent(context, ConfiguracionActivity.class));
                     break;
             }
         }
