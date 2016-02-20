@@ -15,7 +15,6 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
-
 /**
  * Created by CDP on 14/11/2015.
  */
@@ -107,7 +106,7 @@ public class Backup {
     public void guardarBackup(){
         Log.i("MILOG", "Lanzamos la tarea asincrona de guardar el backup");
         // Guardamos las partidas por orden cronologico, las mas recientes primero
-        ordenarPartidas(mibackup.partidas, false);
+    //    ordenarPartidas(mibackup.partidas, false);
         new SaveBackupAsyncTask().execute(mibackup);
         Log.i("MILOG", "Salimos de la tarea asincrona de guardar el backup");
     }

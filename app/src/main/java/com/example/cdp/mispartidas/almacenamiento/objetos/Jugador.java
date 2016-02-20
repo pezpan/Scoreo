@@ -1,6 +1,5 @@
 package com.example.cdp.mispartidas.almacenamiento.objetos;
 
-
 public class Jugador {
 	
 	String nombre;		

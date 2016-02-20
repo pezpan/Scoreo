@@ -1,19 +1,13 @@
 package com.example.cdp.mispartidas.almacenamiento.sax;
 
 import android.content.Context;
-import android.content.res.AssetManager;
 import android.util.Log;
-import android.widget.Toast;
-
 import com.example.cdp.mispartidas.almacenamiento.objetos.Partida;
-
 import java.io.InputStream;
 import java.util.List;
-
 import javax.xml.parsers.SAXParserFactory;
 import org.xml.sax.InputSource;
 import org.xml.sax.XMLReader;
-
 
 public class SAXXMLParser {
 

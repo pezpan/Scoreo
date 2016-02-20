@@ -2,63 +2,40 @@ package com.example.cdp.mispartidas.actividades;
 
 import android.app.Activity;
 import android.app.FragmentManager;
-import android.content.Context;
-import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.GradientDrawable;
-import android.os.Build;
-import android.support.v4.app.NavUtils;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.ActionMode;
-import android.view.ContextMenu;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.AbsListView;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.cdp.mispartidas.Utils;
-import com.example.cdp.mispartidas.auxiliares.Dado;
 import com.example.cdp.mispartidas.auxiliares.Utilidades;
-import com.example.cdp.mispartidas.colorpicker.ColorPickerDialog;
-import com.example.cdp.mispartidas.colorpicker.ColorPickerSwatch;
 import com.example.cdp.mispartidas.dialogos.NombreDialogFragment;
 import com.example.cdp.mispartidas.dialogos.NumeroTanteoDialogFragment;
 import com.example.cdp.mispartidas.dialogos.ConfirmacionDialogFragment;
 import com.example.cdp.mispartidas.R;
 import com.example.cdp.mispartidas.almacenamiento.objetos.Jugador;
-import com.example.cdp.mispartidas.almacenamiento.objetos.Partida;
-import com.example.cdp.mispartidas.almacenamiento.operaciones.Backup;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
 
 public class Tanteo extends BaseTanteoActivity implements NumeroTanteoDialogFragment.NumberTanteoDialogListener, NombreDialogFragment.NuevoNombreListener, ConfirmacionDialogFragment.ConfirmarListener {
 
     private AdaptadorTanteo adaptador;
     private ListView listviewjugadores;
     ActionMode actionMode = null;
-    int mSelectedColorCal0;
-    ColorPickerDialog colorcalendar;
     private boolean hayDuelo = false;
 
     @Override
@@ -83,6 +60,12 @@ public class Tanteo extends BaseTanteoActivity implements NumeroTanteoDialogFrag
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        ((AdaptadorTanteo) listviewjugadores.getAdapter()).notifyDataSetChanged();
     }
 
     @Override
@@ -209,7 +192,8 @@ public class Tanteo extends BaseTanteoActivity implements NumeroTanteoDialogFrag
             }
             
             // Definimos lo que necesitamos para el cab
-            item.setBackgroundColor(getResources().getColor(android.R.color.background_light)); //default color
+            //item.setBackgroundColor(getResources().getColor(android.R.color.background_light)); //default color
+            item.setBackgroundColor(partida.getJugadores().get(position).getColor());
               
             if (mSelection.contains(position)) {
                 item.setBackgroundColor(getResources().getColor(android.R.color.holo_blue_light));// this is a selected position so make it red
@@ -222,23 +206,28 @@ public class Tanteo extends BaseTanteoActivity implements NumeroTanteoDialogFrag
 
             // Definimos los listener para las vistas
             holder.listener = new CustomListener(position);
+            holder.longlistener = new LongListener(position);
             holder.botonmenos.setOnClickListener(holder.listener);
+            holder.botonmenos.setOnLongClickListener(holder.longlistener);
             holder.botonmas.setOnClickListener(holder.listener);
-            holder.puntos.setOnClickListener(holder.listener);
+            holder.botonmas.setOnLongClickListener(holder.longlistener);
 
             // Establecemos el nombre por defecto
             holder.nombrejugador.setText(jugadores.get(position).getNombre());
             holder.puntos.setText(String.valueOf(jugadores.get(position).getPuntuacion()));
 
-            // Definimos el color de fondo del boton
+            // Ponemos el fondo de los botones con un tono mas oscuro
             // boton mas
-            GradientDrawable bgShapemas = (GradientDrawable)holder.botonmas.getBackground();
-            bgShapemas.mutate();
-            bgShapemas.setColor(partida.getJugadores().get(position).getColor());
+            holder.botonmas.setBackgroundColor(Utilidades.getDarker(partida.getJugadores().get(position).getColor()));
+
             // boton menos
-            GradientDrawable bgShapemenos = (GradientDrawable)holder.botonmenos.getBackground();
-            bgShapemenos.mutate();
-            bgShapemenos.setColor(partida.getJugadores().get(position).getColor());
+            holder.botonmenos.setBackgroundColor(Utilidades.getDarker(partida.getJugadores().get(position).getColor()));
+
+            // Comprobamos si tenemos que poner el texto negro por el fondo blanco
+            if(partida.getJugadores().get(position).getColor() == Color.WHITE){
+                holder.puntos.setTextColor(getResources().getColor(R.color.textonegro));
+                holder.nombrejugador.setTextColor(getResources().getColor(R.color.textonegro));
+            }
 
             /*
             if (position % 2 == 1) {
@@ -261,24 +250,10 @@ public class Tanteo extends BaseTanteoActivity implements NumeroTanteoDialogFrag
             public void onClick(View v) {
                 //Comprobamos que vista ha lanzado el evento y lo gestionamos
                 switch (v.getId()) {
-                    case R.id.puntos:
-                        // Decrementamos el tanteo
-                        Log.i("MILOG", "Modificamos el tanteo");
-                        // Lanzamos el dialog
-                        NumeroTanteoDialogFragment fragmento = new NumeroTanteoDialogFragment();
-                        Bundle bundles = new Bundle();
-                        bundles.putString("titulo", getString(R.string.sumar_puntos));
-                        bundles.putInt("posicion", position);
-                        fragmento.setArguments(bundles);
-                        Log.i("MILOG", "Mostramos el dialog para elegir el numero que queremos modificar");
-                        FragmentManager fragmentManager = ((Activity) context).getFragmentManager();
-                        fragmento.show(fragmentManager, "Dialogo_tanteo");
-                        break;
-
                     case R.id.sumar:
                         Log.i("MILOG", "Sumamos uno");
                         int suma = jugadores.get(position).getPuntuacion();
-                        jugadores.get(position).setPuntuacion(suma + 1);
+                        jugadores.get(position).setPuntuacion(suma + ConfiguracionActivity.incremento);
                         // Actualizamos el backup
                         actualizar(indice);
                         break;
@@ -287,46 +262,11 @@ public class Tanteo extends BaseTanteoActivity implements NumeroTanteoDialogFrag
                         // Decrementamos el tanteo
                         Log.i("MILOG", "Restamos uno");
                         int resta = jugadores.get(position).getPuntuacion();
-                        jugadores.get(position).setPuntuacion(resta - 1);
+                        jugadores.get(position).setPuntuacion(resta - ConfiguracionActivity.decremento);
                         // Actualizamos el backup
                         actualizar(indice);
                         break;
                 }
-            }
-        }
-    }
-
-    public class ColorListener {
-        private List<Integer> positions;
-
-        protected ColorListener(List<Integer> positions) {
-            this.positions = positions;
-        }
-
-        public void muestraColores(){
-            int[] mColor = Utils.ColorUtils.colorChoice(getApplicationContext());
-            try {
-                colorcalendar = ColorPickerDialog.newInstance(R.string.color_picker_default_title, mColor, mSelectedColorCal0,
-                        4, Utils.isTablet(getApplicationContext()) ? ColorPickerDialog.SIZE_LARGE : ColorPickerDialog.SIZE_SMALL);
-                //Implement listener to get selected color value
-                colorcalendar.setOnColorSelectedListener(new ColorPickerSwatch.OnColorSelectedListener() {
-
-                    @Override
-                    public void onColorSelected(int color) {
-                        // Alamcenamos el color para la siguiente activity
-                        for(Integer position : positions) {
-                            partida.getJugadores().get(position).setColor(color);
-                        }
-                        // Actualizamos la vista
-                        actionMode.finish();
-                        // Actualizamos el adaptador para ver el nuevo color
-                        ((AdaptadorTanteo) listviewjugadores.getAdapter()).notifyDataSetChanged();
-                    }
-                });
-                colorcalendar.show(getFragmentManager(), "cal");
-
-            }catch(Exception e){
-                Log.i("MILOG", "Exception en colorpicker: " + e.getMessage());
             }
         }
     }
@@ -337,9 +277,22 @@ public class Tanteo extends BaseTanteoActivity implements NumeroTanteoDialogFrag
         ImageButton botonmas;
         ImageButton botonmenos;
         AdaptadorTanteo.CustomListener listener;
+        LongListener longlistener;
     }
     
     // Metodos abstractos implementados
+
+    @Override
+    protected void mostrarBotonAtras(){
+        // Habilitamos la fecha volver a la activity principal
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    protected void establecerLayout() {
+        // Establecemos el layout
+        setContentView(getLayoutResourceId());
+    }
 
     @Override
     protected void notificaCambiosInterfaz() {
@@ -378,6 +331,18 @@ public class Tanteo extends BaseTanteoActivity implements NumeroTanteoDialogFrag
         // Reiniciamos la partida
         partida.reiniciarPartida();
     }
+
+    @Override
+    protected void onColorSeleccionado(int color, List<Integer> positions){
+        // Alamcenamos el color para la siguiente activity
+        for(Integer position : positions) {
+            partida.getJugadores().get(position).setColor(color);
+        }
+        // Actualizamos la vista
+        actionMode.finish();
+        // Actualizamos el adaptador para ver el nuevo color
+        ((AdaptadorTanteo) listviewjugadores.getAdapter()).notifyDataSetChanged();
+    }
     
     @Override
     protected void gestionarOnCreate() {
@@ -393,6 +358,14 @@ public class Tanteo extends BaseTanteoActivity implements NumeroTanteoDialogFrag
         if(partida.getJugadores().size() == 2){
             hayDuelo = true;
         }
+
+        // Obtenemos las preferencias
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
+
+        ConfiguracionActivity.caras = Integer.parseInt(pref.getString("pref_caras_dado", "6"));
+        ConfiguracionActivity.contador_inicial = Integer.parseInt(pref.getString("pref_contador_inicial", "0"));
+        ConfiguracionActivity.incremento = Integer.parseInt(pref.getString("pref_incremento", "1"));
+        ConfiguracionActivity.decremento = Integer.parseInt(pref.getString("pref_decremento", "1"));
         
         // Definimos el contextual action bar
         Log.i("MILOG", "Definimos el contextual action bar");
@@ -461,7 +434,7 @@ public class Tanteo extends BaseTanteoActivity implements NumeroTanteoDialogFrag
                         Log.i("MILOG", "Reiniciamos la partida");
                         // Reiniciamos la puntuacion
                         for (Integer indice : adaptador.getCurrentCheckedPosition()) {
-                            partida.getJugadores().get(indice).setPuntuacion(0);
+                            partida.getJugadores().get(indice).setPuntuacion(ConfiguracionActivity.contador_inicial);
                         }
                         // Actualizamos la vista
                         mode.finish();

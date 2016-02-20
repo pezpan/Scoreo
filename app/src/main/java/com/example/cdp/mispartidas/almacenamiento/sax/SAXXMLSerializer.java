@@ -6,14 +6,11 @@ import android.util.Xml;
 import com.example.cdp.mispartidas.almacenamiento.objetos.Jugador;
 import com.example.cdp.mispartidas.almacenamiento.objetos.Partida;
 import org.xmlpull.v1.XmlSerializer;
-
 import java.io.FileOutputStream;
 import java.util.List;
 
-
 public class SAXXMLSerializer {
 
-		
 	public static void store(List<Partida> backup, Context contexto){
 		
 		final String xmlFile = "userData.xml";		
@@ -118,5 +115,4 @@ public class SAXXMLSerializer {
 		    Log.d("MILOG", "Error al guardar el xml: " + e.getMessage());
 		}
 	}
-
 }

@@ -1,10 +1,8 @@
 <resources>
 
     <string name="app_name">Mis Partidas</string>
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Configuracion</string>
     <string name="nueva_partida">Nueva Partida</string>
-    <string name="partidas_guardadas">Partidas Guardadas</string>
     <string name="mensaje_jugadores">Numero de jugadores</string>
     <string name="aceptar">Aceptar</string>
     <string name="cancelar">Cancelar</string>
@@ -18,41 +16,84 @@
     <string name="sumar">Sumar</string>
     <string name="restar">Restar</string>
     <string name="reiniciar_partida">Reiniciar la partida</string>
-    <string name="ordenar_partida">Ordenar descendente</string>
+    <string name="ordenar_partida">Orden descendente</string>
     <string name="borrar_historial">Borrar el historial</string>
     <string name="context_borrar">Borrar</string>
     <string name="dialogonombre">Nuevo nombre</string>
-    <string name="vista_duelo">Pantalla duelo</string>
-    <string name="vista_lista">Pantalla lista</string>
+    <string name="vista_duelo">Vista 1 vs 1</string>
     <string name="confirmacion">¿Estas seguro?</string>
     <string name="tirar_dado">Tirar el dado</string>
     <string name="jugador_inicial">Jugador inicial</string>
     <string name="settings_configuracion">Configuracion</string>
-    <string name="pref_contador_inicial">Contador inicial</string>
     <string name="pref_incremento">Boton +</string>
     <string name="pref_valor_inicial">Puntuacion inicial</string>
     <string name="pref_decremento">Boton -</string>
-    <string name="pref_caras_dado">Nº caras del dado</string>
     <string name="pref_numero_caras">Numero de caras</string>
     <string name="resultado_tirada">Tu tirada</string>
-    
-
-    <string name="ns_menu_main_header_dash">Dashclock</string>
-    <string name="ns_menu_main_row_dash_original">Original ColorPreference</string>
-    <string name="ns_menu_main_row_dash_dialog">Custom ColorPickerDialog</string>
-    <string name="ns_menu_main_header_calendar">Stock Calendar</string>
-    <string name="ns_menu_main_row_calendar_original">Original ColorPicker</string>
-    <string name="ns_menu_main_row_calendar_preference">Custom ColorPreference</string>
-
-    <string name="title_about">About</string>
-    <string name="about_ok">OK</string>
-    <string name="pref_config">Color Picker</string>
-    <string name="title_activity_settings">Setting</string>
-    
+    <string name="color_picker_default_title">Elige un color</string>
     <string name="title_activity_duelo">Duelo</string>
     <string name="nuevo_nombre">Cambiar nombre</string>
     <string name="nuevo_color">Cambiar color</string>
     <string name="reiniciar">Reiniciar tanteo</string>
     <string name="borrar">Eliminar jugador</string>
+    <string name="title_activity_configuracion">Configuracion</string>
+
+    <!-- Strings related to Settings -->
+
+    <!-- Example General settings -->
+    <string name="pref_header_general">General</string>
+
+    <string name="pref_title_social_recommendations">Enable social recommendations</string>
+    <string name="pref_description_social_recommendations">Recommendations for people to contact
+        based on your message history
+    </string>
+
+    <string name="pref_title_display_name">Display name</string>
+    <string name="pref_default_display_name">John Smith</string>
+
+    <string name="pref_title_add_friends_to_messages">Add friends to messages</string>
+    <string-array name="pref_example_list_titles">
+        <item>Always</item>
+        <item>When possible</item>
+        <item>Never</item>
+    </string-array>
+    <string-array name="pref_example_list_values">
+        <item>1</item>
+        <item>0</item>
+        <item>-1</item>
+    </string-array>
+
+    <!-- Example settings for Data & Sync -->
+    <string name="pref_header_data_sync">Data &amp; sync</string>
+
+    <string name="pref_title_sync_frequency">Sync frequency</string>
+    <string-array name="pref_sync_frequency_titles">
+        <item>15 minutes</item>
+        <item>30 minutes</item>
+        <item>1 hour</item>
+        <item>3 hours</item>
+        <item>6 hours</item>
+        <item>Never</item>
+    </string-array>
+    <string-array name="pref_sync_frequency_values">
+        <item>15</item>
+        <item>30</item>
+        <item>60</item>
+        <item>180</item>
+        <item>360</item>
+        <item>-1</item>
+    </string-array>
+
+    <string name="pref_title_system_sync_settings">System sync settings</string>
+
+    <!-- Example settings for Notifications -->
+    <string name="pref_header_notifications">Notifications</string>
+
+    <string name="pref_title_new_message_notifications">New message notifications</string>
+
+    <string name="pref_title_ringtone">Ringtone</string>
+    <string name="pref_ringtone_silent">Silent</string>
+
+    <string name="pref_title_vibrate">Vibrate</string>
 
 </resources>

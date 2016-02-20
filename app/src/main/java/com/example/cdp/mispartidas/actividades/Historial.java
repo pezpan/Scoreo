@@ -2,7 +2,6 @@ package com.example.cdp.mispartidas.actividades;
 
 import android.app.Activity;
 import android.app.FragmentManager;
-import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
@@ -14,29 +13,24 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.cdp.mispartidas.auxiliares.Utilidades;
 import com.example.cdp.mispartidas.dialogos.NombreDialogFragment;
 import com.example.cdp.mispartidas.dialogos.ConfirmacionDialogFragment;
 import com.example.cdp.mispartidas.R;
 import com.example.cdp.mispartidas.almacenamiento.objetos.Partida;
 import com.example.cdp.mispartidas.almacenamiento.operaciones.Backup;
 
-import java.util.Date;
 import java.util.List;
 
 public class Historial extends ActionBarActivity implements NombreDialogFragment.NuevoNombreListener, ConfirmacionDialogFragment.ConfirmarListener  {
 
     private ListView listapartidas;
-    //private List<Partida> mispartidas;
     private AdaptadorHistorial adaptador;
-    //private static Context context;
     private Backup backup;
 
     @Override
@@ -119,6 +113,7 @@ public class Historial extends ActionBarActivity implements NombreDialogFragment
                 break;
 
             case R.id.action_settings:
+                startActivity(new Intent(this, ConfiguracionActivity.class));
                 break;
             default:
                 return true;
@@ -198,7 +193,6 @@ public class Historial extends ActionBarActivity implements NombreDialogFragment
         // Almacenamos
         Log.i("MILOG", "Guardamos el backup");
         backup.guardarBackup();
-
 
         return true;
     }

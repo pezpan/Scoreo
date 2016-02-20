@@ -50,16 +50,13 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".actividades.MainActivity" />
         </activity>
-        <activity 
+        <activity
             android:name=".actividades.Duelo"
-            android:label="@string/title_activity_tanteo"
-            android:theme="@android:style/Theme.NoTitleBar">
-            <!-- Parent activity meta-data to support 4.0 and lower -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".actividades.MainActivity" />
-                
-        </activity>
+            android:label="Tanteo"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".actividades.ConfiguracionActivity"
+            android:label="@string/title_activity_configuracion"></activity>
     </application>
 
 </manifest>

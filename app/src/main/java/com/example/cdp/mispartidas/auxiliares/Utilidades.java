@@ -5,7 +5,6 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -36,6 +35,13 @@ public class Utilidades {
         String hexColor = String.format("#%06X", (0xFFFFFF & intcolor));
         return hexColor;
     }
+
+    public static int getDarker(int color){
+        float[] hsv = new float[3];
+        Color.colorToHSV(color, hsv);
+        hsv[2] *= 0.8f; // value component
+        return(Color.HSVToColor(hsv));
+    }
     
     public static void buttonEffect(View button){
         button.setOnTouchListener(new View.OnTouchListener() {
@@ -45,10 +51,7 @@ public class Utilidades {
                     case MotionEvent.ACTION_DOWN: {
                         ColorDrawable colordraw = (ColorDrawable)v.getBackground();
                         int color = colordraw.getColor();
-                        float[] hsv = new float[3];
-                        Color.colorToHSV(color, hsv);
-                        hsv[2] *= 0.8f; // value component
-                        color = Color.HSVToColor(hsv);
+                        color = getDarker(color);
                         v.getBackground().setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
                         v.invalidate();
                         break;

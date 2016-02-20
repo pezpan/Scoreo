@@ -19,8 +19,11 @@ public class NumeroTanteoDialogFragment extends DialogFragment {
 
     private String titulo;
     private int posicion;
+    private int operacion;
     private final int MAX = 100;
     private final int MIN = 1;
+    public static final int sumar = 0;
+    public static final int restar = 1;
 
     public NumeroTanteoDialogFragment(){
 
@@ -30,6 +33,7 @@ public class NumeroTanteoDialogFragment extends DialogFragment {
         Bundle bundle = getArguments();
         this.titulo = bundle.getString("titulo");
         this.posicion = bundle.getInt("posicion");
+        this.operacion = bundle.getInt("operacion");
     }
     
     // Container Activity must implement this interface
@@ -45,7 +49,7 @@ public class NumeroTanteoDialogFragment extends DialogFragment {
 
         // Obtenemos los parametros
         getParameters();
-        final int posicion = this.posicion;
+
         myNumberPicker.setMaxValue(MAX);
         myNumberPicker.setMinValue(MIN);
 
@@ -53,22 +57,19 @@ public class NumeroTanteoDialogFragment extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(actividad);
         builder.setTitle(this.titulo)
                 .setView(myNumberPicker)
-                .setNegativeButton(R.string.restar, new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.cancelar, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        // User cancelled the dialog
-                        int valor = myNumberPicker.getValue();
-                        // Cambiamos el signo
-                        valor *= -1;
-                        // Declaramos un objeto de la interfaz que hemos definido para devolver el valor
-                        NumberTanteoDialogListener activity = (NumberTanteoDialogListener) getActivity();
-                        activity.onNumberSelected(valor, posicion);
+                        dismiss();
                     }
                 })
-                .setPositiveButton(R.string.sumar, new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.aceptar, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         // Debemos guardar el numero de jugadores seleccionados
                         try {
                             int valor = myNumberPicker.getValue();
+                            // Comprobamos si hay que sumar o restar
+                            if(operacion == restar)
+                                valor *= -1;
                             // Declaramos un objeto de la interfaz que hemos definido para devolver el valor
                             NumberTanteoDialogListener activity = (NumberTanteoDialogListener) getActivity();
                             activity.onNumberSelected(valor, posicion);
@@ -77,7 +78,6 @@ public class NumeroTanteoDialogFragment extends DialogFragment {
                         }
                     }
                 });
-
 
         // Create the AlertDialog object and return it
         return builder.create();

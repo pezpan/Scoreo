@@ -11,5 +11,8 @@
     <color name="background2">#EEEEEE</color>
     <color name="primary_material_dark">#2196f3</color>
 
-    <item name="botonbase" type="color">#9E9E9E</item>
+    <item name="botonbase" type="color">#808080</item>
+    <item name="botonesduelo" type="color">#212121</item>
+    <item name="texto" type="color">#FFFFFF</item>
+    <item name="textonegro" type="color">#000000</item>
 </resources>

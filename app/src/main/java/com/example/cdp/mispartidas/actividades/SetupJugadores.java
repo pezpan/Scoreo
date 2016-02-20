@@ -128,7 +128,7 @@ public class SetupJugadores extends ActionBarActivity {
             // Anadimos el numero de jugador
             player.setNumerojugador(i);
             // Anadimos la puntuacion
-            player.setPuntuacion(0);
+            player.setPuntuacion(ConfiguracionActivity.contador_inicial);
             // Anadimos el color
             player.setColor(players.get(i).getcolor());
             // Anadimos el jugador a la lista

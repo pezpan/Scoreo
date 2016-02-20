@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:drawable/dialog_holo_light_frame">
+
+    <RelativeLayout
+            android:id="@+id/relativeLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:layout_weight="1" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/nombrejugador"
+                android:gravity="center"
+                android:paddingTop="10dp"
+                android:textSize="20dp"
+                android:maxLines="1"
+                android:ellipsize="marquee"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="false"
+                android:layout_alignParentStart="true"
+                android:textColor="@color/texto" />
+
+            <com.example.cdp.mispartidas.auxiliares.AutoResizeTextView
+                android:id="@+id/tantosduelo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="120dp"
+                android:layout_weight="1"
+                android:padding="5dp"
+                android:textStyle="bold"
+                android:maxLines="1"
+                android:ellipsize="none"
+                android:layout_gravity="center"
+                android:textColor="@color/texto"
+                android:layout_above="@+id/botoneshorizontal"
+                android:layout_below="@+id/nombrejugador"
+                android:textAlignment="center" />
+
+            <LinearLayout
+                android:id="@+id/botoneshorizontal"
+                android:layout_alignParentLeft="false"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:gravity="bottom|center"
+                android:orientation="horizontal"
+                android:layout_gravity="left"
+                android:layout_alignParentBottom="true">
+
+                <ImageButton android:id="@+id/restarduelo"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:src="@drawable/ic_remove_white_48dp"
+                    android:scaleType="fitCenter"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:padding="10dp"
+                    android:layout_weight="1" />
+
+                <ImageButton android:id="@+id/sumarduelo"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:src="@drawable/ic_add_white_48dp"
+                    android:scaleType="fitCenter"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:padding="10dp"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+</LinearLayout>

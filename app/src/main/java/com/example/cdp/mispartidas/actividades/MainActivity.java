@@ -2,6 +2,7 @@ package com.example.cdp.mispartidas.actividades;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -9,7 +10,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.cdp.mispartidas.auxiliares.Utilidades;
 import com.example.cdp.mispartidas.dialogos.NumeroJugadoresDialogFragment;
 import com.example.cdp.mispartidas.R;
 import com.example.cdp.mispartidas.almacenamiento.operaciones.Backup;
@@ -51,11 +51,9 @@ public class MainActivity extends ActionBarActivity implements NumeroJugadoresDi
         botonhistorial.setOnClickListener(listeneropciones);
         botonduelo.setOnClickListener(listeneropciones);
         botoncontinuar.setOnClickListener(listeneropciones);
-        // Incluimos el efecto de hacer click
-        Utilidades.buttonEffect(botonaceptar);
-        Utilidades.buttonEffect(botonhistorial);
-        Utilidades.buttonEffect(botonduelo);
-        Utilidades.buttonEffect(botoncontinuar);
+
+        PreferenceManager.setDefaultValues(this, R.xml.preferencias, false);
+
     }
 
     @Override
@@ -74,7 +72,7 @@ public class MainActivity extends ActionBarActivity implements NumeroJugadoresDi
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
+            startActivity(new Intent(this, ConfiguracionActivity.class));
         }
 
         return super.onOptionsItemSelected(item);
@@ -142,7 +140,5 @@ public class MainActivity extends ActionBarActivity implements NumeroJugadoresDi
                     break;
             }
         }
-        
     }
-
 }

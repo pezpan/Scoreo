@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    tools:context="com.example.cdp.mispartidas.actividades.Duelo">
+    
+    <include android:id="@+id/jugador0"
+        android:layout_width="wrap_content"
+         android:layout_height="match_parent"
+        layout="@layout/tanteo_duelo_horizontal"
+        android:layout_weight="1"
+        android:layout_gravity="top" />
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="@android:color/background_light"/>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:padding="5dp"
+        android:orientation="vertical"
+        android:background="@color/botonesduelo" >
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="27dp"
+            android:layout_weight="0.5" />
+
+        <ImageButton android:id="@+id/dadoduelo"
+            android:layout_width="27dp"
+            android:layout_height="27dp"
+            android:src="@drawable/ic_casino_white_24dp"
+            android:scaleType="fitXY"
+            android:focusable="false"
+            android:layout_gravity="center"
+            android:background="@color/botonesduelo"
+            android:focusableInTouchMode="false"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="27dp"
+            android:layout_weight="1" />
+
+        <ImageButton android:id="@+id/resetarduelo"
+            android:layout_width="27dp"
+            android:layout_height="27dp"
+            android:src="@drawable/ic_loop_white_24dp"
+            android:scaleType="fitXY"
+            android:background="@color/botonesduelo"
+            android:focusable="false"
+            android:layout_gravity="center"
+            android:focusableInTouchMode="false"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="27dp"
+            android:layout_weight="1" />
+
+        <ImageButton android:id="@+id/jugador_duelo"
+            android:layout_width="27dp"
+            android:layout_height="27dp"
+            android:src="@drawable/ic_star_white_24dp"
+            android:scaleType="fitXY"
+            android:layout_gravity="center"
+            android:background="@color/botonesduelo"
+            android:focusable="false"
+            android:focusableInTouchMode="false"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="27dp"
+            android:layout_weight="1" />
+
+        <ImageButton android:id="@+id/settings_duelo"
+            android:layout_width="27dp"
+            android:layout_height="27dp"
+            android:src="@drawable/ic_settings_white_24dp"
+            android:scaleType="fitXY"
+            android:background="@color/botonesduelo"
+            android:layout_gravity="center"
+            android:focusable="false"
+            android:focusableInTouchMode="false"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="27dp"
+            android:layout_weight="0.5" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="@android:color/background_light"/>
+
+    <include android:id="@+id/jugador1"
+        android:layout_width="match_parent"
+         android:layout_height="match_parent"
+         android:layout_weight="1"
+         layout="@layout/tanteo_duelo_horizontal" />
+
+</LinearLayout >

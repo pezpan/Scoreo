@@ -9,21 +9,22 @@
         app:showAsAction="always"/>
 
     <item
-        android:id="@+id/partidasguardadas"
-        android:title="@string/partidas_guardadas"
-        android:icon="@drawable/ic_folder_white_24dp"
+        android:id="@+id/reiniciarpartida"
+        android:title="@string/reiniciar_partida"
+        android:icon="@drawable/ic_loop_white_24dp"
         app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/partidasguardadas"
+        android:title="@string/title_activity_historial"
+        android:icon="@drawable/ic_folder_white_24dp"
+        app:showAsAction="ifRoom"/>
         
     <item
         android:id="@+id/addjugador"
         android:title="@string/nuevo_jugador"
         android:icon="@drawable/ic_person_add_white_24dp"
-        app:showAsAction="always"/>
-        
-    <item
-        android:id="@+id/reiniciarpartida"
-        android:title="@string/reiniciar_partida"
-        app:showAsAction="never"/>   
+        app:showAsAction="ifRoom"/>
         
     <item
         android:id="@+id/ordenarpartida"
@@ -40,7 +41,8 @@
         android:title="@string/vista_duelo"
         app:showAsAction="never"/>
         
-    <item android:id="@+id/action_settings" 
+    <item android:id="@+id/action_settings"
+        android:icon="@drawable/ic_settings_white_24dp"
         android:title="@string/action_settings"
         android:orderInCategory="100" 
         app:showAsAction="never" />

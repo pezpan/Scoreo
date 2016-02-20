@@ -15,8 +15,8 @@
     </string-array>
 
     <string-array name="default_color_choice_values" translatable="false">
-        <item>#9E9E9E</item>
         <item>#424242</item>
+        <item>#9E9E9E</item>
         <item>#FFFFFF</item>
         <item>#000000</item>
         <item>#FFD600</item>

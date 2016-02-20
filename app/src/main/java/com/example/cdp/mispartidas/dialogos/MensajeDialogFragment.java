@@ -5,8 +5,10 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.widget.EditText;
+import android.view.Gravity;
+import android.widget.TextView;
 
 import com.example.cdp.mispartidas.R;
 
@@ -15,8 +17,9 @@ import com.example.cdp.mispartidas.R;
  */
 public class MensajeDialogFragment extends DialogFragment {
   
-  private String titulo;
-  private String mensaje;
+    private String titulo;
+    private String mensaje;
+    private int tamTexto;
   
   public MensajeDialogFragment(){
     
@@ -26,6 +29,7 @@ public class MensajeDialogFragment extends DialogFragment {
         Bundle bundle = getArguments();
         this.titulo = bundle.getString("titulo");
         this.mensaje = bundle.getString("mensaje");
+        this.tamTexto = bundle.getInt("tamTexto");
     }
   
   @Override
@@ -34,23 +38,24 @@ public class MensajeDialogFragment extends DialogFragment {
         final Activity actividad = getActivity();
         final TextView texto = new TextView(actividad);
 
+
         // Obtenemos los parametros
         getParameters();
         // Modificamos el textview
         texto.setText(mensaje);
         texto.setGravity(Gravity.CENTER_HORIZONTAL);
         texto.setPadding(20,20,20,20);
-        texto.setTextSize(20);
-        texto.setTextColor(#212121);
+        texto.setTextSize(this.tamTexto);
+        texto.setTextColor(Color.parseColor("#212121"));
         
         // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(actividad);
         builder.setTitle(titulo)
-                .setView(myName)
+                .setView(texto)
                 .setView(texto)
                 .setPositiveButton(R.string.aceptar, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        this.dismiss();
+                        dismiss();
                     }
                 });
         // Create the AlertDialog object and return it
