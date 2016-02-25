@@ -34,7 +34,7 @@
         <Button
            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Duelo"
+            android:text="Nueva 1 vs 1"
             android:id="@+id/botonduelo"
             android:textSize="16sp"
             android:textStyle="bold"
