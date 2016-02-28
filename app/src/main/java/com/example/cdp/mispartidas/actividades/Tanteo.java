@@ -333,6 +333,7 @@ public class Tanteo extends BaseTanteoActivity implements NumeroTanteoDialogFrag
     protected void optionReiniciarPartida(){
         // Reiniciamos la partida
         partida.reiniciarPartida();
+        actualizar(indice);
     }
 
     @Override

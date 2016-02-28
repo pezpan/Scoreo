@@ -2,9 +2,17 @@ package com.example.cdp.mispartidas.actividades;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.EditTextPreference;
+import android.preference.ListPreference;
+import android.preference.MultiSelectListPreference;
+import android.preference.Preference;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceGroup;
+import android.preference.PreferenceManager;
 
 import com.example.cdp.mispartidas.R;
+
+import java.util.prefs.Preferences;
 
 
 /**
@@ -35,6 +43,9 @@ public class ConfiguracionActivity extends PreferenceActivity implements SharedP
         super.onCreate(savedInstanceState);
 
         addPreferencesFromResource(R.xml.preferencias);
+        PreferenceManager.setDefaultValues(ConfiguracionActivity.this, R.xml.preferencias,
+                false);
+        initSummary(getPreferenceScreen());
     }
 
     @Override
@@ -61,6 +72,22 @@ public class ConfiguracionActivity extends PreferenceActivity implements SharedP
             ConfiguracionActivity.decremento = Integer.parseInt(sharedPreferences.getString(s, ""));
         }else if (s.equals("pref_caras_dado")) {
             ConfiguracionActivity.caras = Integer.parseInt(sharedPreferences.getString(s, ""));
+        }
+        // Actualizamos el valor de la preferencia
+        Preference p = findPreference(s);
+        EditTextPreference editTextPref = (EditTextPreference) p;
+        p.setSummary(editTextPref.getText());
+    }
+
+    private void initSummary(Preference p) {
+        if (p instanceof PreferenceGroup) {
+            PreferenceGroup pGrp = (PreferenceGroup) p;
+            for (int i = 0; i < pGrp.getPreferenceCount(); i++) {
+                initSummary(pGrp.getPreference(i));
+            }
+        } else {
+            EditTextPreference editTextPref = (EditTextPreference) p;
+            p.setSummary(editTextPref.getText());
         }
     }
 }

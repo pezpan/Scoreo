@@ -1,5 +1,6 @@
 package com.example.cdp.mispartidas.almacenamiento.objetos;
 
+import com.example.cdp.mispartidas.actividades.ConfiguracionActivity;
 import com.example.cdp.mispartidas.auxiliares.Utilidades;
 
 import java.util.ArrayList;
@@ -42,7 +43,7 @@ public class Partida{
 		int numjugadores = this.getJugadores().size();
 		// recorremos y reiniciamos
 		for(int i = 0; i < numjugadores; i++){
-			this.getJugadores().get(i).setPuntuacion(0);
+			this.getJugadores().get(i).setPuntuacion(ConfiguracionActivity.contador_inicial);
 		}
 	}
 		
